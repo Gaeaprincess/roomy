@@ -1,0 +1,124 @@
+.wrap{
+	.active{
+		background-color: $mainColor;
+		color: white;
+		border: none;
+	}
+	.logo{
+		padding-top:40rpx;
+		text-align: center;
+		image{
+			width: 200rpx;
+			height: 200rpx;
+		}
+		.title{
+			margin: 20rpx auto;
+			display: block;
+		}
+	}
+	// 验证码登录
+	input{
+		display: inline-block;
+		padding-left: 40rpx;
+	}
+	margin:auto;
+	// 验证码登录
+	.verification{
+		margin: auto;
+		// 输入手机号码
+		view:nth-child(1){
+			margin: auto;
+			width: 600rpx;
+			margin-top: 60rpx;
+			border-bottom: 4rpx solid $mainColor;
+		}
+		//获取验证码
+		view:nth-child(2){
+			margin: 60rpx auto;
+			width: 600rpx;
+			.getCodeBtn{
+				display: inline-block;
+				height: 80rpx;
+				line-height: 80rpx;
+				margin-left: 10rpx;
+				border: 2rpx solid $mainColor;
+				border-radius: 16rpx;
+			}
+			input{
+				width: 300rpx;
+				border-bottom: 4rpx solid $mainColor;
+			}
+		}
+		view:nth-child(3){
+			text-align: center;
+			width: 500rpx;
+			height: 120rpx;
+			margin: 40rpx auto;
+			button{
+				border-radius: 16rpx;
+				border: 2rpx solid $mainColor;
+			}
+		}
+		.change-method{
+			text-align: right;
+			margin-top: 70rpx;
+		}
+	}
+	// 账号密码登录
+	.account{
+		margin: auto;
+		input:{
+			width: 300rpx;
+		}
+		.account-box{
+			margin: auto;
+			width: 600rpx;
+			margin-top: 60rpx;
+			border-bottom: 4rpx solid $mainColor;
+		}
+		.password{
+			margin: auto;
+			width: 600rpx;
+			margin-top: 60rpx;
+			input{
+				width: 450rpx;
+				border-bottom: 4rpx solid $mainColor;
+			}
+			.icon-yanjingbiyankaobei,
+			.icon-zhengyan{
+				font-size: 56rpx;
+				display: inline;
+				height: 60rpx;
+				line-height: 60rpx;
+				margin-left: 16rpx;
+			}
+		}
+		view:nth-child(3){
+			width: 600rpx;
+			display: flex;
+			margin: 40rpx auto 20rpx auto;
+			border:none !important;
+			justify-content: space-around;
+			
+		}
+		.button{
+			width: 600rpx;
+			display: flex;
+			margin: 40rpx auto;
+			border:none !important;
+			justify-content: space-around;
+			button{
+				border-radius: 16rpx;
+				width: 200rpx;
+			}
+			button:nth-child(1){
+				border: 2rpx solid $mainColor;
+			}
+			button:nth-child(2){
+				background-color: $mainColor;
+				color: white;
+			}
+		}
+		
+	}
+}

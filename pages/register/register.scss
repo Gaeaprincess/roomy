@@ -1,0 +1,106 @@
+.wrap{
+	background-color:#F9F9F9;
+	.active{
+		background-color: $mainColor;
+		color: white;
+		border: none;
+	}
+	button{
+		border-radius: 16rpx;
+	}
+	// margin: auto;
+	.index{
+		text-align: center;
+		padding-top: 40rpx;
+		image{
+			width: 200rpx;
+			height: 200rpx;
+		}
+		.title{
+			font-size: 30rpx;
+			margin: 10rpx auto;
+			display: block;
+		}
+		text:nth-child(1){
+			font-size: 40rpx;
+			font-weight: bold;
+		}	
+	}
+	.verification{
+		.frist-line{
+			width: 600rpx;
+			margin: 60rpx auto;
+			border-bottom: 2rpx solid $mainColor;
+			input{
+				border: none;
+				width: 500rpx;
+				padding-left: 12rpx;
+				
+				
+			}
+			
+		}
+		.second-line{
+			width: 600rpx;
+			margin:  auto;
+			input{
+				border: none;
+				width: 300rpx;
+				padding-left: 12rpx;
+				border-bottom: 2rpx solid $mainColor;
+				display: inline-block;
+			}
+			button{
+				margin-left: 30rpx;
+				display: inline-block;
+				border:1rpx solid $mainColor
+			}
+			
+		}
+		.thrid-line{
+			width: 600rpx;
+			margin: 40rpx;
+			text-align: center;
+			button{
+				width: 400rpx;
+				margin-left: 30rpx;
+				display: inline-block;
+				border: 1rpx solid $mainColor;
+			}
+		}
+	}
+	.verification-code{
+		input{
+			padding-left: 12rpx;
+		}
+		.first-line{
+			width: 600rpx;
+			margin: 60rpx auto;
+			border-bottom: 4rpx solid $mainColor;
+		
+		}
+		.second-line{
+			width: 600rpx;
+			margin: 60rpx auto;
+			border-bottom: 4rpx solid $mainColor;
+		}
+		.thrid-line{
+			margin: 60rpx auto;
+			width: 600rpx;
+			text-align: center;
+			button{
+				width: 400rpx;
+				border:1rpx solid $mainColor;
+			}
+		}
+		// 密码提示框
+		.prompt-box{
+			// width: 600rpx;
+			text-align: center;
+			text{
+				font-size: 14rpx;
+				display: inline-block;	
+			}
+		}
+	}
+}

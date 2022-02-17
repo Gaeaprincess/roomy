@@ -1,0 +1,41 @@
+.wrap{
+	background-color:#F9F9F9;
+.index{
+	padding-top:40rpx ;
+	text-align: center;
+	image{
+		width: 200rpx;
+		height: 200rpx;
+	}
+	.title{
+		margin: 20rpx auto;
+		display: block;
+	}
+	.normal{
+		width: 600rpx;
+		border-radius: 16rpx;
+		color: white;
+		border: 2rpx solid $mainColor;
+	}
+	.checked{
+		background-color: $mainColor;
+		color: white !important;
+		border: none;
+	}
+	.authorization-login{
+		margin-bottom: 10rpx;
+		color: #6E7783;
+	}
+	.radio{
+		navigator{
+			display: inline-block;
+			color: blue;
+		}
+		checkbox{
+			transform:scale(0.7);
+			border-color:$mainColor !important;
+		}
+	}
+
+}	
+}

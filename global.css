@@ -1,0 +1,31 @@
+.uni-list-item__container{
+	height: 100%;
+	background-color: none;
+}
+body,html{
+	background-color: #F9F9F9;
+}
+@font-face {
+	font-family:Arial;//字体
+}
+uni-toast {
+	z-index: 100000;
+	margin: auto;
+	font-size: 42rpx;
+}
+.segmented-control__item--button--first{
+		border-left-width: 1px;
+		border-top-left-radius: 15px;
+		border-bottom-left-radius: 15px;
+	}
+
+	.segmented-control__item--button--last {
+		border-top-right-radius: 15px;
+		border-bottom-right-radius: 15px;
+	}
+	.uni-popup{
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%,-50%);
+	}
