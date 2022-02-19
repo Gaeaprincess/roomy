@@ -1,3 +1,4 @@
+import  userAPI from "@/api/user.js"
 export default {
 		data() {
 			return {
@@ -10,8 +11,8 @@ export default {
 					isShowIndex: true,
 					isShowAuthorization: true
 				},
-				//  微信用户的oppenid
-				oppenid: '',
+				//  微信用户的code
+				code: '',
 				user:{
 					nickname:'',
 					gendar:0,
@@ -37,18 +38,7 @@ export default {
 				uni.login({
 					provider: 'weixin',
 					success: res => {
-						let code = res.code;
-						uni.request({
-							method: 'get',
-							url: `https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${secret}&js_code=${code}&grant_type=authorization_code`,
-							success:res=>{
-								console.log(res.data.openid)
-								this.user.oppenid = res.data.openid;
-							},
-							fail:err=>{
-								console.log(err)
-							}
-						})
+						 this.code = res.code;
 					},
 					fail: (err) => {
 						console.log(err)
@@ -62,31 +52,20 @@ export default {
 					uni.getUserProfile({
 						desc:'获取基本的用户信息',
 						success:res=>{
-							this.user.nickname=res.userInfo.nickName;
-							this.user.gendar=res.userInfo.gendar;
-							this.user.avatarUrl=res.userInfo.avatarUrl;
-							this.user.oppenid=res.userInfo.oppenid;
-							this.$https({
-								url:'/api/login',
-								method:'post',
-								data:this.user
-							}).then(res=>{
+							// 授权成功
+							userAPI.loginByWeixin(this.code).then(res=>{
 								console.log(res)
-								
 							}).catch(err=>{
 								console.log(err)
-							})
-							uni.reLaunch({
-								url: '/pages/index/index'
-							})
+							}
+							)
 						},
 						fail:err=>{
 							console.log(err)
 						}
 					})
 				}
-				
-
+			
 			},
 			//手机登录
 			phoneLogin() {

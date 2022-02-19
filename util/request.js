@@ -3,14 +3,14 @@ import axios from 'axios'
 
 
 const service = axios.create({
-baseURL:'http://127.0.0.1:3001',
+baseURL:'http://111.229.239.208:9986',
 timeout: 6000, // request timeout
 crossDomain: true
 
 })
-
+ 
+ // 请求拦截器
 service.interceptors.request.use(config => {
-
     //添加请求头
     let token = uni.getStorageSync('token') || ''
     if (token) {
@@ -25,19 +25,20 @@ error => {
 }
 
 );
-
+// 响应拦截器
 service.interceptors.response.use(res => {
-
-if (res.data.status == 200) {
+ const response = res.data
+if (response.code == 200) {
     return res.data
 } else {
     return Promise.reject(res.data.msg);
 }
 
 }, error => {
+	console.log(error)
 
-if (error.response.status) {
-    switch (error.response.status) {
+if (error.response.code) {
+    switch (error.response.code) {
         case 401:
             break;
         default:
@@ -48,7 +49,7 @@ return Promise.reject(error)
 
 })
 
-axios.defaults.adapter = function(config) {
+axios.defaults.adapter  = function(config) {
 
 return new Promise((resolve, reject) => {
     // console.log(config)
@@ -66,12 +67,11 @@ return new Promise((resolve, reject) => {
             // console.log("执行完成：", response)
             response = {
                 data: response.data,
-                status: response.statusCode,
-                errMsg: response.errMsg,
+                code: response.code,
+                msg: response.msg,
                 header: response.header,
                 config: config
             };
-
             settle(resolve, reject, response);
         }
     })
