@@ -22,6 +22,16 @@ export default {
 			}
 		},
 		methods: {
+			// 测试登录
+			test(){
+				let jwt='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+				uni.setStorageSync('Authorization',jwt)
+				// 存储用户id
+				uni.setStorageSync('id',1)
+				uni.navigateTo({
+					url: '../index/index'
+				})
+			},
 			// 控制按钮状态
 			checkBox(e, item) {
 				item.checked = !item.checked;
@@ -33,12 +43,11 @@ export default {
 			},
 			// 登录方法，页面加载时调用
 			login() {
-				let secret = 'be89422ff9379e3e35c39679a3d13128'
-				let appid = 'wx94b8661d033f6623'
 				uni.login({
 					provider: 'weixin',
+					onlyAuthorize:true,
 					success: res => {
-						 this.code = res.code;
+						this.code = res.code;
 					},
 					fail: (err) => {
 						console.log(err)
@@ -48,12 +57,13 @@ export default {
 			// 微信授权登录
 			Authorization() {
 				// uni.getUserProfile  判断是否支持这个
+				let code=this.code
 				if(uni.getUserProfile){
 					uni.getUserProfile({
-						desc:'获取基本的用户信息',
+						desc:'获取用户的基本信息',
 						success:res=>{
 							// 授权成功
-							userAPI.loginByWeixin(this.code).then(res=>{
+							userAPI.loginByWeixin(code).then(res=>{
 								console.log(res)
 							}).catch(err=>{
 								console.log(err)
@@ -65,7 +75,7 @@ export default {
 						}
 					})
 				}
-			
+
 			},
 			//手机登录
 			phoneLogin() {

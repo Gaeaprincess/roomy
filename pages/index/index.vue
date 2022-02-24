@@ -20,7 +20,7 @@
       <image class="img1" src="/static/image/overall3.jpg"></image>
     </swiper-item>
   </swiper>
-  
+
 </view>
 <view class="title2">附近门店</view>
 <view v-for="(item, index) in list" :key="index" class="shop" @tap="regionFun">
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-
+import  userAPI from "@/api/user.js"
 export default {
   data() {
     return {
@@ -57,11 +57,35 @@ export default {
 
   components: {},
   props: {},
-
+  methods: {
+    bindRegionChange: function (e) {
+      console.log('picker发送选择改变，携带值为', e.detail.value);
+      this.setData({
+        region: e.detail.value
+      });
+    },
+    regionFun: function () {
+      uni.navigateTo({
+        url: '/pagesA/shop/shop'
+      });
+    },
+    // 获取用户数据
+    getInfoByUserId(){
+      userAPI.getUserInfo().then(res=>{
+        console.log("4333");
+        console.log(res);
+      }).catch(err=>{
+        console.log(err.msg);
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    // console.log(uni.getStorageSync('id'));
+    this.getInfoByUserId()
+  },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -97,19 +121,7 @@ export default {
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {},
-  methods: {
-    bindRegionChange: function (e) {
-      console.log('picker发送选择改变，携带值为', e.detail.value);
-      this.setData({
-        region: e.detail.value
-      });
-    },
-    regionFun: function () {
-      uni.navigateTo({
-        url: '/pagesA/shop/shop'
-      });
-    }
-  }
+
 };
 </script>
 <style scoped>

@@ -4,7 +4,7 @@ import App from './App'
 import Polyfill from './polyfill/polyfill';
 Polyfill.init();
 // 对原生的uni.request进行了封装 发起请求 用 this.$http()
-import request from './util/request.js';
+import request from './util/request';
 Vue.prototype.$https = request;
 
 

@@ -8,11 +8,11 @@ timeout: 6000, // request timeout
 crossDomain: true
 
 })
- 
+
  // 请求拦截器
 service.interceptors.request.use(config => {
     //添加请求头
-    let token = uni.getStorageSync('token') || ''
+    let token = uni.getStorageSync('Authorization') || ''
     if (token) {
         config.headers.Authorization = token
     }
@@ -20,7 +20,7 @@ service.interceptors.request.use(config => {
     return config;
 },
 error => {
-    // console.log(error); 
+    // console.log(error);
     return Promise.reject(error);
 }
 

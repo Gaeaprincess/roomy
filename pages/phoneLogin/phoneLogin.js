@@ -1,4 +1,5 @@
-	export default {
+	import userAPI from '@/api/user.js'
+export default {
 		data() {
 			return {
 				// 是否用验证码登录
@@ -23,11 +24,41 @@
 				},
 				// 是否填写手机号码
 				isSend:false,
-				
-				
+
+
 			}
 		},
 		methods: {
+			// 发送手机验证码
+			sendCode(){
+				userAPI.getPhoneCode(this.userMsg.phone).then(res=>{
+					console.log(res);
+				}).catch(err=>err)
+			},
+			// 通过手机号 密码登录
+			loginByPwd(){
+				userAPI.loginByPhone(this.userMsg).then(res=>{
+                    if(res.code===200){
+						const resRult=res.data
+						uni.setStorageSync('Authorization',resRult.jwt)
+						// 存储用户id
+						uni.setStorageSync('id',resRult.userid)
+						uni.navigateTo({
+							url: '../index/index'
+						})
+					}
+				}).catch(err=>{
+
+				})
+			},
+			// 手机号、验证码登录
+			loginByPhoneVerfify(){
+				userAPI.loginByVerfy(this.userMsg).then(res=>{
+					console.log(res)
+				}).catch(err=>{
+					console.log(err)
+				})
+			},
 			verification(){
 				this.isVerification=false;
 			},
@@ -43,7 +74,7 @@
 					this.isFinished=false;
 				}
 				//验证码登录监听输入框
-				if(this.userMsg.phone!==''&& this.userMsg.code!=''){
+				if(this.userMsg.phone!==''&& this.userMsg.code!==''){
 					this.isComplete=true;
 				}else{
 					this.isComplete=false;

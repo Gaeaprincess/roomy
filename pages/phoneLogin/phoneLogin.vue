@@ -8,14 +8,14 @@
 		<view class="verification" v-if="isVerification">
 			<form action="">
 				<view>
-					<input type="text" placeholder="输入手机号码:" @blur="isFinish()" v-model="userMsg.phone">
+					<input type="text" placeholder="输入手机号码:" @blur="isFinish" v-model="userMsg.phone">
 				</view>
 				<view>
-					<input type="text" placeholder="输入验证码:"@blur="isFinish()" v-model="userMsg.code"/>
-					<button  class="getCodeBtn" :disabled="!isSend" :class="isSend==true ? 'active':''">获取验证码</button>
+					<input type="text" placeholder="输入验证码:"@blur="isFinish" v-model="userMsg.code"/>
+					<button  class="getCodeBtn" :disabled="!isSend" :class="isSend==true ? 'active':''" @click="sendCode">获取验证码</button>
 				</view>
 				<view>
-					<button :disabled="!isComplete" :class="isComplete==true ? 'active':''">登录</button>
+					<button :disabled="!isComplete" :class="isComplete==true ? 'active':''" @click="loginByPhoneVerfify">登录</button>
 				</view>
 			</form>
 			<view class="change-method">
@@ -38,7 +38,7 @@
 				<view><text @click="findPass()">忘记密码</text></view>
 			</view>
 			<view class="button">
-				<button :disabled="!isFinished" :class="isFinished==true ? 'active':''">登录</button>
+				<button :disabled="!isFinished" :class="isFinished==true ? 'active':''" @click="loginByPwd">登录</button>
 				<button @click="goToRegister()">去注册</button>
 			</view>
 		</view>
