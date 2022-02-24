@@ -22,16 +22,16 @@ export default {
 			}
 		},
 		methods: {
-			// 测试登录
-			test(){
-				let jwt='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-				uni.setStorageSync('Authorization',jwt)
-				// 存储用户id
-				uni.setStorageSync('id',1)
-				uni.navigateTo({
-					url: '../index/index'
-				})
-			},
+			// // 测试登录
+			// test(){
+			// 	let jwt='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+			// 	uni.setStorageSync('Authorization',jwt)
+			// 	// 存储用户id
+			// 	uni.setStorageSync('id',1)
+			// 	uni.navigateTo({
+			// 		url: '../index/index'
+			// 	})
+			// },
 			// 控制按钮状态
 			checkBox(e, item) {
 				item.checked = !item.checked;
@@ -58,6 +58,7 @@ export default {
 			Authorization() {
 				// uni.getUserProfile  判断是否支持这个
 				let code=this.code
+				console.log(code);
 				if(uni.getUserProfile){
 					uni.getUserProfile({
 						desc:'获取用户的基本信息',
