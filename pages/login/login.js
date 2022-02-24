@@ -23,15 +23,15 @@ export default {
 		},
 		methods: {
 			// // 测试登录
-			// test(){
-			// 	let jwt='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-			// 	uni.setStorageSync('Authorization',jwt)
-			// 	// 存储用户id
-			// 	uni.setStorageSync('id',1)
-			// 	uni.navigateTo({
-			// 		url: '../index/index'
-			// 	})
-			// },
+			test(){
+				let jwt='Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsiUm9vbXlVc2VyIl0sImV4cCI6MTY0NjI5NDc2NywiaWF0IjoxNjQzNzAyNzY3LCJpc3MiOiJzaGVleSIsInVpZCI6MX0.uUOUO8X-2rchje6SW4oUiysrmeWk1Qal77G6z3hY9OQ'
+				uni.setStorageSync('Authorization',jwt)
+				// 存储用户id
+				uni.setStorageSync('id',1)
+				uni.navigateTo({
+					url: '../index/index'
+				})
+			},
 			// 控制按钮状态
 			checkBox(e, item) {
 				item.checked = !item.checked;

@@ -3,7 +3,7 @@
 		{
 			"path": "pages/login/login",
 			"style": {
-		
+
 				"enablePullDownRefresh": false
 			}
 		},{
@@ -12,14 +12,14 @@
 		},
 		{
 		    "path" : "pages/test/test",
-		    "style" :                                                                                    
+		    "style" :
 		    {
 		        "navigationBarTitleText": "",
 		        "enablePullDownRefresh": false
 		    }
-		    
+
 		},
-		
+
 		{
 			"path": "pages/xueba/xueba",
 			"style": {
@@ -38,7 +38,7 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-		}, 
+		},
 		{
 			"path": "pages/phoneLogin/phoneLogin",
 			"style": {
@@ -52,7 +52,7 @@
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
-		}, 
+		},
 		{
 			"path": "pages/protocol/protocol",
 			"style": {
@@ -76,7 +76,7 @@
 				"backgroundTextStyle": "light"
 			}
 		}
-	
+
     ],
 	"permission": {
 		"scope.userLocation": {
