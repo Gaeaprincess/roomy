@@ -32,7 +32,13 @@ export default {
 			// 发送手机验证码
 			sendCode(){
 				userAPI.getPhoneCode(this.userMsg.phone).then(res=>{
-					console.log(res);
+					if(res.code===200){
+						uni.showToast({
+							title: '发送成功，请注意查收',
+							duration: 2000
+						});
+						console.log(res.data.msg);
+					}
 				}).catch(err=>err)
 			},
 			// 通过手机号 密码登录
@@ -54,10 +60,30 @@ export default {
 			// 手机号、验证码登录
 			loginByPhoneVerfify(){
 				userAPI.loginByVerfy(this.userMsg).then(res=>{
-					console.log(res)
+					if(res.code===200){
+						const resRult=res.data
+						uni.setStorageSync('Authorization',resRult.jwt)
+						// 存储用户id
+						uni.setStorageSync('id',resRult.userid)
+						uni.navigateTo({
+							url: '../index/index'
+						})
+					}
 				}).catch(err=>{
 					console.log(err)
 				})
+			},
+			// 监听手机号输入
+			watchPhone(e){
+				if(e.detail.value.length===11){
+					this.isSend=true
+				}
+			},
+			//监听验证码输入
+			watchCode(e){
+				if(e.detail.value.length===4){
+					this.isComplete=true
+				}
 			},
 			verification(){
 				this.isVerification=false;

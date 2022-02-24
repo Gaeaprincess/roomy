@@ -9,11 +9,11 @@
 		<!-- 获取验证码 -->
 		<view class="verification" v-show="isShowVeify">
 			<view class="frist-line">
-				<input type="text" placeholder="输入手机号:" @blur="checkFinsh" v-model="userInfo.phone">
+				<input type="text" placeholder="输入手机号:" @blur="checkFinsh" v-model="userInfo.phone" @input="watchPhone">
 			</view>
 			<view class="second-line">
-				<input type="text" placeholder="输入验证码:" @blur="checkFinsh" v-model="userInfo.verification"/>
-				<button :disabled="!isSend" :class="isSend==true?'active':''" >获取验证码</button>
+				<input type="text" placeholder="输入验证码:" @blur="checkFinsh" v-model="userInfo.verification" @click="watchCode"/>
+				<button :disabled="!isSend" :class="isSend==true?'active':''" @click="sendCode">获取验证码</button>
 			</view>
 			<view class="thrid-line">
 				<button class="next-step" @click="setpwd" :disabled="!isFinsh" :class="isFinsh==true ?'active':''">下一步</button>

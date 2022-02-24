@@ -6,7 +6,6 @@ const service = axios.create({
 baseURL:'http://111.229.239.208:9986',
 timeout: 6000, // request timeout
 crossDomain: true
-
 })
 
  // 请求拦截器
@@ -28,7 +27,7 @@ error => {
 // 响应拦截器
 service.interceptors.response.use(res => {
  const response = res.data
-if (response.code == 200) {
+if (response.code === 200) {
     return res.data
 } else {
     return Promise.reject(res.data.msg);
@@ -64,10 +63,10 @@ return new Promise((resolve, reject) => {
         responseType: config.responseType,
         sslVerify: config.sslVerify,
         complete: function complete(response) {
-            // console.log("执行完成：", response)
+            console.log("执行完成：", response)
             response = {
                 data: response.data,
-                code: response.code,
+                code: response.statusCode,
                 msg: response.msg,
                 header: response.header,
                 config: config

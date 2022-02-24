@@ -8,11 +8,11 @@
 		<view class="verification" v-if="isVerification">
 			<form action="">
 				<view>
-					<input type="text" placeholder="输入手机号码:" @blur="isFinish" v-model="userMsg.phone">
+					<input type="text" placeholder="输入手机号码:" @blur="isFinish" v-model="userMsg.phone" @input="watchPhone">
 				</view>
 				<view>
-					<input type="text" placeholder="输入验证码:"@blur="isFinish" v-model="userMsg.code"/>
-					<button  class="getCodeBtn" :disabled="!isSend" :class="isSend==true ? 'active':''" @click="sendCode">获取验证码</button>
+					<input type="text" placeholder="输入验证码:"@blur="isFinish" v-model="userMsg.code" @input="watchPhone"/>
+					<button  class="getCodeBtn" ref="codeBtn" :disabled="!isSend" :class="isSend==true ? 'active':''" @click="sendCode">获取验证码</button>
 				</view>
 				<view>
 					<button :disabled="!isComplete" :class="isComplete==true ? 'active':''" @click="loginByPhoneVerfify">登录</button>
@@ -25,7 +25,7 @@
 		<!-- 用户密码登录 -->
 		<view class="account" v-if="! isVerification">
 			<view class="account-box">
-				<input type="text" placeholder="账号/手机号" v-model="userMsg.account" @blur="isFinish()">
+				<input type="text" placeholder="账号/手机号" v-model="userMsg.account" @blur="isFinish()" @input="watchPhone">
 			</view>
 			<view class="password">
 				<input :password="true" placeholder="密码" v-if="!isShowPWD" v-model="userMsg.password" @blur="isFinish()"/>
