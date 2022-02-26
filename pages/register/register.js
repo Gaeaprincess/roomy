@@ -1,4 +1,5 @@
-	export default {
+import  userAPI from "@/api/user.js"
+export default {
 		data() {
 			return {
 				//是否是需要使用注册功能
@@ -24,11 +25,35 @@
 				isSure:false,
 				//是找回密码还是注册
 				editItem:{
-					
+
 				},
 			}
 		},
 		methods: {
+			// 发送手机验证码
+			sendCode(){
+				userAPI.getPhoneCode(this.userInfo.phone).then(res=>{
+					if(res.code===200){
+						uni.showToast({
+							title: '发送成功，请注意查收',
+							duration: 2000
+						});
+						console.log(res.data.msg);
+					}
+				}).catch(err=>err)
+			},
+			// 监听手机号输入
+			watchPhone(e){
+				if(e.detail.value.length===11){
+					this.isSend=true
+				}
+			},
+			//监听验证码输入
+			watchCode(e){
+				if(e.detail.value.length===4){
+					this.isComplete=true
+				}
+			},
 			// 手机号码和验证码完整无误
 			checkFinsh(){
 				//判断手机号码和验证码是否完整
@@ -60,7 +85,7 @@
 					this.isShowPrompt=false;
 				}
 			},
-			
+
 			//下一步按钮
 			setpwd(){
 				this.isShowVeify=false;
@@ -71,5 +96,5 @@
 			this.editItem=editItem;
 			// console.log(this.editItem);
 		}
-	
+
 	}
