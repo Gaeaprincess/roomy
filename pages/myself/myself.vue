@@ -5,9 +5,9 @@
         <view class="top">
         <cover-image class="header_img" src="/static/image/header_img.png"></cover-image>
         <view class="header_message">
-            <view class="header_name">罗华荣</view>
-            <view class="vip">vip</view>
-            <view class="phone">手机号：13990809819</view>
+            <view class="header_name">{{all.username}}</view>
+            <view class="vip" v-show="all.is_pro">vip</view>
+            <view class="phone">手机号：{{all.phone}}</view>
         </view>
         <view class="clear"></view>
         </view>
@@ -88,10 +88,16 @@
 </template>
 
 <script>
-
+import myself from "@/api/myself.js"
 export default {
   data() {
-    return {};
+    return {
+			all:{
+				username:"",
+				phone:"13990209818",
+				is_pro:"",
+			}
+		};
   },
 
   components: {},
@@ -100,7 +106,17 @@ export default {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+		console.log("页面加载成功");
+		myself()
+		.then(res => {
+			console.log(res);
+			this.all = res.data;
+		})
+		.catch(err => {
+			console.log(err)
+		})
+	},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
