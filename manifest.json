@@ -73,5 +73,14 @@
     },
     "uniStatistics" : {
         "enable" : false
+    },
+    "h5" : {
+        "sdkConfigs" : {
+            "maps" : {
+                "qqmap" : {
+                    "key" : "T65BZ-EGUWG-457QN-INDR7-2BUVV-6WFPM"
+                }
+            }
+        }
     }
 }

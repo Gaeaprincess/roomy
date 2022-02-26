@@ -6,17 +6,23 @@ const service = axios.create({
 baseURL:'http://111.229.239.208:9986',
 timeout: 6000, // request timeout
 crossDomain: true
-
 })
 
  // 请求拦截器
 service.interceptors.request.use(config => {
-    //添加请求头
-    let token = uni.getStorageSync('Authorization') || ''
-    if (token) {
-        config.headers.Authorization = token
+    // console.log(config);
+
+    //访问需要权限的接口要添加请求头 
+    if(config.url=='/v1/auth/wechat'||config.url=='/v1/auth/sendsms'||config.url=='/v1/auth/signin'||config.url=='/v1/auth/signin'||config.url=='/v1/auth/signin-password'||config.url=='/v1/auth/{id}/setpassword'){
+        
+    return config;
+    }else{
+        //添加请求头
+        let token = uni.getStorageSync('Authorization') || ''
+        if (token) {
+            config.headers.Authorization = token
+        }
     }
-    // console.log('请求拦截成功')
     return config;
 },
 error => {
@@ -27,8 +33,7 @@ error => {
 );
 // 响应拦截器
 service.interceptors.response.use(res => {
- const response = res.data
-if (response.code == 200) {
+if (res.code === 200) {
     return res.data
 } else {
     return Promise.reject(res.data.msg);
@@ -37,8 +42,8 @@ if (response.code == 200) {
 }, error => {
 	console.log(error)
 
-if (error.response.code) {
-    switch (error.response.code) {
+if (error.res.code) {
+    switch (error.res.code) {
         case 401:
             break;
         default:
@@ -67,7 +72,7 @@ return new Promise((resolve, reject) => {
             // console.log("执行完成：", response)
             response = {
                 data: response.data,
-                code: response.code,
+                code: response.statusCode,
                 msg: response.msg,
                 header: response.header,
                 config: config
