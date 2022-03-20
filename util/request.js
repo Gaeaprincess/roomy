@@ -33,7 +33,7 @@ error => {
 );
 // 响应拦截器
 service.interceptors.response.use(res => {
-if (res.code === 200) {
+if (res.status === 200) {
     return res.data
 } else {
     return Promise.reject(res.data.msg);
