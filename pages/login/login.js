@@ -1,4 +1,5 @@
 import  userAPI from "@/api/user.js"
+import { reject } from "lodash"
 export default {
 		data() {
 			return {
@@ -43,22 +44,24 @@ export default {
 			},
 			// 登录方法，页面加载时调用
 			login() {
-				uni.login({
-					provider: 'weixin',
-					onlyAuthorize:true,
-					success: res => {
-						this.code = res.code;
-					},
-					fail: (err) => {
-						console.log(err)
-					}
+				return new Promise((resolve,reject)=>{
+					uni.login({
+						provider: 'weixin',
+						onlyAuthorize:true,
+						success: res => {
+							this.code = res.code;
+							resolve(this.code)
+						},
+						fail: (err) => {
+							reject(err)
+						}
+					})
 				})
 			},
 			// 微信授权登录
 			Authorization() {
 				// uni.getUserProfile  判断是否支持这个
 				let code=this.code
-				console.log(code);
 				if(uni.getUserProfile){
 					uni.getUserProfile({
 						desc:'获取用户的基本信息',
@@ -86,10 +89,10 @@ export default {
 			},
 
 		},
-		onLoad() {
-			this.login();
-			this.item.isChecked = false;
-		},
+		async onLoad() {
+			 	await	this.login();
+				this.item.isChecked = false;
+			},
 		onShow() {
 
 		}

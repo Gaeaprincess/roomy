@@ -12,13 +12,13 @@ crossDomain: true
 service.interceptors.request.use(config => {
     // console.log(config);
 
-    //访问需要权限的接口要添加请求头 
+    //访问需要权限的接口要添加请求头
     if(config.url=='/v1/auth/wechat'||config.url=='/v1/auth/sendsms'||config.url=='/v1/auth/signin'||config.url=='/v1/auth/signin'||config.url=='/v1/auth/signin-password'||config.url=='/v1/auth/{id}/setpassword'){
-        
+
     return config;
     }else{
         //添加请求头
-        let token = uni.getStorageSync('Authorization') || ''
+        let token ='Bearer '+ uni.getStorageSync('Authorization') || ''
         if (token) {
             config.headers.Authorization = token
         }
@@ -33,15 +33,12 @@ error => {
 );
 // 响应拦截器
 service.interceptors.response.use(res => {
-if (res.status === 200) {
+    if (res.status === 200||res.code===200) {
     return res.data
 } else {
     return Promise.reject(res.data.msg);
 }
-
 }, error => {
-	console.log(error)
-
 if (error.res.code) {
     switch (error.res.code) {
         case 401:
@@ -57,11 +54,10 @@ return Promise.reject(error)
 axios.defaults.adapter  = function(config) {
 
 return new Promise((resolve, reject) => {
-    // console.log(config)
     var settle = require('axios/lib/core/settle');
     var buildURL = require('axios/lib/helpers/buildURL');
     uni.request({
-        method: config.method.toUpperCase(),
+            method: config.method.toUpperCase(),
         url: config.baseURL + buildURL(config.url, config.params, config.paramsSerializer),
         header: config.headers,
         data: config.data,
@@ -69,7 +65,7 @@ return new Promise((resolve, reject) => {
         responseType: config.responseType,
         sslVerify: config.sslVerify,
         complete: function complete(response) {
-            // console.log("执行完成：", response)
+            // console.log('1111111',response);
             response = {
                 data: response.data,
                 code: response.statusCode,
