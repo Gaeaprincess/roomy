@@ -71,9 +71,9 @@ export default {
     },
     // 获取用户数据
     getInfoByUserId(){
-      // console.log('1')
       userAPI.getUserInfo().then(res=>{
-        console.log('1111',res); // 我的开发者工具控制台打印不出来 但是network可以看到请求到的数据
+       console.log('qkjseiwdhj')
+		console.log('1111',res); // 我的开发者工具控制台打印不出来 但是network可以看到请求到的数据
       }).catch(err=>{
         console.log(err);
       })
