@@ -21,19 +21,17 @@
     <button style="background-color: #F5D04B;color:white; float: right; line-height: 60rpx; width: 200rpx; height:60rpx; padding: 0; margin-right: 20rpx;">立即离开</button>
     <view class="dizhi"><text>地址：</text><text id="info">翠屏区白沙湾四川轻化工大学</text></view>
 </view>
+  <mpopup  ref="mpopup" :isdistance="true"></mpopup>
 </view>
 </template>
 
 <script>
-
+import * as myself from "@/api/myself.js"
+import mpopup from '@/components/xuan-popup/xuan-popup.vue'
 export default {
   data() {
     return {
-      // left: "left1",
-      // right: " ",
-      // shiyong: " ",
-      // meiyong: "meiyong"
-	  // tabs数据
+    content:'',
 	  list: [{
 	  		title: '预约'
 	  	},
@@ -45,13 +43,21 @@ export default {
     };
   },
 
-  components: {},
+  components: {
+		mpopup,
+	},
   props: {},
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+		myself.getOrder()
+					.then((res)=>{
+						console.log(res)
+						this.pop(res.msg || "没有订单")
+					})
+	},
 
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -88,30 +94,21 @@ export default {
    */
   onShareAppMessage: function () {},
   methods: {
-    // left() {
-    //   console.log("点击");
-    //   this.setData({
-    //     left: "left1",
-    //     right: " ",
-    //     shiyong: " ",
-    //     meiyong: "meiyong"
-    //   });
-    // },
-
-    // right() {
-    //   console.log("点击");
-    //   this.setData({
-    //     left: " ",
-    //     right: "right1",
-    //     shiyong: "shiyong",
-    //     meiyong: " "
-    //   });
-    // }
+		 pop:function(msg){
+		            this.$refs.mpopup.open({
+		                type:'success',
+		                content: msg,
+		                timeout:2000,
+		            });
+		        },
 	reportClickItem(e) {
 		if (this.current != e.currentIndex) {
 			this.current = e.currentIndex;
 		}
 	},
+	 open(){
+	        this.$refs.popup.open('top')
+	      }
   }
 };
 </script>

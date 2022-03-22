@@ -3,7 +3,7 @@
 <view>
     <view class="top_container">
         <view class="top">
-        <cover-image class="header_img" src="/static/image/header_img.png"></cover-image>
+        <cover-image class="header_img" v-bind:src="all.avatar"></cover-image>
         <view class="header_message">
             <view class="header_name">{{all.username}}</view>
             <view class="vip" v-show="all.is_pro">vip</view>
@@ -15,7 +15,7 @@
     <view class="banner">
         <swiper autoplay="true" indicator-dots="true" circular="true" easing-function="linear">
             <swiper-item class="a"></swiper-item>
-            <swiper-item></swiper-item>
+            <swiper-item class="b"></swiper-item>
         </swiper>
     </view>
     <view class="bottom">
@@ -88,14 +88,16 @@
 </template>
 
 <script>
-import myself from "@/api/myself.js"
+import * as myself from "@/api/myself.js"
 export default {
   data() {
     return {
 			all:{
 				username:"",
-				phone:"13990209818",
+				phone:"",
 				is_pro:"",
+				userid:'',
+				avatar:'/static/image/header_img.png'
 			}
 		};
   },
@@ -107,10 +109,12 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-		console.log("页面加载成功");
-		myself.getUserInfo().then(res=>{
+		myself.getUserInfo()
+					.then(res=>{
             console.log(res);
-        }).catch(err=>err)
+						this.all = res.data
+					})
+					.catch(err=>err)
 	},
 
   /**
@@ -239,6 +243,16 @@ page{
 }
 swiper{
     background-color: red;
+}
+
+.a{
+	background-image: url('https://tse3-mm.cn.bing.net/th/id/OIP-C.n0szoETar9E4Ivsnjh6A2AHaGB?w=205&h=180&c=7&r=0&o=5&pid=1.7');
+	background-size: cover;
+}
+
+.b{
+	background-image: url(/static/image/overall3.jpg);
+	background-size: cover;
 }
 .banner{
     margin: 0 auto;
