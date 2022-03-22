@@ -59,7 +59,7 @@ export default {
     this.setData({
       date: y + "-" + m + "-" + d
     });
-    console.log(date); // console.log(time);
+    console.log(this.date); // console.log(time);
   },
 
   /**

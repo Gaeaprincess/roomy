@@ -13,7 +13,7 @@
         <!-- <view class="round" wx:for="{{time}}" wx:for-index="index">{{time[index]}}</view> -->
         <text class="cho_txt">入座时长：</text>
         <view :class="cho_ti1" @tap="subtraction">-</view>
-        <text class="cho_txt1" @tap="time_change">{{time}}</text>
+        <text class="cho_txt1" @tap="hour_change">{{hour}}</text>
         <view :class="cho_ti2" @tap="add">+</view>
         <text class="cho_txt2">小时</text>
         <view class="cho_button" @tap="choose_seat">选择座位</view>
@@ -27,9 +27,11 @@ export default {
   data() {
     return {
       // time:["1小时","2小时","3小时","4小时","5小时","6小时","7小时","8小时", "9小时","10小时"],
-      time: 1,
-      cho_ti1: "cho_time1",
-      cho_ti2: "cho_time2"
+      hour: 1,
+      cho_ti1: "cho_hour1",
+      cho_ti2: "cho_hour2",
+	  date:"",
+	  time:""
     };
   },
 
@@ -78,22 +80,22 @@ export default {
    */
   onShareAppMessage: function () {},
   methods: {
-    time_change: function () {
-      var num = this.time;
+    hour_change: function () {
+      var num = this.hour;
 
       if (num == 0) {
-        var num2 = "cho_aftertime1";
+        var num2 = "cho_afterhour1";
         this.setData({
           cho_ti1: num2
         });
       } else if (num == 24) {
-        var num2 = "cho_aftertime2";
+        var num2 = "cho_afterhour2";
         this.setData({
           cho_ti2: num2
         });
       } else {
-        var num2 = "cho_time1";
-        var num3 = "cho_time2";
+        var num2 = "cho_hour1";
+        var num3 = "cho_hour2";
         this.setData({
           cho_ti1: num2,
           cho_ti2: num3
@@ -101,24 +103,24 @@ export default {
       }
     },
     subtraction: function () {
-      if (this.time > 0) {
-        var num = this.time - 1;
+      if (this.hour > 0) {
+        var num = this.hour- 1;
         this.setData({
-          time: num
+          hour: num
         });
       }
 
-      this.time_change();
+      this.hour_change();
     },
     add: function () {
-      if (this.time < 24) {
-        var num = this.time + 1;
+      if (this.hour < 24) {
+        var num = this.hour + 1;
         this.setData({
-          time: num
+          hour: num
         });
       }
 
-      this.time_change();
+      this.hour_change();
     },
 
     appointments() {
@@ -128,8 +130,20 @@ export default {
     },
 
     choose_seat() {
+    var date = new Date();
+    var y = date.getFullYear();
+    var m = date.getMonth() + 1;
+    var d = date.getDate();
+	var h = date.getHours(); var end_h = h + this.hour;
+	var min = date.getMinutes();
+    this.setData({
+      date: y + "-" + m + "-" + d,
+	  time: h + ":" + min + "-" + end_h + ":" + min
+    });
+    console.log(this.date);
+    console.log(this.time);
       uni.navigateTo({
-        url: '/pagesA/chooseseat/chooseseat'
+        url: '/pagesA/chooseseat/chooseseat?' + "date=" + this.date + "&time=" + this.time
       });
     }
 
@@ -251,7 +265,7 @@ export default {
     font-family: PingFangSC-regular;
 }
 
-.cho_time1 {
+.cho_hour1 {
     margin-left: 35rpx;
     margin-top: 72rpx;
     width: 48rpx;
@@ -266,7 +280,7 @@ export default {
     text-align: center;
     border: 2rpx solid rgba(245, 208, 75, 100);
 }
-.cho_aftertime1{
+.cho_afterhour1{
     margin-left: 35rpx;
     margin-top: 72rpx;
     width: 48rpx;
@@ -281,7 +295,7 @@ export default {
     text-align: center;
     border: 2rpx solid rgba(245, 208, 75, 100);
 }
-.cho_time2 {
+.cho_hour2 {
     margin-left: 35rpx;
     margin-top: 72rpx;
     width: 48rpx;
@@ -296,7 +310,7 @@ export default {
     text-align: center;
     border: 2rpx solid rgba(245, 208, 75, 100);
 }
-.cho_aftertime2{
+.cho_afterhour2{
     margin-left: 35rpx;
     margin-top: 72rpx;
     width: 48rpx;
