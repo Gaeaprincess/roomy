@@ -60,14 +60,18 @@ export default {
 			},
 			// 手机号、验证码登录
 			loginByPhoneVerfify(){
+				// console.log('执行');
 				userAPI.loginByVerfy(this.userMsg).then(res=>{
-					if(res.code===200){
+					if(res.code==0){
 						const resRult=res.data
 						uni.setStorageSync('Authorization',resRult.jwt)
 						// 存储用户id
 						uni.setStorageSync('id',resRult.userid)
 						uni.navigateTo({
-							url: '../index/index'
+							url: '../index/index',
+							error:(err)=>{
+								console.log(err);
+							}
 						})
 					}
 				}).catch(err=>{

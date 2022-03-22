@@ -108,14 +108,9 @@ export default {
    */
   onLoad: function (options) {
 		console.log("页面加载成功");
-		myself()
-		.then(res => {
-			console.log(res);
-			this.all = res.data;
-		})
-		.catch(err => {
-			console.log(err)
-		})
+		myself.getUserInfo().then(res=>{
+            console.log(res);
+        }).catch(err=>err)
 	},
 
   /**

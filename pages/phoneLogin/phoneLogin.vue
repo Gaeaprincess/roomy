@@ -19,7 +19,7 @@
 				</view>
 			</form>
 			<view class="change-method">
-				<text  @click="verification()">使用账号和密码登录</text>
+				<text  @click="verification">使用账号和密码登录</text>
 			</view>
 		</view>
 		<!-- 用户密码登录 -->

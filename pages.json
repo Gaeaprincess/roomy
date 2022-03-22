@@ -1,5 +1,5 @@
 {
-	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+	"pages": [
 		{
 			"path": "pages/login/login",
 			"style": {
@@ -120,7 +120,6 @@
 		]
 	},
 	"subPackages": [
-		// 选座位的页面
 		{
 			"root": "pagesA",
 			"pages": [{
@@ -161,7 +160,6 @@
 				}
 			]
 			},
-			// 学友圈
 			{
 				"root": "pagesB",
 				"pages": [{
@@ -206,7 +204,6 @@
 					}
 				]
 			},
-			// 我的 页面
 			{
 				"root": "pagesC",
 				"pages": [{
