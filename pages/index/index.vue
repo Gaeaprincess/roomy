@@ -2,8 +2,6 @@
 <view>
 
 <view class="top">
-  <!-- <text class="title">宜宾</text>
-  <image class="arrow" src="/image/arrow.png" ></image> -->
   <region-picker @change="bindRegionChange" :value="region">
         <view class="picker">
             {{region[2]}}<image class="arrow" src="/static/image/arrow_.png"></image>
@@ -82,7 +80,6 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // console.log(uni.getStorageSync('id'));
     this.getInfoByUserId()
   },
 

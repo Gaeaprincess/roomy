@@ -1,12 +1,12 @@
 <template>
-	<view style="height: 100vh;">
+	<view style="height: 100vh;overflow: hidden">
 		<!-- 打卡页面 -->
 		<image class="bacgk" :src='testSrc'></image>
-		<view class="content">
+		<view class="content" style="width: 100%;">
 			<!-- 时钟 -->
 			<canvas canvas-id="tomatoCanvas" class="clock"></canvas>
-			<text class="name">{{item.toToName}}</text>
-			<text>{{t1}}分钟</text>
+        <text class="name">{{item.toToName}}</text>
+        <text>{{t1}}分钟</text>
 			<view class="info">
 				<text v-if="isShow.isStartTomato">进行中</text>
 				<text v-if="!isShow.isStartTomato">已重置</text>
@@ -56,6 +56,8 @@
 					seconds: 0,
 					hours: 0
 				},
+        // 剩余时间
+        remainTime:'',
 				isShow: {
 					isStartTomato: true, //是否开始番茄时间
 					isStartRest: false, //是否开始休息时间
@@ -87,7 +89,6 @@
 				let flag1 = this.flag.tomatoTime / 1000 / 60 / 60;
 				let flag2 = (this.flag.tomatoTime / 1000 / 60) % 60;
 				let flag3 = (this.flag.tomatoTime / 1000) % 60;
-				// console.log(flag2,flag3);
 				if (flag1 && !flag2 && !flag3) {
 					this.flag.hours = Math.floor(flag1);
 					this.flag.minutes = 0;
@@ -111,7 +112,7 @@
 			 let context = uni.createCanvasContext("tomatoCanvas");
 				// Draw outer arc
 				context.beginPath();
-				// 终点x,y坐标  半径  起始角，结束角 
+				// 终点x,y坐标  半径  起始角，结束角
 			 context.arc(192, 187.5, 120, 0, 2 * Math.PI);
 				context.setStrokeStyle("#cccccc");
 				context.setLineWidth(5);
@@ -169,7 +170,6 @@
 
 						//  时间到了自动调用的函数
 						this.stopCountdown();
-						// console.log(this.isShow.isStartTomato);
 						this.$set(this.isShow, "isStartTomato", this.isShow.isStartTomato ? !this.isShow
 							.isStartTomato : this.isShow.isStartTomato);
 						this.$set(this.isShow, "isStartRest", this.isShow.isStartRest ? !this.isShow.isStartRest :
@@ -180,6 +180,7 @@
 						var remainTime =
 							this.flag.totalTime -
 							(totalCount - currentCount) * this.flag.intervalTime;
+              this.remainTime=remainTime
 						this.flag.currentProgress = 1 - currentCount / totalCount;
 						this.flag.hours=Math.floor((remainTime / 1000 / 60/60) % 60);
 						this.flag.minutes = Math.floor((remainTime / 1000 / 60) % 60);
@@ -208,7 +209,7 @@
 				this.startCountdown();
 				// this.bindTap();
 			},
-			// 
+			//
 			bindTap() {
 				this.isShow.isStartTomato = !this.isShow.isStartTomato;
 				this.isShow.isStartRest = false;
@@ -264,7 +265,15 @@
 			showExitDialog() {
 				this.$refs.popup1.open("center")
 			},
-
+      // 保存时间
+      saveTime(){
+        // 取出时间
+        let hour=Number(uni.getStorageSync('studyHours'))
+        console.log(hour);
+        const time=(this.flag.tomatoTime-this.remainTime)/1000/60/60 // 毫秒  number
+        hour=Number(hour)+time.toFixed(2) // 字符串
+        uni.setStorageSync('studyHours',hour)
+      }
 		},
 		onLoad(option) {
 			uni.clearStorage();// 清除缓存
@@ -272,7 +281,7 @@
 			this.t1 = this.item.toDoTime;
 			// 将传来的时间字符串改为数字
 			this.flag.tomatoTime = this.changeTimeFM(this.item.toDoTime);
-			var innerAudioContext = uni.createInnerAudioContext();
+      var innerAudioContext = uni.createInnerAudioContext();
 			innerAudioContext.autoplay = false;
 			innerAudioContext.src = 'https://downsc.chinaz.net/Files/DownLoad/sound1/201909/11983.mp3';
 			innerAudioContext.loop = true;
@@ -290,7 +299,8 @@
 			this.item = {};
 			this.flag=this.flag_copy;
 			this.AudioContext.destroy();
-		}
+      this.saveTime()
+    }
 	}
 </script>
 

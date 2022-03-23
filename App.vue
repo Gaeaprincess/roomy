@@ -2,17 +2,15 @@
 	export default {
 		globalData:{
 			saying:[],
-			
+      date:''
 		},
 		onLaunch() {
-			console.log('App.vue Launch')
+      this.setDate()
 		},
 		onShow(){
-			console.log('App Show')
-			this.getSaying();
+			this.upDateDays()
 		},
 		onHide(){
-			console.log('App Hide')
 		},
 		methods:{
 			// 打开页面的名言获取 调用次数有限 所以暂时用第一次返回的数据
@@ -27,7 +25,7 @@
 						return uni.showToast({
 							icon:"none",
 							title:"调用接口失败"
-						});		
+						});
 					},
 					success:(res)=>{
 						if(res.data.code!=200){
@@ -37,9 +35,22 @@
 						}
 						this.$options.globalData.saying=res.data.newslist;
 					}
-				});		
+				});
 			},
-			
+			// 获取用户登录天数
+      upDateDays(){
+        let time=new Date()
+        uni.setStorageSync('date',time)
+        uni.setStorageSync('days',1)
+      },
+      setDate(){
+        let time=new Date()
+        this.date=uni.getStorageSync('date')
+        if(time!==this.date){
+          let days=uni.getStorageSync('days')
+          uni.setStorageSync('days',days+1)
+        }
+      }
 		}
 	}
 </script>

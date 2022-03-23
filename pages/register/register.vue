@@ -12,7 +12,7 @@
 				<input type="text" placeholder="输入手机号:" @blur="checkFinsh" v-model="userInfo.phone" @input="watchPhone">
 			</view>
 			<view class="second-line">
-				<input type="text" placeholder="输入验证码:" @blur="checkFinsh" v-model="userInfo.verification" @click="watchCode"/>
+				<input type="text" placeholder="输入验证码:" @blur="checkFinsh" v-model="userInfo.verification" @input="watchCode"/>
 				<button :disabled="!isSend" :class="isSend==true?'active':''" @click="sendCode">获取验证码</button>
 			</view>
 			<view class="thrid-line">
@@ -22,16 +22,16 @@
 		<view class="verification-code" v-show="! isShowVeify">
 			<!--  验证码检验合格后再出现这个页面-->
 			<view class="first-line">
-				<input password placeholder="设置密码" v-model="userInfo.password" @blur="checkPWd()">
+				<input password placeholder="设置密码" v-model="userInfo.password" @input="checkPWd">
 			</view>
 			<view class="second-line">
-				<input password placeholder="再次输入密码"v-model="userInfo.rePWd" @blur="checkPWd()">
+				<input password placeholder="再次输入密码"v-model="userInfo.rePWd" @input="checkPWd">
 			</view>
 			<view class="prompt-box" v-show="isShowPrompt">
 				<text>两次输入密码不一致！</text>
 			</view>
 			<view class="thrid-line">
-				<button :disabled="!isSure" :class="isSure==true?'active':''">确定</button>
+				<button :disabled="!isSure" :class="isSure==true?'active':''"  @click="register">确定</button>
 			</view>
 		</view>
 	</view>

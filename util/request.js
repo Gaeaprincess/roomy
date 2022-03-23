@@ -7,11 +7,9 @@ baseURL:'http://111.229.239.208:9986',
 timeout: 6000, // request timeout
 crossDomain: true
 })
-
  // 请求拦截器
 service.interceptors.request.use(config => {
     // console.log(config);
-
     //访问需要权限的接口要添加请求头
     if(config.url=='/v1/auth/wechat'||config.url=='/v1/auth/sendsms'||config.url=='/v1/auth/signin'||config.url=='/v1/auth/signin'||config.url=='/v1/auth/signin-password'||config.url=='/v1/auth/{id}/setpassword'){
 

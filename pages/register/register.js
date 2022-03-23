@@ -33,25 +33,35 @@ export default {
 			// 发送手机验证码
 			sendCode(){
 				userAPI.getPhoneCode(this.userInfo.phone).then(res=>{
-					if(res.code===200){
+					if(res.code===0){
 						uni.showToast({
 							title: '发送成功，请注意查收',
 							duration: 2000
 						});
-						console.log(res.data.msg);
+						this.isShowVeify=false
 					}
 				}).catch(err=>err)
 			},
 			// 监听手机号输入
 			watchPhone(e){
+				if(!e.detail.value){
+					return
+				}
 				if(e.detail.value.length===11){
 					this.isSend=true
+				}else {
+					this.isSend=false
 				}
 			},
 			//监听验证码输入
 			watchCode(e){
+				if(!e.detail.value){
+					return
+				}
 				if(e.detail.value.length===4){
 					this.isComplete=true
+				}else{
+					this.isComplete=false
 				}
 			},
 			// 手机号码和验证码完整无误
@@ -85,10 +95,13 @@ export default {
 					this.isShowPrompt=false;
 				}
 			},
-
 			//下一步按钮
 			setpwd(){
 				this.isShowVeify=false;
+			},
+			// 注册
+			register(){
+
 			}
 		},
 		onLoad(option){
