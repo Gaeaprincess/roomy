@@ -22,10 +22,10 @@
     </view>
     <view class="rechoose" @tap="re_choose">重新选座位</view>
 </view>
-<view class="bottom">
-    <view class="pay" @tap="pay_card">使用卡券</view>
-    <view class="pay" @tap="pay_wx">微信支付</view>
-</view>
+<!-- <view class="bottom"> -->
+    <!-- <view class="pay" @tap="pay_card" style="background-color: rgb(245,208,75);">使用卡券</view> -->
+    <view class="pay" @tap="pay_wx" style="background-color: #04BE02;">微信支付</view>
+<!-- </view> -->
 </view>
 </template>
 
@@ -114,62 +114,12 @@ export default {
     },
 
     pay_wx(e) {
-      var that = this;
-      uni.request({
-        header: {
-          'Authorization': 'Bearer' + uni.getStorageSync('token')
-        },
-        url: app.host + "/pay/wxpay",
-        data: {
-          money: that.czmoney
-        },
-        method: 'POST',
-
-        success(res) {
-          console.log(res);
-
-          if (res.data.status_code == 200) {
-            // 拿到数据，再次发起请求，
-            唤醒支付所需要的字段;
-            const payargs = res.data.data; // 8.调用微信支付api
-
-            uni.requestPayment({
-              timeStamp: payargs.timeStamp,
-              nonceStr: payargs.nonceStr,
-              package: payargs.package,
-              signType: payargs.signType,
-              paySign: payargs.paySign,
-
-              success(res2) {
-                uni.reLaunch({
-                  url: '../../pagesA/wallet/index'
-                });
-              },
-
-              fail(res3) {
-                uni.showToast({
-                  title: '支付失败！',
-                  icon: 'none',
-                  duration: 2000
-                });
-              }
-
-            });
-          } else {
-            uni.showToast({
-              title: res.data.message,
-              icon: 'none',
-              duration: 2000
-            });
-          }
-        }
-
-      });
+        
     },
 
-    pay_card() {
-      console.log("占位：函数 pay_card 未声明");
-    }
+    // pay_card() {
+    //   console.log("占位：函数 pay_card 未声明");
+    // }
 
   }
 };
@@ -177,8 +127,9 @@ export default {
 <style>
 /* pages/pay/pay.wxss */
 .top {
-    margin-left: 50rpx;
+    margin-left: 200rpx;
     margin-top: 60rpx;
+	padding: 20rpx;
     width: 325px;
     height: 163px;
     line-height: 20px;
@@ -188,8 +139,7 @@ export default {
 }
 
 .information {
-    margin-top: 72rpx;
-    margin-left: 168rpx;
+    margin-left: 25rpx;
     width: 314rpx;
     height: 166rpx;
     color: rgba(16, 16, 16, 100);
@@ -198,9 +148,9 @@ export default {
     font-family: PingFangSC-regular;
 }
 
-/* .row{
-    display: inline-block;
-} */
+.row{
+    margin-top: 15rpx;
+}
 .txt1 {
     text-align: left;
     width: 130rpx;
@@ -208,33 +158,32 @@ export default {
 }
 
 .rechoose {
-    margin-left: 206rpx;
-    margin-top: 14rpx;
-    width: 240rpx;
+    margin: 80rpx auto;
+    width: 200rpx;
     height: 60rpx;
     line-height: 60rpx;
     border-radius: 30rpx;
-    background-color: rgba(245, 208, 75, 100);
-    color: rgba(16, 16, 16, 100);
+	background-color: white;
+    color: red;
     font-size: 28rpx;
     text-align: center;
     font-family: Microsoft Yahei;
 }
 
-.bottom {
-    margin-left: 50rpx;
-    margin-top: 78rpx;
-    width: 650rpx;
-    height: 894rpx;
+/*.bottom  {
+    margin: 150rpx auto;
+	padding: 40rpx;
+    width: 600rpx;
+    height: 100%;
     line-height: 40rpx;
     border-radius: 30rpx;
     text-align: center;
     box-shadow: 0rpx 4rpx 12rpx 0rpx rgba(0, 0, 0, 0.4);
-}
+} */
 
 .pay {
-    margin-left: 50rpx;
-    margin-top: 40rpx;
+    margin: 250rpx auto;
+    /* margin-top: 40rpx; */
     width: 550rpx;
     height: 88rpx;
     line-height: 88rpx;

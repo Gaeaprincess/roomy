@@ -45,6 +45,7 @@ export default {
 			loginByPwd(){
 				userAPI.loginByPhone(this.userMsg).then(res=>{
                     if(res.code===200){
+						console.log(res)
 						const resRult=res.data
 						uni.setStorageSync('Authorization',resRult.jwt)
 						// 存储用户id

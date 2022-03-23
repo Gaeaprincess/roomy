@@ -34,6 +34,7 @@ service.interceptors.response.use(res => {
     if (res.status === 200||res.code===200) {
     return res.data
 } else {
+	console.log(res.data)
     return Promise.reject(res.data.msg);
 }
 }, error => {
@@ -72,7 +73,9 @@ return new Promise((resolve, reject) => {
                 config: config
             };
             settle(resolve, reject, response);
-        }
+        },fail(err){
+			console.log(err)
+		}
     })
 })
 

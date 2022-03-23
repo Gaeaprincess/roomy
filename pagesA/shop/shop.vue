@@ -150,34 +150,43 @@
 			},
 			col: function() {
 				
-				let id = 1;
-				collectAPI.getCollect(id).then(res => {
-					console.log(res);
-				}).catch(err => {
-					// console.log(err);
-				})
+				// let id = 1;
 				
 				// 查询数据库  
 				// console.log(this);
 
-				// if (this.flag == false) {
-				// 	this.setData({
-				// 		'img_src': "../static/image/col1.png",
-				// 		flag: true
-				// 	}), uni.showToast({
-				// 		title: '收藏成功',
-				// 		duration: 2500
-				// 	}); // 修改数据库
-				// } else {
-				// 	this.setData({
-				// 		'img_src': "../static/image/col.png",
-				// 		flag: false
-				// 	}), uni.showToast({
-				// 		title: '取消收藏',
-				// 		icon: 'error',
-				// 		duration: 2500
-				// 	}); // 修改数据库
-				// }
+				if (this.flag == false) {
+					//调用接口
+					collectAPI.setCollect(1).then(res => {
+						console.log(res);
+					}).catch(err => {
+						console.log(err);
+					})
+					
+					this.setData({
+						'img_src': "../static/image/col1.png",
+						flag: true
+					}), uni.showToast({
+						title: '收藏成功',
+						duration: 2500
+					}); // 修改数据库
+				} else {
+					//调用接口
+					collectAPI.setUncollect(1).then(res => {
+						console.log(res);
+					}).catch(err => {
+						console.log(err);
+					})
+					
+					this.setData({
+						'img_src': "../static/image/col.png",
+						flag: false
+					}), uni.showToast({
+						title: '取消收藏',
+						icon: 'error',
+						duration: 2500
+					}); // 修改数据库
+				}
 			},
 			reserve: function() {
 				uni.navigateTo({
