@@ -65,27 +65,7 @@ export default {
 			// 饼状图数据 日
 			dailyAnalyse: {
 				"series": [{
-					"data": [{
-							"name": "一班",
-							"value": 50
-						},
-						{
-							"name": "二班",
-							"value": 30
-						},
-						{
-							"name": "三班",
-							"value": 20
-						},
-						{
-							"name": "四班",
-							"value": 18
-						},
-						{
-							"name": "五班",
-							"value": 8
-						}
-					]
+					"data": []
 				}]
 			},
 			// 环形图提示性文字 日
@@ -135,8 +115,10 @@ export default {
 		this.studyTime=uni.getStorageSync('studyHours');
 		this.dailyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
 		this.weeklyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
-		this.toDOList=uni.getStorageSync('data');
+		this.toDOList=uni.getStorageSync('data').list;
 		this.item.totalTimes=uni.getStorageSync('days')
+		console.log(uni.getStorageSync('data').dailyItem);
+		this.dailyAnalyse.series[0].data=uni.getStorageSync('data').dailyItem
 	},
 	methods: {
 				// 对用户学习时间进行处理
@@ -189,7 +171,7 @@ export default {
 				},
 				//从缓存里面取 列表
 				 getToDolist() {
-					this.toDOList =uni.getStorageSync('data');
+					this.toDOList =uni.getStorageSync('data').list;
 				},
 				// 跳转至番茄页面
 				gotoClock(item) {
@@ -200,7 +182,8 @@ export default {
 				// 根据id删除一个代办
 				async deletToDo(id) {
 					// 取出代办
-					 let data=uni.getStorageSync('data');
+					let arr =uni.getStorageSync('data')
+					 let data=uni.getStorageSync('data').list;
 					 if(data){
 						 data=data.filter(item=>{
 							 if(item.id==id){
@@ -209,12 +192,13 @@ export default {
 							 return true
 						 })
 					 }
-					uni.setStorageSync('data',data)
+					 arr.list=data
+					uni.setStorageSync('data',arr)
 					uni.showToast({
 						icon: "none",
 						title: "删除成功!"
 					})
-					this.toDOList =uni.getStorageSync('data');
+					this.toDOList =uni.getStorageSync('data').list?uni.getStorageSync('data').list:[];
 				},
 				// 保存新建代办
 				async addNewList() {
@@ -238,15 +222,29 @@ export default {
 					this.newList.id=id
 					// 四项内容都填了
 					let data=uni.getStorageSync('data')
+					console.log(data);
+					let list=[]
 					if(!data){
-						// 没有数据
-						data=[this.newList,]
+						// data 为空
+						data={}
+						list=[this.newList,]
+
 					}else {
-						// 有数据
-						data.unshift(this.newList) //
+						// data不为空
+						if(!data.list){
+							// list 不存在
+							list=[this.newList,]
+						}else {
+							// list存在
+							list=data.list
+							console.log(list);
+							list.unshift(this.newList) //
+						}
+
 					}
+					data.list=list
 					uni.setStorageSync('data',data)
-					this.toDOList =uni.getStorageSync('data');
+					this.toDOList =uni.getStorageSync('data').list;
 					uni.showToast({
 						icon: "none",
 						title: "新建代办成功!"

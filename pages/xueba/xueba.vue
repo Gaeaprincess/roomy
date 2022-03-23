@@ -83,6 +83,7 @@
 				</view>
 
 			</view>
+<!--     日 -->
 			<view v-if="current === 1">
 				<text class="head">累计学习时长:<text>{{studyTime?studyTime:0}}</text>小时</text>
 				<view class="report-wrap">
@@ -105,6 +106,7 @@
 							</view>
 						</view>
 					</view>
+<!--         月 -->
 					<view v-show="current1===1">
 						<view class="time-box normal">
 							<text>累计学习时长</text>

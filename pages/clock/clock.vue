@@ -66,7 +66,11 @@
 				isShowYinXiao: false,
 				// 音效对象
 				AudioContext: null,
-				testSrc: '../../static/bg1.jpeg'
+				testSrc: '../../static/bg1.jpeg',
+        todoItem:{
+          name:'',
+          value:0
+        }
 			}
 		},
 		methods: {
@@ -162,7 +166,7 @@
 
 			},
 			// 计时
-			startCountdown() {
+			startCountdown() {currentCount
 				let totalCount = this.flag.totalTime / this.flag.intervalTime;
 				let currentCount = totalCount;
 				this.timer = setInterval(() => {
@@ -235,8 +239,33 @@
 					this.bindTap();
 					this.close();
 				}
-
 			},
+      // 保存代办数据
+      saveTodoItem(){
+        let data=uni.getStorageSync('data')
+        // console.log(data,'1111');
+        let dailyItem=[]
+        if(!data){
+          //
+          data={}
+          dailyItem=[this.todoItem]
+        }
+        if(!data.dailyItem){
+          // data肯定有数据
+          dailyItem=[this.todoItem,]
+        }else {
+          if(!data.dailyItem){
+            dailyItem=[this.todoItem,]
+          }else {
+            dailyItem=data.dailyItem
+            dailyItem.unshift(this.newList) //
+          }
+          // 有数据
+
+        }
+        data.dailyItem=dailyItem
+        uni.setStorageSync('data',data)
+      },
 			//开始/暂停休息
 			bindTapRest(event) {
 				this.isShow.isStartRest = !this.isShow.isStartRest;
@@ -269,16 +298,21 @@
       saveTime(){
         // 取出时间
         let hour=Number(uni.getStorageSync('studyHours'))
-        console.log(hour);
         const time=(this.flag.tomatoTime-this.remainTime)/1000/60/60 // 毫秒  number
+        // console.log(time); time 小时
+        this.todoItem.value=(time*60).toFixed(2)
+        // console.log(this.todoItem);
         hour=Number(hour)+time.toFixed(2) // 字符串
+        console.log(hour);
         uni.setStorageSync('studyHours',hour)
       }
 		},
 		onLoad(option) {
 			uni.clearStorage();// 清除缓存
 			this.item = JSON.parse(decodeURIComponent(option.obj));// 接受参数
-			this.t1 = this.item.toDoTime;
+      this.todoItem.name=this.item.toToName
+
+      this.t1 = this.item.toDoTime;
 			// 将传来的时间字符串改为数字
 			this.flag.tomatoTime = this.changeTimeFM(this.item.toDoTime);
       var innerAudioContext = uni.createInnerAudioContext();
@@ -300,6 +334,7 @@
 			this.flag=this.flag_copy;
 			this.AudioContext.destroy();
       this.saveTime()
+      this.saveTodoItem()
     }
 	}
 </script>

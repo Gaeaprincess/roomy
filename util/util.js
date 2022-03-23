@@ -14,7 +14,7 @@ const formatNumber = n => {
 };
 function changeTimeToMinute(time){
   if(!time){
-    return
+    return 0
   }
   return time*60
 }
