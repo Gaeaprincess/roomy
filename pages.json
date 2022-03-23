@@ -247,7 +247,16 @@
 						"path": "friends/friends",
 						"style": {}
 					}
-				]
+				    ,{
+                    "path" : "teste/teste",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 			}
 		]
 	}

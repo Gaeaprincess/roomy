@@ -244,7 +244,7 @@ page{
 swiper{
     background-color: red;
 }
-
+	
 .a{
 	background-image: url('https://tse3-mm.cn.bing.net/th/id/OIP-C.n0szoETar9E4Ivsnjh6A2AHaGB?w=205&h=180&c=7&r=0&o=5&pid=1.7');
 	background-size: cover;

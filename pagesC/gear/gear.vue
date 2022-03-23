@@ -81,8 +81,9 @@ export default {
     },
 		
 		goto_information() {
+			console.log(11111)
       uni.navigateTo({
-        url: '/pagesC/information/information'
+        url: '/pagesC/teste/teste'
       });
     }
 
