@@ -57,11 +57,6 @@ export default{
 	},
 	// 获取用户当前数据
 	getUserInfo(){
-		// let id=uni.getStorageSync('id')
-		// return request({
-		// 	url:`/v1/user/${id}`,
-		// 	method:'get'
-		// })
 		return request({
 			url:`/v1/user/me`,
 			method:'get'

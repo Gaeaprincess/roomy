@@ -80,25 +80,36 @@ export default {
 			},
 			// 监听手机号输入
 			watchPhone(e){
+				if(!e.detail.value){
+					return
+				}
 				if(e.detail.value.length===11){
 					this.isSend=true
+				}else {
+					this.isSend=false
 				}
 			},
 			//监听验证码输入
 			watchCode(e){
+				if(!e.detail.value){
+					return
+				}
 				if(e.detail.value.length===4){
 					this.isComplete=true
+				}else{
+					this.isComplete=false
 				}
 			},
+			// 切换登录框
 			verification(){
 				this.isVerification=false;
 			},
+			// 显示密码
 			toggleIcon(){
 				this.isShowPWD= !this.isShowPWD;
 			},
 			//监听输入框的blur事件
 			isFinish(){
-				// console.log(this);
 				if(this.userMsg.account!==''&& this.userMsg.password!==''){
 					this.isFinished=true;
 				}else{

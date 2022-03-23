@@ -2,12 +2,16 @@ import chart1 from '../../components/Uchart/dailyTotal.vue'
 import chart2 from '@/components/Uchart/dailyDetail.vue'
 import chart3 from '@/components/Uchart/monthTotal.vue'
 import chart4 from '@/components/Uchart/monthDetail.vue'
+import {getId} from '../../util/uniqueId'
+import util from '../../util/util'
 export default {
 	data() {
 		return {
 			current: 0,
 			// 分段器选项数组
 			items: ["代办", "学习报告"],
+			// 当日学习时长
+			studyTime:'',
 			//  用户的数据
 			item: {},
 			// 代办列表
@@ -29,7 +33,7 @@ export default {
 			// 学习报告分段器
 			current1: 0,
 			// 环形统计图 日
-			dailyData: {
+			dailyData1: {
 				// 不用修改
 				"series": [{
 					"data": 1,
@@ -87,7 +91,7 @@ export default {
 			// 环形图提示性文字 日
 			dailyTitle: {
 				// name是Strig类型
-				"name": "2",
+				"name": "3",
 				"fontSize": 25,
 				"fontWeight": 500,
 				"color": "#F5D04B",
@@ -127,33 +131,21 @@ export default {
 			}
 		}
 		},
-		onLoad() {
-				this.getUserInfo();
-				this.getToDolist();
-			},
-			components: {
-				"chart-a": chart1,
-				"chart-b": chart2,
-				"chart-c": chart3,
-				"chart-d": chart4
-			},
-			computed: {
-				// 把时间转化为小时
-				changeToHours() {
-					let decimals = (this.item.totalTime % 60) / 60;
-					let redix = this.fomatFloat(decimals, 2);
-					let hour = Math.floor(this.item.totalTime / 60);
-					return hour + redix;
-				}
-			},
-			methods: {
+	onLoad() {
+		this.studyTime=uni.getStorageSync('studyHours');
+		this.dailyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
+		this.weeklyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
+		this.toDOList=uni.getStorageSync('data');
+		this.item.totalTimes=uni.getStorageSync('days')
+	},
+	methods: {
 				// 对用户学习时间进行处理
 				fomatFloat(num, n) {
 					var f = parseFloat(num);
 					if (isNaN(f)) {
 						return false;
 					}
-					f = Math.round(num * Math.pow(10, n)) / Math.pow(10, n); // n 幂   
+					f = Math.round(num * Math.pow(10, n)) / Math.pow(10, n); // n 幂
 					var s = f.toString();
 					var rs = s.indexOf('.');
 					//判定如果是整数，增加小数点再补0
@@ -195,15 +187,9 @@ export default {
 					//  Number类型
 					// console.log(typeof(this.item.totalTime))
 				},
-				//或取代办列表（待整合）
-				async getToDolist() {
-					const {
-						data: res
-					} = await this.$myRequest({
-						url: '/todo'
-					})
-					// 返回一个数组
-					this.toDOList = res;
+				//从缓存里面取 列表
+				 getToDolist() {
+					this.toDOList =uni.getStorageSync('data');
 				},
 				// 跳转至番茄页面
 				gotoClock(item) {
@@ -213,17 +199,22 @@ export default {
 				},
 				// 根据id删除一个代办
 				async deletToDo(id) {
-					const {
-						data: res
-					} = await this.$myRequest({
-						url: `/todo/` + id,
-						method: 'delete'
-					})
+					// 取出代办
+					 let data=uni.getStorageSync('data');
+					 if(data){
+						 data=data.filter(item=>{
+							 if(item.id==id){
+								 return false
+							 }
+							 return true
+						 })
+					 }
+					uni.setStorageSync('data',data)
 					uni.showToast({
 						icon: "none",
 						title: "删除成功!"
 					})
-					this.getToDolist();
+					this.toDOList =uni.getStorageSync('data');
 				},
 				// 保存新建代办
 				async addNewList() {
@@ -243,25 +234,24 @@ export default {
 							title: '请选择代办目标'
 						});
 					}
+					let id=getId()
+					this.newList.id=id
 					// 四项内容都填了
-					this.$myRequest({
-						url: '/todo',
-						data: this.newList,
-						method: 'POST',
-						header: {
-							'content-type': 'application/x-www-form-urlencoded',
-						}
-					})
-					const {
-						data: res
-					} = await this.$myRequest({
-						url: '/todo'
-					})
-					this.toDOList = res;
+					let data=uni.getStorageSync('data')
+					if(!data){
+						// 没有数据
+						data=[this.newList,]
+					}else {
+						// 有数据
+						data.unshift(this.newList) //
+					}
+					uni.setStorageSync('data',data)
+					this.toDOList =uni.getStorageSync('data');
 					uni.showToast({
 						icon: "none",
 						title: "新建代办成功!"
 					})
+					this.newList.toToName=''
 					this.isShowToDo = false;
 					this.showMasking = false;
 				},
@@ -319,5 +309,14 @@ export default {
 				add() {
 					this.toDoTime += 10;
 				},
-			}
+			},
+	components: {
+		"chart-a": chart1,
+		"chart-b": chart2,
+		"chart-c": chart3,
+		"chart-d": chart4
+	},
+	computed: {
+
+	}
 	}

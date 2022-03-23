@@ -34,7 +34,6 @@
 							</uni-swipe-action-item>
 						</uni-swipe-action>
 					</view>
-
 					<!-- 添加代办对话框 -->
 					<view v-if="isShowToDo" class="ToDobox">
 						<view class="masking" v-if="showMasking">
@@ -53,7 +52,7 @@
 									<input type="text" class="toDoName" v-model="newList.toToName" prop="toDoName">
 								</view>
 								<view class="target">
-									<text style="display: block;color:$mainColor">代办分类</text>
+									<text style="display: block;color:#F5D04B">代办分类</text>
 									<radio-group @change="radio1Change">
 										<label>
 											<radio value="proposal" color="#F5D04B" />达目标
@@ -64,7 +63,7 @@
 									</radio-group>
 								</view>
 								<view class="target">
-									<text style="display: block;color:$mainColor">代办时长</text>
+									<text style="display: block;color:#F5D04B">代办时长</text>
 									<radio-group @change="(e)=>radio3Change(e)">
 										<label>
 											<radio value="30" color="#F5D04B" />30分钟
@@ -82,19 +81,18 @@
 						</view>
 					</view>
 				</view>
-				</div>
+
 			</view>
 			<view v-if="current === 1">
-				<text class="head">累计学习时长:<text>{{changeToHours}}</text>小时</text>
+				<text class="head">累计学习时长:<text>{{studyTime?studyTime:0}}</text>小时</text>
 				<view class="report-wrap">
 					<ms-tabs :list="list" v-model="current1" lineColor="#F5D04B" itemColor="#F5D04B"></ms-tabs>
 					<view v-show="current1===0">
 						<view class="time-box normal">
 							<text>累计学习时长</text>
-							<!-- <chart-a  :current="current1" :toDoTime="toDoTime" :totalTime="totalTime" :show="current1===0"></chart-a> -->
 							<view class="charts-box">
 								<qiun-data-charts type="arcbar" :chartData="dailyData" background="none"
-									:opts="{dailyTitle}" />
+									:opts="{'title':dailyTitle}" />
 							</view>
 
 						</view>
@@ -112,14 +110,14 @@
 							<text>累计学习时长</text>
 							<!-- <chart-c :current="current1" :toDoTime="toDoTime" :totalTime="totalTime"></chart-c> -->
 							<view class="charts-box">
-								<qiun-data-charts type="arcbar" :chartData="weeklyData" :reshow="current1===1" />
+								<qiun-data-charts type="arcbar" :chartData="weeklyData" :reshow="current1===1" :opts="{'title':weeklyTitle}"/>
 							</view>
 
 						</view>
 						<view class="classify normal">
-							<text>学习版块分布</text>
+							<text>学习时间分布</text>
 							<!-- <chart-d :current="current1"></chart-d> -->
-							<view class="weekly-chart">
+							<view class="weekly-chart" >
 								<qiun-data-charts type="line" :chartData="weeklyAnalyse" background="none"
 									tooltipFormat='tooltipDemo1' :reshow="current1===1" />
 							</view>
