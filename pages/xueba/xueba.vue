@@ -149,9 +149,140 @@
 </template>
 
 <script>
-	import xueba from './xueba.js'
+import xueba from './xueba.js'
+import util from '../../util/util'
+import chart1 from '../../components/Uchart/dailyTotal.vue'
+import chart2 from '@/components/Uchart/dailyDetail.vue'
+import chart3 from '@/components/Uchart/monthTotal.vue'
+import chart4 from '@/components/Uchart/monthDetail.vue'
 	export default {
-		...xueba
+		data:()=>({
+			current: 0,
+			// 分段器选项数组
+			items: ["代办", "学习报告"],
+			// 当日学习时长
+			studyTime:'',
+			//  用户的数据
+			item: {},
+			// 代办列表
+			toDOList: [],
+			toDoTime: 50,
+			totalTime: 120,
+			// 添加代办的对话框
+			isShowToDo: false,
+			showMasking: false,
+			newList: {
+				toToName: '',
+				study_target: "",
+				toDoTime: "",
+			},
+			isRefresh: true,
+			// 自定义时间
+			timeSetting: false,
+			showMasking2: false,
+			// 学习报告分段器
+			current1: 0,
+			// 环形统计图 日
+			dailyData1: {
+				// 不用修改
+				"series": [{
+					"data": 1,
+					"color": "#F5D04B"
+				}]
+			},
+			// tabs标签数据
+			list: [{
+					title: '日'
+				},
+				{
+					title: '月'
+				},
+			],
+			// 环形统计图 日
+			dailyData: {
+				"series": [{
+					"data": 1,
+					"color": "#F5D04B"
+				}]
+			},
+			// 环形统计图 周
+			weeklyData: {
+				"series": [{
+					"data": 1,
+					"color": "#F5D04B"
+				}]
+			},
+			// 饼状图数据 日
+			dailyAnalyse: {
+				"series": [{
+					"data": []
+				}]
+			},
+			// 环形图提示性文字 日
+			dailyTitle: {
+				// name是Strig类型
+				"name": "3",
+				"fontSize": 25,
+				"fontWeight": 500,
+				"color": "#F5D04B",
+				"offsetX": 0,
+				"offsetY": -5
+			},
+			// 环形图提示性文字 周
+			weeklyTitle: {
+				// name是Strig类型
+				"name": "2",
+				"fontSize": 25,
+				"fontWeight": 500,
+				"color": "#F5D04B",
+				"offsetX": 0,
+				"offsetY": -5
+			},
+			// 折线统计图数据  周
+			weeklyAnalyse: {
+				"categories": [
+					"2016",
+					"2017",
+					"2018",
+					"2019",
+					"2020",
+					"2021"
+				],
+				"series": [{
+					"data": [
+						35,
+						8,
+						25,
+						37,
+						0,
+						20
+					]
+				}]
+			}	
+		}),
+		methods:{
+			...xueba,
+		},
+		onLoad() {
+			
+		},
+		onShow(){
+			this.studyTime=uni.getStorageSync('studyHours');
+			this.dailyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
+			this.weeklyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
+			this.toDOList=uni.getStorageSync('todoList');
+			this.item.totalTimes=uni.getStorageSync('days')
+			this.dailyAnalyse.series[0].data=uni.getStorageSync('data').dailyItem
+		},
+		created(){
+			this.dailyAnalyse.series[0].data=uni.getStorageSync('data').dailyItem
+		},
+		components: {
+		"chart-a": chart1,
+		"chart-b": chart2,
+		"chart-c": chart3,
+		"chart-d": chart4
+		},
 	}
 </script>
 <style lang="scss" scoped>
