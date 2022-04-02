@@ -1,126 +1,5 @@
-import chart1 from '../../components/Uchart/dailyTotal.vue'
-import chart2 from '@/components/Uchart/dailyDetail.vue'
-import chart3 from '@/components/Uchart/monthTotal.vue'
-import chart4 from '@/components/Uchart/monthDetail.vue'
 import {getId} from '../../util/uniqueId'
-import util from '../../util/util'
 export default {
-	data() {
-		return {
-			current: 0,
-			// 分段器选项数组
-			items: ["代办", "学习报告"],
-			// 当日学习时长
-			studyTime:'',
-			//  用户的数据
-			item: {},
-			// 代办列表
-			toDOList: [],
-			toDoTime: 50,
-			totalTime: 120,
-			// 添加代办的对话框
-			isShowToDo: false,
-			showMasking: false,
-			newList: {
-				toToName: '',
-				study_target: "",
-				toDoTime: "",
-			},
-			isRefresh: true,
-			// 自定义时间
-			timeSetting: false,
-			showMasking2: false,
-			// 学习报告分段器
-			current1: 0,
-			// 环形统计图 日
-			dailyData1: {
-				// 不用修改
-				"series": [{
-					"data": 1,
-					"color": "#F5D04B"
-				}]
-			},
-			// tabs标签数据
-			list: [{
-					title: '日'
-				},
-				{
-					title: '月'
-				},
-			],
-			// 环形统计图 日
-			dailyData: {
-				"series": [{
-					"data": 1,
-					"color": "#F5D04B"
-				}]
-			},
-			// 环形统计图 周
-			weeklyData: {
-				"series": [{
-					"data": 1,
-					"color": "#F5D04B"
-				}]
-			},
-			// 饼状图数据 日
-			dailyAnalyse: {
-				"series": [{
-					"data": []
-				}]
-			},
-			// 环形图提示性文字 日
-			dailyTitle: {
-				// name是Strig类型
-				"name": "3",
-				"fontSize": 25,
-				"fontWeight": 500,
-				"color": "#F5D04B",
-				"offsetX": 0,
-				"offsetY": -5
-			},
-			// 环形图提示性文字 周
-			weeklyTitle: {
-				// name是Strig类型
-				"name": "2",
-				"fontSize": 25,
-				"fontWeight": 500,
-				"color": "#F5D04B",
-				"offsetX": 0,
-				"offsetY": -5
-			},
-			// 折线统计图数据  周
-			weeklyAnalyse: {
-				"categories": [
-					"2016",
-					"2017",
-					"2018",
-					"2019",
-					"2020",
-					"2021"
-				],
-				"series": [{
-					"data": [
-						35,
-						8,
-						25,
-						37,
-						0,
-						20
-					]
-				}]
-			}
-		}
-		},
-	onLoad() {
-		this.studyTime=uni.getStorageSync('studyHours');
-		this.dailyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
-		this.weeklyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
-		this.toDOList=uni.getStorageSync('data').list;
-		this.item.totalTimes=uni.getStorageSync('days')
-		console.log(uni.getStorageSync('data').dailyItem);
-		this.dailyAnalyse.series[0].data=uni.getStorageSync('data').dailyItem
-	},
-	methods: {
 				// 对用户学习时间进行处理
 				fomatFloat(num, n) {
 					var f = parseFloat(num);
@@ -182,8 +61,7 @@ export default {
 				// 根据id删除一个代办
 				async deletToDo(id) {
 					// 取出代办
-					let arr =uni.getStorageSync('data')
-					 let data=uni.getStorageSync('data').list;
+					 let data=uni.getStorageSync('todoList');
 					 if(data){
 						 data=data.filter(item=>{
 							 if(item.id==id){
@@ -192,13 +70,12 @@ export default {
 							 return true
 						 })
 					 }
-					 arr.list=data
-					uni.setStorageSync('data',arr)
+					uni.setStorageSync('todoList',data)
 					uni.showToast({
 						icon: "none",
 						title: "删除成功!"
 					})
-					this.toDOList =uni.getStorageSync('data').list?uni.getStorageSync('data').list:[];
+					this.toDOList =uni.getStorageSync('todoList')?uni.getStorageSync('todoList'):[];
 				},
 				// 保存新建代办
 				async addNewList() {
@@ -221,30 +98,18 @@ export default {
 					let id=getId()
 					this.newList.id=id
 					// 四项内容都填了
-					let data=uni.getStorageSync('data')
+					let data=uni.getStorageSync('todoList')
 					console.log(data);
 					let list=[]
 					if(!data){
 						// data 为空
-						data={}
-						list=[this.newList,]
-
+						data=[]
+						data.unshift(this.newList)
 					}else {
-						// data不为空
-						if(!data.list){
-							// list 不存在
-							list=[this.newList,]
-						}else {
-							// list存在
-							list=data.list
-							console.log(list);
-							list.unshift(this.newList) //
-						}
-
+						data.unshift(this.newList)
 					}
-					data.list=list
-					uni.setStorageSync('data',data)
-					this.toDOList =uni.getStorageSync('data').list;
+					uni.setStorageSync('todoList',data)
+					this.toDOList =uni.getStorageSync('todoList');
 					uni.showToast({
 						icon: "none",
 						title: "新建代办成功!"
@@ -307,14 +172,4 @@ export default {
 				add() {
 					this.toDoTime += 10;
 				},
-			},
-	components: {
-		"chart-a": chart1,
-		"chart-b": chart2,
-		"chart-c": chart3,
-		"chart-d": chart4
-	},
-	computed: {
-
-	}
 	}

@@ -49,7 +49,6 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
-    console.log(option);
     var i = option.i;
     var j = option.j;
     var date = option.date;

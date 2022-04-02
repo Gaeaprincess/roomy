@@ -243,7 +243,7 @@
       // 保存代办数据
       saveTodoItem(){
         let data=uni.getStorageSync('data')
-        // console.log(data,'1111');
+        console.log(data,'1111');
         let dailyItem=[]
         if(!data){
           //
@@ -258,12 +258,12 @@
             dailyItem=[this.todoItem,]
           }else {
             dailyItem=data.dailyItem
-            dailyItem.unshift(this.newList) //
+            dailyItem.unshift(this.todoItem) //
           }
           // 有数据
-
         }
         data.dailyItem=dailyItem
+		// console.log(data,222);
         uni.setStorageSync('data',data)
       },
 			//开始/暂停休息
@@ -285,10 +285,9 @@
 			// 退出
 			finish() {
 				// 不能带参数
-				uni.switchTab({
+				uni.reLaunch({
 					url: '/pages/xueba/xueba'
 				})
-
 			},
 			// 显示退出计时对话框
 			showExitDialog() {
@@ -298,24 +297,21 @@
       saveTime(){
         // 取出时间
         let hour=Number(uni.getStorageSync('studyHours'))
-        const time=(this.flag.tomatoTime-this.remainTime)/1000/60/60 // 毫秒  number
-        // console.log(time); time 小时
-        this.todoItem.value=(time*60).toFixed(2)
-        // console.log(this.todoItem);
+        const time=(this.flag.tomatoTime-this.remainTime)/1000/60/60 // 小时  number
+        this.todoItem.value=(time*60).toFixed(2) // 分
         hour=Number(hour)+time.toFixed(2) // 字符串
-        console.log(hour);
         uni.setStorageSync('studyHours',hour)
       }
 		},
 		onLoad(option) {
 			uni.clearStorage();// 清除缓存
 			this.item = JSON.parse(decodeURIComponent(option.obj));// 接受参数
-      this.todoItem.name=this.item.toToName
+      		this.todoItem.name=this.item.toToName
 
-      this.t1 = this.item.toDoTime;
+      		this.t1 = this.item.toDoTime;
 			// 将传来的时间字符串改为数字
 			this.flag.tomatoTime = this.changeTimeFM(this.item.toDoTime);
-      var innerAudioContext = uni.createInnerAudioContext();
+      		var innerAudioContext = uni.createInnerAudioContext();
 			innerAudioContext.autoplay = false;
 			innerAudioContext.src = 'https://downsc.chinaz.net/Files/DownLoad/sound1/201909/11983.mp3';
 			innerAudioContext.loop = true;
@@ -333,8 +329,8 @@
 			this.item = {};
 			this.flag=this.flag_copy;
 			this.AudioContext.destroy();
-      this.saveTime()
-      this.saveTodoItem()
+			this.saveTime()
+			this.saveTodoItem()
     }
 	}
 </script>
