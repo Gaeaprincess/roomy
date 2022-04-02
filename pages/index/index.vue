@@ -22,8 +22,8 @@
   </swiper>
 
 </view>
-<view class="title2">附近门店</view>
-<view v-for="(item, index) in list" :key="index" class="shop" @tap="regionFun">
+<view class="title2">附近门店</view><!--v-for="(item, index) in list" :key="index"-->
+<view  class="shop" @tap="regionFun">
   <image class="img2" src="/static/image/shop_1.png"></image>
   <view class="txt">
     <view class="txt1">{{item.title}}</view>
@@ -36,22 +36,22 @@
 
 <script>
 import  userAPI from "@/api/user.js"
+import  shopAPI from "@/api/seat.js"
 export default {
   data() {
     return {
       region: ['四川省', '宜宾市', '翠屏区'],
       // customItem: '全部',
-      list: [{
-        // img:"/image/"
-        title: "智慧自习室",
-        place: "地点：四川轻化工大学城",
-        time: "经营时间:00:00-24:00"
-      }, {
-        // img:
-        title: "智慧自习室",
-        place: "地点：四川轻化工大学城",
-        time: "经营时间:00:00-24:00"
-      }]
+      // list: [{
+      //   title: "智慧自习室",
+      //   place: "地点：四川轻化工大学城",
+      //   time: "经营时间:00:00-24:00"
+      // }, {
+      //   title: "智慧自习室",
+      //   place: "地点：四川轻化工大学城",
+      //   time: "经营时间:00:00-24:00"
+      // }],
+	  shop:{} 
     };
   },
 
@@ -76,14 +76,26 @@ export default {
       }).catch(err=>{
         console.log(err);
       })
-    }
+    },
+	getShop(geolocation){
+		shopAPI.getShop(geolocation).then(res => {
+			console.log(res.data);
+			this.setData({
+				shop:res.data,
+			});
+		}).catch(err => {
+			console.log(err);
+		})
+	}
   },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
     // console.log(uni.getStorageSync('id'));
-    this.getInfoByUserId()
+    this.getInfoByUserId(),
+	this.getShop(273323.19856,7234123.96344712)
+	console.log(11)
   },
 
   /**
