@@ -15,7 +15,7 @@ function getUserInfo () {
 function getOrder () {
   let id = uni.getStorageSync('id');
   return service({
-    url: `/v1/order/all`,
+    url: `/v1/session/history?page=1`,
     method: 'get'
   })
 }
@@ -36,5 +36,27 @@ function putInformation (aaa) {
   })
 }
 
-export { getUserInfo, getOrder, getMendian, putInformation }
+function getdynamic () {
+  return service({
+    url: `/v1/community/user/threads?page=1`,
+    method: 'get',
+  })
+}
+
+function chicken () {
+  return service({
+    url: '/v1/community/checkin',
+    method: 'post'
+  })
+}
+
+function getchicken () {
+  return service({
+    url: '/v1/community/checkin/history',
+    method: 'get'
+  })
+}
+
+
+export { getUserInfo, getOrder, getMendian, putInformation, getdynamic, chicken, getchicken }
 

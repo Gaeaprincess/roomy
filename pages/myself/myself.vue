@@ -7,9 +7,21 @@
                      v-bind:src="all.avatar"></cover-image>
         <view class="header_message">
           <view class="header_name">{{all.username}}</view>
-          <view class="vip"
-                v-show="all.is_pro">vip</view>
+          <!-- <view class="vip"
+                v-show="is_pro">打卡</view> -->
           <view class="phone">手机号：{{all.phone}}</view>
+
+          <view class="vip"
+                v-show="is_pro"
+                @click="click_chinken">
+            <button class="pre_button">打卡
+            </button>
+          </view>
+          <view class="isvip"
+                v-show="!is_pro">
+            <button>已打卡
+            </button>
+          </view>
         </view>
         <view class="clear"></view>
       </view>
@@ -51,7 +63,7 @@
                  class="image_item"></image>
         </view>
         <view class="text_container">
-          VIP
+          打卡记录
         </view>
       </view>
       <view class="all_container"
@@ -116,23 +128,38 @@ export default {
       all: {
         username: "",
         phone: "",
-        is_pro: "",
+
         userid: '',
         avatar: '/static/image/header_img.png'
       },
+      is_pro: true,
     };
   },
   components: {},
   props: {},
-
+  computed: {
+    date () {
+      var date = new Date();
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      if (month < 10) {
+        month = "0" + month;
+      }
+      if (day < 10) {
+        day = "0" + day;
+      }
+      return year + "-" + month + "-" + day;
+    }
+  },
 
   onLoad: function (options) {
-    // myself.getUserInfo()
-    //   .then(res => {
-    //     console.log(res);
-    //     this.all = res.data
-    //   })
-    //   .catch(err => err)
+    myself.getchicken()
+      .then(res => {
+        console.log(res);
+        res.data[0] === this.date ? this.is_pro = false : this.is_pro = true
+      })
+      .catch(err => err)
   },
   // computed: {
   //   count () {
@@ -181,6 +208,15 @@ export default {
    */
   onShareAppMessage: function () { },
   methods: {
+    click_chinken () {
+      myself.chicken()
+        .then((res) => {
+          this.is_pro = false
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    },
     goto_vip () {
       uni.navigateTo({
         url: "/pagesC/vip/vip"
@@ -258,7 +294,20 @@ page {
   display: inline-block;
 }
 .vip {
-  background-color: #f5d04b;
+  position: absolute;
+  top: 55px;
+  right: 100px;
+  /* background-color: #f5d04b; */
+  display: inline-block;
+  margin-left: 20rpx;
+  padding-right: 12rpx;
+  padding-left: 12rpx;
+}
+.isvip {
+  position: absolute;
+  top: 55px;
+  right: 100px;
+  /* background-color: #18ee18; */
   display: inline-block;
   margin-left: 20rpx;
   padding-right: 12rpx;
@@ -335,5 +384,51 @@ swiper {
   height: 60rpx;
   width: 60rpx;
   margin: 20rpx 20rpx;
+}
+
+button {
+  line-height: 3.5em;
+  width: 9em;
+  height: 3em;
+  border-radius: 30em;
+  font-size: 15px;
+  font-family: inherit;
+  border: none;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff;
+}
+
+button::before {
+  content: "";
+  width: 0;
+  height: 3em;
+  border-radius: 30em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to right, #0fd850 0%, #f9f047 100%);
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+  width: 9em;
+}
+.pre_button::before {
+  content: "";
+  width: 0;
+  height: 3em;
+  border-radius: 30em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(to right, #0fd850 0%, #f9f047 100%);
+  transition: 0.5s ease;
+  display: block;
+  z-index: -1;
+}
+
+.pre_button:hover::before {
+  width: 9em;
 }
 </style>
