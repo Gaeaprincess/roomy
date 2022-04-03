@@ -20,7 +20,7 @@
             <text class="txt2">{{cost}}元</text>
         </view>
     </view>
-    <view class="rechoose" @tap="re_choose">重新选座位</view>
+    <!-- <view class="rechoose" @tap="re_choose">重新选座位</view> -->
 </view>
 <!-- <view class="bottom"> -->
     <!-- <view class="pay" @tap="pay_card" style="background-color: rgb(245,208,75);">使用卡券</view> -->
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-
+import payAPI from '../../api/pay_wx.js'
 export default {
   data() {
     return {
@@ -38,7 +38,10 @@ export default {
       time: "06:00-09:00",
       seat_i: ["JY", "JP", "YG"],
       cost: "25",
-      seat: ""
+      seat: "",
+	  seat_id:0,
+	  start:0,
+	  end:0
     };
   },
 
@@ -49,7 +52,6 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
-    console.log(option);
     var i = option.i;
     var j = option.j;
     var date = option.date;
@@ -58,18 +60,13 @@ export default {
       seat: this.seat_i[i] + "_" + j,
       date: date,
       time: time
-    }); // console.log(option.query)
-    // const eventChannel = this.getOpenerEventChannel()
-    // eventChannel.emit('acceptDataFromOpenedPage', {
-    //   data: 'test'
-    // });
-    // eventChannel.emit('someEvent', {
-    //   data: 'test'
-    // });
-    // 监听acceptDataFromOpenerPage事件，获取上一页面通过eventChannel传送到当前页面的数据
-    // eventChannel.on('acceptDataFromOpenerPage', function (data) {
-    //   console.log(data)
-    // })
+    }); 
+	this.seat_id=option.seat_id;
+	this.start=option.start;
+	this.end=option.end
+	// console.log(option.seat_id);
+	// console.log(option.start);
+	// console.log(option.end);
   },
 
   /**
@@ -114,8 +111,26 @@ export default {
     },
 
     pay_wx(e) {
-        
+        payAPI.pay_wx(this.seat_id,this.start,this.end).then(res => {
+			console.log(res);
+			uni.showToast({
+				title: '订座成功',
+				icon: 'success',
+				duration: 2500
+			});
+			setTimeout(() => {
+				uni.navigateTo({
+				  url:"../../pages/index/index"})
+			}
+			,2500)
+		}).catch(err => {
+			console.log(err);
+		})
     },
+	naTo(){
+		uni.navigateTo({
+		  url:"../../pages/index/index"})
+	}
 
     // pay_card() {
     //   console.log("占位：函数 pay_card 未声明");

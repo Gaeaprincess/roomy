@@ -18,6 +18,16 @@ export default {
 				id
 			}
 		})
+	},
+
+	getCollect: function(page) {
+		return request({
+			url: `/v1/store/stared`,
+			method: 'get',
+			params: {
+				page
+			}
+		})
 	}
 
 }

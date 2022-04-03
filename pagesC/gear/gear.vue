@@ -12,8 +12,8 @@
 <view class="child" @tap="goto_customer_service">
     我的客服
 </view>
-<view class="child">
-    用户协议
+<view class="child" @tap="goto_information">
+    关于用户
 </view>
 </view>
 </template>
@@ -77,6 +77,13 @@ export default {
     goto_customer_service() {
       uni.navigateTo({
         url: '/pagesC/customer_service/customer_service'
+      });
+    },
+		
+		goto_information() {
+			console.log(11111)
+      uni.navigateTo({
+        url: '/pagesC/teste/teste'
       });
     }
 

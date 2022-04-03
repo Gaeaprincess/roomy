@@ -9,12 +9,23 @@ export default {
 			}
 		})
 	},
-	setSeat: function(id) {
+	// setSeat: function(id) {
+	// 	return request({
+	// 		url: `/store/seats`,
+	// 		method: 'get',
+	// 		params: {
+	// 			id
+	// 		}
+	// 	})
+	// },
+	getSeat: function(id,year,month,day) {
 		return request({
-			url: `/store/seats`,
+			url: `/v1/store/`+id+`/seats`,
 			method: 'get',
 			params: {
-				id
+				year,
+				month,
+				day
 			}
 		})
 	}

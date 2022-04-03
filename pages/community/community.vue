@@ -13,7 +13,8 @@
 <block v-if="rankType ==='dongtai'">
     <input type="text" class="header-input" placeholder="学友圈" placeholder-style="header-input-placeholder" @input="handleInputChange">
     <icon type="search" class="header-input-icon" v-if="showIcon"></icon>
-<swiper :circular="true" :autoplay="true" class="swiper" indicator-dots> 
+<!--  轮播图 -->
+<swiper :circular="true" :autoplay="true" class="swiper" indicator-dots>
     <swiper-item class="swiper-item">
         <image class="swiper-image" src="https://tse1-mm.cn.bing.net/th/id/OIP-C.InZNu-X-tEtq4NXVrKRzaAHaEK?w=326&h=183&c=7&r=0&o=5&pid=1.7"></image>
     </swiper-item>
@@ -24,18 +25,20 @@
         <image class="swiper-image" src="https://tse2-mm.cn.bing.net/th/id/OIP-C.ZP4wtmQqVdsJZUKSd8fDegHaEK?w=302&h=180&c=7&r=0&o=5&pid=1.7"></image>
     </swiper-item>
 </swiper>
-<navigator url="/pagesB/xinzeng/xinzeng">
+<navigator url="/pagesB/xinzeng/xinzengd">
     <image class="xinzeng-photo" src="/static/resources/xinzeng.png"></image>
 </navigator>
 <view class="project">
     <text class="project-title">热门</text>
+<!--  无动态 -->
     <view class="empty" :hidden="!(searchList && searchList.length==0)">无相关动态</view>
+<!--  有动态-->
     <view v-for="(item, index) in searchList?searchList:dongtai" :key="index" class="project-dongtai">
         <view class="gerenxinxi">
             <image class="project-touxiang" :src="item.touxiang"></image>
             <view class="project-xinxi">
                 <view class="project-nicheng">{{item.name}}</view>
-                <view class="yuedushu"> 
+                <view class="yuedushu">
                     <image class="yuedushuimage" src="/static/resources/liulan.png"></image>
                     <view class="yuedushunum">{{item.yuedushunum}}</view>
                 </view>
@@ -68,7 +71,7 @@
     </view>
 </view>
 </block>
-<block v-if="rankType ==='paihangbang'"> 
+<block v-if="rankType ==='paihangbang'">
     <view class="title">月学时排行榜</view>
     <view v-for="(item, index) in paihangbang1" :key="index" class="qian">
         <view class="diyim">
@@ -86,12 +89,12 @@
         <view class="yhname0">{{item.name}}</view>
         <view class="shichang0">{{item.time}}</view>
     </view>
-    
+
     <view v-for="(item, index) in paihangbang3" :key="index" class="hou">
         <view class="mingci">{{index+4}}</view>
         <image class="yhtouxiang" :src="item.touxiang"></image>
         <view class="yhname">{{item.name}}</view>
-        <view class="shichang">{{item.time}}</view>                
+        <view class="shichang">{{item.time}}</view>
     </view>
 </block>
 
@@ -99,18 +102,18 @@
 </template>
 
 <script>
-// index.js
 // 获取应用实例
 const app = getApp();
+import  communityAPI from '../../api/community.js'
 import { dongtai, updateDianZan } from '../../mockData/DongTaiData';
-
 export default {
   data() {
     return {
       showIcon: true,
       rankType: 'dongtai',
       searchList: null,
-      rankTypes: [{
+      rankTypes: [
+          {
         title: '动态',
         type: 'dongtai'
       }, {
@@ -118,7 +121,8 @@ export default {
         type: 'paihangbang'
       }],
       dongtai,
-      paihangbang1: [{
+      paihangbang1: [
+          {
         touxiang: "https://tse1-mm.cn.bing.net/th/id/OIP-C.g4VMocET-A-JEvZrRMalBgAAAA?w=186&h=186&c=7&r=0&o=5&pid=1.7",
         name: "蛋蛋",
         time: "33.5小时"
@@ -148,7 +152,10 @@ export default {
         touxiang: "https://tse3-mm.cn.bing.net/th/id/OIP-C.jwdyntX4GuNihC4SPAYo6AHaEo?w=267&h=180&c=7&r=0&o=5&pid=1.7",
         name: "罗华荣",
         time: "30.5小时"
-      }]
+      }],
+      // ...
+      // 文章数据
+      invitations:[]
     };
   },
 
@@ -156,7 +163,6 @@ export default {
   props: {},
 
   onLoad() {
-    console.log(dongtai);
     this.setData({
       dongtai: this.dongtai
     });
@@ -169,6 +175,16 @@ export default {
   },
 
   methods: {
+    // 获取帖子
+    getnews(){
+      communityAPI.getnews().then((res)=>{
+        if(res.code==0){
+          this.invitations=res.data
+        }
+      }).catch((err)=>{
+
+      })
+    },
     handleTypeChange(e) {
       const rankType = e.currentTarget.dataset.type;
       this.setData({
@@ -345,7 +361,7 @@ export default {
     height: 30rpx;
 }
 .yuedushunum{
-    font-size: 20rpx;   
+    font-size: 20rpx;
     padding-left: 10rpx;
 }
 .project-content{
@@ -463,13 +479,13 @@ export default {
     padding-left: 20rpx;
 }
 .yhtouxiang{
-    width: 55rpx;   
+    width: 55rpx;
     height: 55rpx;
     border-radius: 30rpx;
     margin-left: 60rpx;
 }
 .yhname{
-    text-align: left; 
+    text-align: left;
     margin-left: 28rpx;
     font-size: 28rpx;
     width: 300rpx;

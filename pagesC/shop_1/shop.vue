@@ -11,7 +11,7 @@
 </template>
 
 <script>
-
+import * as myself from "@/api/myself.js"
 export default {
   data() {
     return {};
@@ -23,7 +23,12 @@ export default {
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+		myself.getMendian()
+					.then((res)=>{
+						console.log(res);
+					})
+	},
 
   /**
    * 生命周期函数--监听页面初次渲染完成

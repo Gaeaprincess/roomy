@@ -12,7 +12,13 @@ const formatNumber = n => {
   n = n.toString();
   return n[1] ? n : `0${n}`;
 };
-
+function changeTimeToMinute(time){
+  if(!time){
+    return 0
+  }
+  return time*60
+}
 module.exports = {
-  formatTime
+  formatTime,
+  changeTimeToMinute
 };

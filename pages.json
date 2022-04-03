@@ -6,10 +6,12 @@
 
 				"enablePullDownRefresh": false
 			}
-		},{
+		},
+		{
 			"path": "pages/index/index",
 			"style": {}
 		},
+		
 		{
 		    "path" : "pages/test/test",
 		    "style" :
@@ -247,7 +249,16 @@
 						"path": "friends/friends",
 						"style": {}
 					}
-				]
+				    ,{
+                    "path" : "teste/teste",
+                    "style" :                                                                                    
+                {
+                    "navigationBarTitleText": "",
+                    "enablePullDownRefresh": false
+                }
+                
+                }
+            ]
 			}
 		]
 	}
