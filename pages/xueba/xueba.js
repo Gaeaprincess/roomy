@@ -54,6 +54,7 @@ export default {
 				},
 				// 跳转至番茄页面
 				gotoClock(item) {
+					console.log(item)
 					uni.navigateTo({
 						url: '/pages/clock/clock?obj=' + encodeURIComponent(JSON.stringify(item))
 					})
