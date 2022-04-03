@@ -304,7 +304,6 @@
       }
 		},
 		onLoad(option) {
-			uni.clearStorage();// 清除缓存
 			this.item = JSON.parse(decodeURIComponent(option.obj));// 接受参数
       		this.todoItem.name=this.item.toToName
 
