@@ -214,6 +214,7 @@ module.exports = {
 },
 "line":{
     "type": "line",
+	"loadingType":0,
     "canvasId": "",
     "canvas2d": false,
     "background": "none",
@@ -233,7 +234,7 @@ module.exports = {
     "errorReload": true,
     "fontSize": 13,
     "fontColor": "#666666",
-    "enableScroll": false,
+    "enableScroll": true,
     "touchMoveLimit": 60,
     "enableMarkLine": false,
     "dataLabel": true,

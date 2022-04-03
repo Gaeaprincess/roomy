@@ -304,10 +304,8 @@
       }
 		},
 		onLoad(option) {
-			uni.clearStorage();// 清除缓存
 			this.item = JSON.parse(decodeURIComponent(option.obj));// 接受参数
       		this.todoItem.name=this.item.toToName
-
       		this.t1 = this.item.toDoTime;
 			// 将传来的时间字符串改为数字
 			this.flag.tomatoTime = this.changeTimeFM(this.item.toDoTime);

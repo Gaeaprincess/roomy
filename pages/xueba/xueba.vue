@@ -112,7 +112,7 @@
 							<text>累计学习时长</text>
 							<!-- <chart-c :current="current1" :toDoTime="toDoTime" :totalTime="totalTime"></chart-c> -->
 							<view class="charts-box">
-								<qiun-data-charts type="arcbar" :chartData="weeklyData" :reshow="current1===1" :opts="{'title':weeklyTitle}"/>
+								<qiun-data-charts type="arcbar" :chartData="weeklyData" :reshow="current1===1" :ontouch="true" :opts="{'title':weeklyTitle}"/>
 							</view>
 
 						</view>
@@ -121,7 +121,7 @@
 							<!-- <chart-d :current="current1"></chart-d> -->
 							<view class="weekly-chart" >
 								<qiun-data-charts type="line" :chartData="weeklyAnalyse" background="none"
-									tooltipFormat='tooltipDemo1' :reshow="current1===1" />
+									tooltipFormat='tooltipDemo1' :reshow="current1===1"   :ontouch="true"/>
 							</view>
 
 						</view>
@@ -240,42 +240,36 @@ import chart4 from '@/components/Uchart/monthDetail.vue'
 			},
 			// 折线统计图数据  周
 			weeklyAnalyse: {
-				"categories": [
-					"2016",
-					"2017",
-					"2018",
-					"2019",
-					"2020",
-					"2021"
-				],
-				"series": [{
+			"categories": [
+				"3",
+			],
+			"series": [
+				{
 					"data": [
-						35,
-						8,
-						25,
-						37,
-						0,
-						20
+						'0.8'
 					]
-				}]
-			}	
+				},
+			   
+			]
+		}
 		}),
 		methods:{
 			...xueba,
 		},
 		onLoad() {
-			
-		},
-		onShow(){
 			this.studyTime=uni.getStorageSync('studyHours');
 			this.dailyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
 			this.weeklyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
 			this.toDOList=uni.getStorageSync('todoList');
 			this.item.totalTimes=uni.getStorageSync('days')
-			this.dailyAnalyse.series[0].data=uni.getStorageSync('data').dailyItem
+			this.dailyAnalyse.series[0].data=uni.getStorageSync('data').dailyItem?uni.getStorageSync('data').dailyItem:[]
+			// this.weeklyAnalyse=uni.getStorageSync('monthList')?uni.getStorageSync('monthList'):{}
+		},
+		onShow(){	
+			this.dailyAnalyse.series[0].data=uni.getStorageSync('data').dailyItem?uni.getStorageSync('data').dailyItem:[]
 		},
 		created(){
-			this.dailyAnalyse.series[0].data=uni.getStorageSync('data').dailyItem
+	
 		},
 		components: {
 		"chart-a": chart1,
