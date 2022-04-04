@@ -57,6 +57,12 @@ function getchicken () {
   })
 }
 
+function getpwd() { 
+  return service({
+    url: '/v1/iot/interaction/gdan',
+    method:'post'
+  })
+}
 
-export { getUserInfo, getOrder, getMendian, putInformation, getdynamic, chicken, getchicken }
+export { getUserInfo, getOrder, getMendian, putInformation, getdynamic, chicken, getchicken, getpwd}
 

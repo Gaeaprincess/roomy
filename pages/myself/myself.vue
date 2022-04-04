@@ -3,117 +3,82 @@
   <view>
     <view class="top_container">
       <view class="top">
-        <cover-image class="header_img"
-                     v-bind:src="all.avatar"></cover-image>
+        <cover-image class="header_img" v-bind:src="all.avatar"></cover-image>
         <view class="header_message">
-          <view class="header_name">{{all.username}}</view>
+          <view class="header_name">{{ all.username }}</view>
           <!-- <view class="vip"
                 v-show="is_pro">打卡</view> -->
-          <view class="phone">手机号：{{all.phone}}</view>
+          <view class="phone">手机号：{{ all.phone }}</view>
 
-          <view class="vip"
-                v-show="is_pro"
-                @click="click_chinken">
-            <button class="pre_button">打卡
-            </button>
+          <view class="vip" v-show="is_pro" @click="click_chinken">
+            <button class="pre_button">打卡</button>
           </view>
-          <view class="isvip"
-                v-show="!is_pro">
-            <button>已打卡
-            </button>
+          <view class="isvip" v-show="!is_pro">
+            <button>已打卡</button>
           </view>
         </view>
         <view class="clear"></view>
       </view>
     </view>
     <view class="banner">
-      <swiper autoplay="true"
-              indicator-dots="true"
-              circular="true"
-              easing-function="linear">
+      <swiper
+        autoplay="true"
+        indicator-dots="true"
+        circular="true"
+        easing-function="linear"
+      >
         <swiper-item class="a"></swiper-item>
         <swiper-item class="b"></swiper-item>
       </swiper>
     </view>
     <view class="bottom">
-      <view class="all_container"
-            @tap="goto_card">
+      <view class="all_container" @tap="goto_card">
         <view class="img_container">
-          <image src="/static/image/taocan.png"
-                 class="image_item"></image>
+          <image src="/static/image/taocan.png" class="image_item"></image>
         </view>
-        <view class="text_container">
-          卡券套餐
-        </view>
+        <view class="text_container"> 卡券套餐 </view>
       </view>
-      <view class="all_container"
-            @tap="goto_friends">
-        <view class="img_container  friend">
-          <image src="/static/image/goodfriends.png"
-                 class="image_item"></image>
+      <view class="all_container" @tap="goto_friends">
+        <view class="img_container friend">
+          <image src="/static/image/goodfriends.png" class="image_item"></image>
         </view>
-        <view class="text_container">
-          好友
-        </view>
+        <view class="text_container"> 好友 </view>
       </view>
-      <view class="all_container"
-            @tap="goto_vip">
-        <view class="img_container  VIP">
-          <image src="/static/image/vip_1.png"
-                 class="image_item"></image>
+      <view class="all_container" @tap="goto_vip">
+        <view class="img_container VIP">
+          <image src="/static/image/vip_1.png" class="image_item"></image>
         </view>
-        <view class="text_container">
-          打卡记录
-        </view>
+        <view class="text_container"> 打卡记录 </view>
       </view>
-      <view class="all_container"
-            @tap="goto_order">
+      <view class="all_container" @tap="goto_order">
         <view class="img_container">
-          <image src="/static/image/naozhong.png"
-                 class="image_item"></image>
+          <image src="/static/image/naozhong.png" class="image_item"></image>
         </view>
-        <view class="text_container">
-          我的预约
-        </view>
+        <view class="text_container"> 我的预约 </view>
       </view>
       <view class="all_container">
         <view class="img_container">
-          <image src="/static/image/zizhu.png"
-                 class="image_item"></image>
+          <image src="/static/image/zizhu.png" class="image_item"></image>
         </view>
-        <view class="text_container">
-          自助设备
-        </view>
+        <view class="text_container"> 自助设备 </view>
       </view>
-      <view class="all_container"
-            @tap="goto_shop">
+      <view class="all_container" @tap="goto_shop">
         <view class="img_container">
-          <image src="/static/image/shop.png"
-                 class="image_item"></image>
+          <image src="/static/image/shop.png" class="image_item"></image>
         </view>
-        <view class="text_container">
-          店铺收藏
-        </view>
+        <view class="text_container"> 店铺收藏 </view>
       </view>
-      <view class="all_container"
-            @tap="goto_dynamic">
+      <view class="all_container" @tap="goto_dynamic">
         <view class="img_container">
-          <image src="/static/image/dynatic.png"
-                 class="image_item"></image>
+          <image src="/static/image/dynatic.png" class="image_item"></image>
         </view>
-        <view class="text_container">
-          我的动态
-        </view>
+        <view class="text_container"> 我的动态 </view>
       </view>
-      <view class="all_container"
-            @tap="goto_gear">
+      <view class="all_container" @tap="goto_gear">
         <view class="img_container gear">
-          <image src="/static/image/gear.png"
-                 class="image_item"></image>
+          <image src="/static/image/gear.png" class="image_item"></image>
         </view>
-        <view class="text_container">
-          设置
-        </view>
+        <view class="text_container"> 设置 </view>
       </view>
     </view>
     <!-- <h2>{{count}}</h2> -->
@@ -121,16 +86,15 @@
 </template>
 
 <script>
-import * as myself from "@/api/myself.js"
+import * as myself from "@/api/myself.js";
 export default {
-  data () {
+  data() {
     return {
       all: {
         username: "",
         phone: "",
-
-        userid: '',
-        avatar: '/static/image/header_img.png'
+        userid: "",
+        avatar: "/static/image/header_img.png",
       },
       is_pro: true,
     };
@@ -138,7 +102,7 @@ export default {
   components: {},
   props: {},
   computed: {
-    date () {
+    date() {
       var date = new Date();
       var year = date.getFullYear();
       var month = date.getMonth() + 1;
@@ -150,16 +114,19 @@ export default {
         day = "0" + day;
       }
       return year + "-" + month + "-" + day;
-    }
+    },
   },
 
   onLoad: function (options) {
-    myself.getchicken()
-      .then(res => {
+    myself
+      .getchicken()
+      .then((res) => {
         console.log(res);
-        res.data[0] === this.date ? this.is_pro = false : this.is_pro = true
+        res.data[0] === this.date
+          ? (this.is_pro = false)
+          : (this.is_pro = true);
       })
-      .catch(err => err)
+      .catch((err) => err);
   },
   // computed: {
   //   count () {
@@ -169,97 +136,98 @@ export default {
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () { },
+  onReady: function () {},
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    myself.getUserInfo()
-      .then(res => {
+    myself
+      .getUserInfo()
+      .then((res) => {
         console.log(res);
-        this.all = res.data
+        this.all = res.data;
       })
-      .catch(err => err)
+      .catch((err) => err);
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () { },
+  onHide: function () {},
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () { },
+  onUnload: function () {},
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () { },
+  onPullDownRefresh: function () {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () { },
+  onReachBottom: function () {},
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () { },
+  onShareAppMessage: function () {},
   methods: {
-    click_chinken () {
-      myself.chicken()
+    click_chinken() {
+      myself
+        .chicken()
         .then((res) => {
-          this.is_pro = false
+          this.is_pro = false;
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
-        })
+        });
     },
-    goto_vip () {
+    goto_vip() {
       uni.navigateTo({
-        url: "/pagesC/vip/vip"
+        url: "/pagesC/vip/vip",
       });
     },
 
-    goto_gear () {
+    goto_gear() {
       uni.navigateTo({
-        url: "/pagesC/gear/gear"
+        url: "/pagesC/gear/gear",
       });
     },
 
-    goto_dynamic () {
+    goto_dynamic() {
       uni.navigateTo({
-        url: '/pagesC/dynamic/dynamic'
+        url: "/pagesC/dynamic/dynamic",
       });
     },
 
-    goto_shop () {
+    goto_shop() {
       uni.navigateTo({
-        url: "/pagesC/shop_1/shop"
+        url: "/pagesC/shop_1/shop",
       });
     },
 
-    goto_order () {
+    goto_order() {
       uni.navigateTo({
-        url: '/pagesC/order/order'
+        url: "/pagesC/order/order",
       });
     },
 
-    goto_card () {
+    goto_card() {
       uni.navigateTo({
-        url: '/pagesC/card/card'
+        url: "/pagesC/card/card",
       });
     },
 
-    goto_friends () {
+    goto_friends() {
       uni.navigateTo({
-        url: "/pagesC/friends/friends"
+        url: "/pagesC/friends/friends",
       });
-    }
-
-  }
+    },
+  },
 };
 </script>
 <style>

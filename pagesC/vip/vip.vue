@@ -1,37 +1,39 @@
 <template>
   <view class="top">
-    <time-line ref="timeline"
-               location="center"
-               title="我的时间轴"
-               :arr="arr"></time-line>
+    <time-line
+      ref="timeline"
+      location="center"
+      title="我的时间轴"
+      :arr="arr"
+    ></time-line>
   </view>
 </template>
 
 <script>
-import timeLine from '@/components/xuan-timeLine/xuan-timeLine.vue'
-import { getchicken } from '../../api/myself.js'
+import timeLine from "@/components/xuan-timeLine/xuan-timeLine.vue"
+import { getchicken } from "../../api/myself.js"
 export default {
-  data () {
+  data() {
     return {
-      arr: []
-    };
+      arr: [],
+    }
   },
 
   components: {
-    timeLine
+    timeLine,
   },
   props: {},
 
-  onLoad: function (options) {
-    getchicken()
-      .then(res => {
-        console.log(res);
-        this.arr = res.data;
-      })
+  onShow: function (options) {
+    getchicken().then((res) => {
+      console.log(res)
+      this.arr = res.data
+      console.log(this.arr)
+    })
   },
 
-  methods: {}
-};
+  methods: {},
+}
 </script>
 <style>
 page {
