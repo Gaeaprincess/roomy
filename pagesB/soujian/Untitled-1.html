@@ -1,0 +1,31 @@
+<div class="project-content-neirong">
+  <div v-for="content in artical.content" v-key="content.content">
+    <p v-if="content.type === 'paragraph'">
+      <span v-for="item in content.content" v-key="item.content">
+        <span :class="calcClass(item.style)">{{ item.content }}</span> 
+      </span>
+    </p>
+    <span v-if="content.type === 'image'">
+      <div class="img">
+        <img style="display:block;" :src="content.url" />
+        <div class="img-desc"> {{ content.desc }} </div>
+      </div>
+    </span>
+    <span v-if="content.type === 'reference'">
+      <span class="ref"> {{ content.content }} </span>
+    </span>
+    <span v-if="content.type === 'header'">
+      <h1> {{ content.content }} </h1>
+    </span>
+    <span v-if="content.type === 'ul'">
+      <ul>
+        <li v-for="item in content.items" v-key="item"> {{ item }} </li>
+      </ul>
+    </span>
+    <span v-if="content.type === 'ol'">
+      <ol>
+        <li v-for="item in content.items" v-key="item"> {{ item }} </li>
+      </ol>
+    </span>
+  </div>
+</div>

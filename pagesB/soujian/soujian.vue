@@ -4,6 +4,7 @@
 
 
     <view v-for="(item, index) in pinglun" :key="index" class="project-dongtai">
+      <!-- 个人信息 -->
     <view class="gerenxinxi">
         <image class="project-touxiang" :src="item.touxiang"></image>
         <view class="project-xinxi">
@@ -13,7 +14,7 @@
         <view class="jiaHaoYouBox">
                 <view class="huifu" @tap="isShow" :data-id="item.root_id" :data-name="item.huifuname" :data-comment_essay_id="item.pinglun_pr_id">回复</view>
         </view>
-    </view>
+    </view> 
     <view class="neirong">{{item.content}}</view>
     <view class="yuanwen">
         <image :src="item.photo"></image>
@@ -42,9 +43,12 @@
 import { addComment, getMyMessage, userInfo } from "../../mockData/TestData.js";
 import { getDongTai } from "../../mockData/DongTaiData.js";
 
+import huoqu from "../../api/community"
+
 export default {
   data() {
     return {
+      page:1,
       pinglun: [],
       content: '',
       root_id: null,
@@ -87,9 +91,19 @@ export default {
         pinglun: _1
       });
     });
+    this.getMyPost();
   },
 
   methods: {
+    // 我的帖子
+    getMyPost(){
+      const e = this.page;
+      console.log(this.page);
+      huoqu.myPost(e).then((res)=>{
+        console.log(res)
+      })
+    },
+
     contentChange(e) {
       this.setData({
         content: e.detail.value
