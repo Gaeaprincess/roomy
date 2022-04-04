@@ -3,44 +3,54 @@
     <view class="time-line">
       <!-- 标题 -->
       <view class="time-line-title">
-        {{title}}
+        {{ title }}
       </view>
       <!-- 时间轴 -->
-      <view class="time-line-container"
-            :class="addTypeClass">
+      <view class="time-line-container" :class="addTypeClass">
         <!-- 时间轴内容块列表 -->
         <view class="time-line-list">
-
           <!-- 时间轴内容块 -->
-          <view class="time-line-info"
-                :key="index"
-                :class="[layoutClass(index)]"
-                :id="'timeline'+index"
-                v-for="(item,index) of my_time_line_list">
-
+          <view
+            class="time-line-info"
+            :key="index"
+            :class="[layoutClass(index)]"
+            :id="'timeline' + index"
+            v-for="(item, index) of my_time_line_list"
+          >
             <!-- 内容块内容 -->
             <view class="line-info-content">
-
               <!-- 时间轴圆点 -->
-              <view class="line-on-round"
-                    :style="{ opacity: current[index]&&current[index].is=='ok'?1:0,top:'50px'}"
-                    :class="current[index]&&current[index].is=='ok'?comeani:''"></view>
+              <view
+                class="line-on-round"
+                :style="{
+                  opacity: current[index] && current[index].is == 'ok' ? 1 : 0,
+                  top: '50px',
+                }"
+                :class="
+                  current[index] && current[index].is == 'ok' ? comeani : ''
+                "
+              ></view>
 
-              <view class="info-content-wrap"
-                    :style="{ opacity: current[index]&&current[index].is=='ok'?1:0}"
-                    :class="current[index]&&current[index].is=='ok'?comeani:''">
+              <view
+                class="info-content-wrap"
+                :style="{
+                  opacity: current[index] && current[index].is == 'ok' ? 1 : 0,
+                }"
+                :class="
+                  current[index] && current[index].is == 'ok' ? comeani : ''
+                "
+              >
                 <!-- 标题 -->
                 <view class="info-title">
-                  {{item.tittle}}<span>{{item.title_span}}</span>
+                  {{ item.tittle }}<span>{{ item.title_span }}</span>
                 </view>
 
                 <!-- 内容 -->
                 <view class="info-content">
                   <!-- 内容 -->
-                  <view class="info-txt">{{item.content}}</view>
+                  <view class="info-txt">{{ item.content }}</view>
                 </view>
               </view>
-
             </view>
           </view>
         </view>
@@ -52,33 +62,33 @@
 <script>
 // import { log } from '../QS-tabs-wxs-list/js/config';
 export default {
-  data () {
+  data() {
     return {
       // 数据
       time_line_list: [
         {
-          tittle: '2015.11.11',
-          title_span: '匆匆',
-          content: '燕子去了，有再来的时候；杨柳枯了，有再青的时候。'
+          tittle: "2015.11.11",
+          title_span: "匆匆",
+          content: "燕子去了，有再来的时候；杨柳枯了，有再青的时候。",
         },
         {
-          tittle: '2016.11.11',
-          title_span: '日子',
-          content: '我不知道他们给了我多少日子'
+          tittle: "2016.11.11",
+          title_span: "日子",
+          content: "我不知道他们给了我多少日子",
         },
         {
-          tittle: '2017.11.11',
-          title_span: '你好',
-          content: '时间就像海绵里的水，只要愿挤，总还是有的。'
+          tittle: "2017.11.11",
+          title_span: "你好",
+          content: "时间就像海绵里的水，只要愿挤，总还是有的。",
         },
       ],
-      HEIGHT: 0,//屏幕高度
-      result: [],//监听的结果
-      current: [],//当前在屏幕内的
-      sum: 0,//加载完成个数
-      comeani: 'come-ani',//入场动画
-      isScroll: true,//是否加载动画
-    }
+      HEIGHT: 0, //屏幕高度
+      result: [], //监听的结果
+      current: [], //当前在屏幕内的
+      sum: 0, //加载完成个数
+      comeani: "come-ani", //入场动画
+      isScroll: true, //是否加载动画
+    };
   },
   props: {
     arr: {
@@ -86,70 +96,69 @@ export default {
     },
     location: {
       type: String,
-      default: 'center',
+      default: "center",
     },
     title: {
       type: String,
-      default: '时间轴'
+      default: "时间轴",
     },
   },
   computed: {
-    addTypeClass () {
+    addTypeClass() {
       let _class = "";
       let arrType = ["left", "right", "center"];
-      if (arrType.indexOf(this.location) !== -1 && this.location !== 'center') {
+      if (arrType.indexOf(this.location) !== -1 && this.location !== "center") {
         _class += this.location + "-time-line";
       }
       return _class;
     },
-    my_time_line_list () {
+    my_time_line_list() {
       let objarr = [];
-      let obj = new Object();
-      // return this.time_line_list;
-
       if (this.arr.length) {
-        this.arr.forEach(element => {
+        this.arr.forEach((element) => {
+          let obj = new Object();
           obj.tittle = element;
           obj.title_span = "打卡";
           obj.content = "加油呀!少年";
           objarr.push(obj);
         });
-        return objarr
+        return objarr;
       } else {
         return this.time_line_list;
-      };
-    }
+      }
+    },
   },
-  mounted () {
+  mounted() {
     this.init();
   },
   methods: {
-    init () {
+    init() {
       try {
         // 获取屏幕高度
         const res = uni.getSystemInfoSync();
         this.HEIGHT = res.screenHeight;
         // 添加标志位
         for (let i = 0; i < this.time_line_list.length; i++) {
-          this.current.push({ tag: 'timeline' + i, is: 'no' });
+          this.current.push({ tag: "timeline" + i, is: "no" });
         }
         // 开始获取位置信息
         this.getScroll();
       } catch (e) {
         // error
       }
-
     },
-    loadani () {
+    loadani() {
       for (let i = 0; i < this.result.length; i++) {
         for (let j = 0; j < this.result[i].info.length; j++) {
           // 是否没加载动画
-          if (this.current[j].is != 'ok') {
+          if (this.current[j].is != "ok") {
             // 是否进入视野
-            if (this.current[j].tag == this.result[i].info[j].tag &&
-              this.result[i].info[j].domTop + 90 < this.HEIGHT) {
+            if (
+              this.current[j].tag == this.result[i].info[j].tag &&
+              this.result[i].info[j].domTop + 90 < this.HEIGHT
+            ) {
               // 加载动画
-              this.current[j].is = 'ok';
+              this.current[j].is = "ok";
               this.sum = j + 1;
             }
           }
@@ -158,14 +167,18 @@ export default {
         this.result.splice(i, 1);
       }
       // 是否全部加载完成
-      if (this.sum == this.time_line_list.length) { this.isScroll = false; }
+      if (this.sum == this.time_line_list.length) {
+        this.isScroll = false;
+      }
     },
-    async getScroll () {
-      if (!this.isScroll) { return; }
+    async getScroll() {
+      if (!this.isScroll) {
+        return;
+      }
       let info = [];
       // 返回位置信息加入数组
       for (let i = 0; i < this.time_line_list.length; i++) {
-        await this.getNodeList('timeline' + i, i).then(res => {
+        await this.getNodeList("timeline" + i, i).then((res) => {
           info.push(res);
         });
       }
@@ -173,27 +186,30 @@ export default {
       // 加载动画
       this.loadani();
     },
-    getNodeList (id, i) {
+    getNodeList(id, i) {
       // 获取位置信息并返回
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         const query = uni.createSelectorQuery().in(this);
-        query.select('#' + id).boundingClientRect(data => {
-          // console.log("得到布局位置信息" + JSON.stringify(data));
-          // console.log("节点离页面顶部的距离为" + data.top);
-          resolve({ domInfo: data.height, domTop: data.top, tag: id })
-        }).exec();
+        query
+          .select("#" + id)
+          .boundingClientRect((data) => {
+            // console.log("得到布局位置信息" + JSON.stringify(data));
+            // console.log("节点离页面顶部的距离为" + data.top);
+            resolve({ domInfo: data.height, domTop: data.top, tag: id });
+          })
+          .exec();
       });
     },
     // 添加动画
-    layoutClass (index) {
+    layoutClass(index) {
       let _class = "";
-      if (this.location == 'center' && index % 2 != 0) {
-        _class = 'right-info';
+      if (this.location == "center" && index % 2 != 0) {
+        _class = "right-info";
       }
       return _class;
-    }
+    },
   },
-}
+};
 </script>
 
 <style lang="scss">
