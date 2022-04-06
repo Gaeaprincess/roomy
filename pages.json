@@ -3,7 +3,6 @@
 		{
 			"path": "pages/login/login",
 			"style": {
-
 				"enablePullDownRefresh": false
 			}
 		},
@@ -19,9 +18,7 @@
 		        "navigationBarTitleText": "",
 		        "enablePullDownRefresh": false
 		    }
-
 		},
-
 		{
 			"path": "pages/xueba/xueba",
 			"style": {
@@ -65,7 +62,7 @@
 		{
 			"path": "pages/community/community",
 			"style": {
-				"enablePullDownRefresh": false
+				"enablePullDownRefresh": true
 			}
 
 		},
@@ -75,10 +72,10 @@
 				"navigationBarTextStyle": "black",
 				"navigationBarTitleText": "智慧自习室",
 				"backgroundColor": "#eeeeee",
-				"backgroundTextStyle": "light"
+				"backgroundTextStyle": "light",
+				"enablePullDownRefresh": false
 			}
 		}
-
     ],
 	"permission": {
 		"scope.userLocation": {
