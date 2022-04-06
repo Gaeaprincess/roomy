@@ -39,6 +39,4 @@ export default {
     top: -20rpx;
     right: -20rpx;
 }
-
-
 </style>

@@ -7,6 +7,7 @@
                 <view class="project-nicheng">{{item.name}}</view>
                 <view class="shijian">{{item.shijian}}</view>
             </view>
+            <!-- 加好友 -->
             <view class="jiaHaoYouBox">
                 <navigator url="/pagesB/jiahaoyou/jiahaoyou">
                     <image class="jiahaoyou" src="../static/resources/jiahaoyou.png"></image>
@@ -366,30 +367,6 @@ export default {
       });
     },
 
-    // onLoad: function(option) {
-    //     var getId = option.id;
-    //     this.setData({
-    //      currentId: getId
-    //     });
-    //     // 读取所有的文章列表点赞缓存状态
-    //     var cache = wx.getStorageSync('cache_key');
-    //     if (cache) {
-    //      // 拿到所有缓存状态中的1个
-    //      var currentCache = cache[getId];
-    //      // 把拿到的缓存状态中的1个赋值给data中的collection，如果当前文章没有缓存状态，currentCache 的值就是 false，如果当前文章的缓存存在，那么 currentCache 就是有值的，有值的说明 currentCache 的值是 true
-    //      this.setData({
-    //       collection: currentCache
-    //      })
-    //     } else {
-    //      // 如果所有的缓存状态都不存在 就让不存在的缓存存在
-    //      var cache = {};
-    //      // 既然所有的缓存都不存在，那么当前这个文章点赞的缓存也不存在，我们可以把当前这个文章点赞的缓存值设置为 false
-    //      cache[getId] = false;
-    //      // 把设置的当前文章点赞放在整体的缓存中
-    //      wx.setStorageSync('cache_key',cache);
-    //     }
-    //    },
-    // 点击图片的点赞事件 这里使用的是同步的方式
     toCollect: function (event) {
       var cache = uni.getStorageSync('cache_key'); // 获取当前文章是否被点赞的缓存
 

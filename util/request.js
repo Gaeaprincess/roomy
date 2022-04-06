@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
 
-
 const service = axios.create({
 baseURL:'http://111.229.239.208:9986',
 timeout: 6000, // request timeout

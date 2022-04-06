@@ -1,5 +1,5 @@
 <template>
-<!--logs.wxml-->
+<!--logs.wxml日志-->
 <view class="container log-list">
   <block v-for="(log, index) in logs" :key="index">
     <text class="log-item">{{index + 1}}. {{log.date}}</text>
