@@ -71,6 +71,7 @@ export default {
       i: "",
       date: "",
       time: "",
+	  hour: 0,
 	  id:0,
       selected_idx: "",
 	  start:"",
@@ -111,10 +112,12 @@ export default {
       //   selected_idx: e.currentTarget.dataset.idx
       // });
 	  this.seat_id=id;
+	  // console.log(this.seat_id);
     },
 
     change_pay() {
 	  let j = this.selected_j+1;
+	  console.log(this.seat_id);
       uni.navigateTo({
         url: '/pagesA/pay/pay?' + "i=" + this.selected_i + "&j=" + j + "&date=" + this.date + "&time=" + this.time + "&seat_id=" +this.seat_id+"&start="+this.start+"&end="+this.end,
         events: {
@@ -151,23 +154,25 @@ export default {
 		})
 	},
 	getOcptime(date,time){
-		this.start=date+" "+time.substring(0,5);
-		this.end = date+" "+time.substring(6);
-		// console.log(this.start);
-		// console.log(this.end);
+		console.log(time);
+		this.start=date+" "+time;
 		   // 当前时间戳
 		this.start = parseInt(new Date(this.start).getTime()/1000);
-		this.end = parseInt(new Date(this.end).getTime()/1000);
+		// this.end = parseInt(new Date(this.end).getTime()/1000);
+		this.end = this.start + this.hour * 60 * 60;
+		console.log(this.start);
+		console.log("----"+this.end);
 	},
 	  statusSrc(item,i,j) {
 		  // console.log(item[0].status)
 		// console.log(this.start);
 		// console.log(this.end);
-		this.seat_id=item[0].seat_id;
-		  let arr=item[0].status;
+		// this.seat_id=item[j].seat_id;
+		  let arr=item[j].status;
 		  for (var idx in arr) {
 		  // console.log(parseInt(new Date(arr[idx].start_time).getTime()/1000) );
 			  if(arr[idx].status=="occupied" && (parseInt(new Date(arr[idx].start_time).getTime()/1000) < this.end && parseInt(new Date(arr[idx].end_time).getTime()/1000) > this.start) ){
+				  console.log("111111");
 				  return '../static/image/seat2.png';
 			  }
 		  }
@@ -186,7 +191,8 @@ export default {
     console.log(options);
     this.setData({
       date: options.date,
-      time: options.time
+      time: options.time,
+	  hour: options.hour,
     }); 
 	this.id=options.id;
 	// console.log(this.id)

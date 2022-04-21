@@ -114,15 +114,26 @@ export default {
     },
     my_time_line_list() {
       let objarr = [];
+<<<<<<< HEAD
       if (this.arr.length) {
         this.arr.forEach((element) => {
+=======
+      // return this.time_line_list;
+      if (this.arr.length) {
+        this.arr.forEach(element => {
+>>>>>>> 3a9f230c6e47e83c7413632f8e6cf22e297c0a92
           let obj = new Object();
           obj.tittle = element;
           obj.title_span = "打卡";
           obj.content = "加油呀!少年";
           objarr.push(obj);
         });
+<<<<<<< HEAD
         return objarr;
+=======
+        console.log(objarr);
+        return objarr
+>>>>>>> 3a9f230c6e47e83c7413632f8e6cf22e297c0a92
       } else {
         return this.time_line_list;
       }

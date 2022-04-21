@@ -36,12 +36,14 @@ export default {
     return {
       date: "2021-10-06",
       time: "06:00-09:00",
-      seat_i: ["JY", "JP", "YG"],
-      cost: "25",
+      seat_i: ["JY", "YG", "JP"],
+	  one_cost:"9",
+      cost: "",
       seat: "",
 	  seat_id:0,
 	  start:0,
-	  end:0
+	  end:0,
+	  hour:1
     };
   },
 
@@ -63,10 +65,15 @@ export default {
     }); 
 	this.seat_id=option.seat_id;
 	this.start=option.start;
-	this.end=option.end
+	this.end=option.end;
+	let hour_sjc = this.end - this.start;
+	console.log(hour_sjc);
+	this.hour = parseInt(hour_sjc/ ( 60 * 60));
 	// console.log(option.seat_id);
-	// console.log(option.start);
-	// console.log(option.end);
+	console.log(option.start);
+	console.log(option.end);
+	console.log("sjc"+this.hour);
+	this.cost = this.one_cost * this.hour;
   },
 
   /**

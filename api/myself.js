@@ -57,12 +57,19 @@ function getchicken () {
   })
 }
 
-function getpwd() { 
+function getfollower () {
   return service({
-    url: '/v1/iot/interaction/gdan',
-    method:'post'
+    url: `/v1/user/${id}/followers`,
+    method: 'get'
   })
 }
 
-export { getUserInfo, getOrder, getMendian, putInformation, getdynamic, chicken, getchicken, getpwd}
+function getfollowings () {
+  return service({
+    url: `/v1/user/${id}/followings`,
+    method: 'get'
+  })
+}
 
+
+export { getUserInfo, getOrder, getMendian, putInformation, getdynamic, chicken, getchicken, getfollower, getfollowings }

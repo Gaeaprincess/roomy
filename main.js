@@ -26,11 +26,8 @@ App.mpType = 'app'
 const app = new Vue({
   ...App,
 })
-
 app.$mount()
 
 Vue.prototype.$IsoToString = iso => {
     return new Date(iso).toLocaleString()
 }
-
-

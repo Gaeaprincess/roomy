@@ -1,262 +1,265 @@
 {
-	"pages": [
-		{
-			"path": "pages/index/index",
-			"style": {}
-		},
-		
-		{
-		    "path" : "pages/test/test",
-		    "style" :
-		    {
-		        "navigationBarTitleText": "",
-		        "enablePullDownRefresh": false
-		    }
-
-		},
-		{
-			"path": "pages/xueba/xueba",
-			"style": {
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/clock/clock",
-			"style": {
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/register/register",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/phoneLogin/phoneLogin",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "components/xueba-com/header",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/protocol/protocol",
-			"style": {
-				"navigationBarTitleText": "用户使用手册",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/community/community",
-			"style": {
-				"enablePullDownRefresh": true
-			}
-
-		},
-		{
-			"path": "pages/myself/myself",
-			"style": {
-				"navigationBarTextStyle": "black",
-				"navigationBarTitleText": "智慧自习室",
-				"backgroundColor": "#eeeeee",
-				"backgroundTextStyle": "light",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/login/login",
-			"style": {
-				"enablePullDownRefresh": false
-			}
-		}
-    ],
-	"permission": {
-		"scope.userLocation": {
-			"desc": "你的位置信息将用于小程序位置接口的效果展示"
-		}
-	},
-	"globalStyle": {
-		"navigationBarTitleText": "智慧自习室",
-		"navigationBarTextStyle": "black",
-		"navigationBarBackgroundColor": "#FFFFFF"
-	},
-	"optimization":{"subPackages":true},
-	"tabBar": {
-		"color": "#333333",
-		"selectedColor": "#F5D04B",
-		"borderStyle": "white",
-		"list": [{
-				"pagePath": "pages/index/index",
-				"iconPath": "static/icon/zixishi.png",
-				"selectedIconPath": "static/icon/zixishi_active.png",
-				"text": "自习室"
-			},
-			{
-				"pagePath": "pages/xueba/xueba",
-				"iconPath": "static/icon/xueba.png",
-				"selectedIconPath": "static/icon/xueba_active.png",
-				"text": "学霸模式"
-			},
-			{
-				"pagePath": "pages/community/community",
-				"iconPath": "static/icon/xueyouquan.png",
-				"selectedIconPath": "static/icon/xueyouquan_active.png",
-				"text": "学友圈"
-			},
-			{
-				"pagePath": "pages/myself/myself",
-				"iconPath": "static/icon/profile.png",
-				"selectedIconPath": "static/icon/profile_active.png",
-				"text": "我"
-			}
-		]
-	},
-	"subPackages": [
-		{
-			"root": "pagesA",
-			"pages": [{
-					"path": "shop/shop",
-					"style": {
-						"navigationBarTitleText": "选择门店"
-					}
-				},
-				{
-					"path": "bookseat/bookseat",
-					"style": {}
-				},
-				{
-					"path": "bookseat1/bookseat1",
-					"style": {
-						"navigationBarTitleText": "预约时间"
-					}
-				},
-				{
-					"path": "chooseseat/chooseseat",
-					"style": {
-						"navigationBarTitleText": "选座"
-					}
-				},
-				{
-					"path": "pay/pay",
-					"style": {
-						"navigationBarTitleText": "支付"
-					}
-				},
-				{
-					"path": "collect/collect",
-					"style": {}
-				},
-				{
-					"path": "aftercollect/aftercollect",
-					"style": {}
-				}
-			]
-			},
-			{
-				"root": "pagesB",
-				"pages": [{
-						"path": "Test/Test",
-						"style": {}
-					},
-					{
-						"path": "detail/detail",
-						"style": {
-							"navigationBarTitleText": "文章详情"
-						}
-					},
-					{
-						"path": "huati/huati",
-						"style": {
-							"navigationBarTitleText": "选择标签"
-						}
-					},
-					{
-						"path": "xinzeng/xinzeng",
-						"style": {
-							"navigationBarTitleText": "发布动态"
-						}
-					},
-					{
-						"path": "soujian/soujian",
-						"style": {
-							"navigationBarTitleText": "消息"
-						}
-					},
-					{
-						"path": "jiahaoyou/jiahaoyou",
-						"style": {
-							"navigationBarTitleText": "添加好友"
-						}
-					},
-					{
-						"path": "logs/logs",
-						"style": {
-							"navigationBarTitleText": "查看启动日志"
-						}
-					}
-				]
-			},
-			{
-				"root": "pagesC",
-				"pages": [{
-						"path": "info/index",
-						"style": {}
-					},
-					{
-						"path": "vip/vip",
-						"style": {}
-					},
-
-					{
-						"path": "gear/gear",
-						"style": {}
-					},
-					{
-						"path": "about_money/about_money",
-						"style": {}
-					},
-					{
-						"path": "customer_service/customer_service",
-						"style": {}
-					},
-					{
-						"path": "dynamic/dynamic",
-						"style": {}
-					},
-					{
-						"path": "shop_1/shop",
-						"style": {}
-					},
-					{
-						"path": "order/order",
-						"style": {}
-					},
-					{
-						"path": "card/card",
-						"style": {}
-					},
-					{
-						"path": "friends/friends",
-						"style": {}
-					}
-				    ,{
-                    "path" : "teste/teste",
-                    "style" :                                                                                    
-                {
-                    "navigationBarTitleText": "",
-                    "enablePullDownRefresh": false
-                }
-                
-                }
-            ]
-			}
-		]
-	}
+  "pages": [
+    {
+      "path": "pages/login/login",
+      "style": {
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/index/index",
+      "style": {}
+    },
+    {
+      "path": "pages/test/test",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/xueba/xueba",
+      "style": {
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/clock/clock",
+      "style": {
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/register/register",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/phoneLogin/phoneLogin",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "components/xueba-com/header",
+      "style": {
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/protocol/protocol",
+      "style": {
+        "navigationBarTitleText": "用户使用手册",
+        "enablePullDownRefresh": false
+      }
+    },
+    {
+      "path": "pages/community/community",
+      "style": {
+        "enablePullDownRefresh": true
+      }
+    },
+    {
+      "path": "pages/myself/myself",
+      "style": {
+        "navigationBarTextStyle": "black",
+        "navigationBarTitleText": "智慧自习室",
+        "backgroundColor": "#eeeeee",
+        "backgroundTextStyle": "light",
+        "enablePullDownRefresh": false
+      }
+    }
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
+    }
+  },
+  "globalStyle": {
+    "navigationBarTitleText": "智慧自习室",
+    "navigationBarTextStyle": "black",
+    "navigationBarBackgroundColor": "#FFFFFF"
+  },
+  "optimization": {
+    "subPackages": true
+  },
+  "tabBar": {
+    "color": "#333333",
+    "selectedColor": "#F5D04B",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/icon/zixishi.png",
+        "selectedIconPath": "static/icon/zixishi_active.png",
+        "text": "自习室"
+      },
+      {
+        "pagePath": "pages/xueba/xueba",
+        "iconPath": "static/icon/xueba.png",
+        "selectedIconPath": "static/icon/xueba_active.png",
+        "text": "学霸模式"
+      },
+      {
+        "pagePath": "pages/community/community",
+        "iconPath": "static/icon/xueyouquan.png",
+        "selectedIconPath": "static/icon/xueyouquan_active.png",
+        "text": "学友圈"
+      },
+      {
+        "pagePath": "pages/myself/myself",
+        "iconPath": "static/icon/profile.png",
+        "selectedIconPath": "static/icon/profile_active.png",
+        "text": "我"
+      }
+    ]
+  },
+  "subPackages": [
+    {
+      "root": "pagesA",
+      "pages": [
+        {
+          "path": "shop/shop",
+          "style": {
+            "navigationBarTitleText": "选择门店"
+          }
+        },
+        {
+          "path": "bookseat/bookseat",
+          "style": {}
+        },
+        {
+          "path": "bookseat1/bookseat1",
+          "style": {
+            "navigationBarTitleText": "预约时间"
+          }
+        },
+        {
+          "path": "chooseseat/chooseseat",
+          "style": {
+            "navigationBarTitleText": "选座"
+          }
+        },
+        {
+          "path": "pay/pay",
+          "style": {
+            "navigationBarTitleText": "支付"
+          }
+        },
+        {
+          "path": "collect/collect",
+          "style": {}
+        },
+        {
+          "path": "aftercollect/aftercollect",
+          "style": {}
+        }
+      ]
+    },
+    {
+      "root": "pagesB",
+      "pages": [
+        {
+          "path": "Test/Test",
+          "style": {}
+        },
+        {
+          "path": "detail/detail",
+          "style": {
+            "navigationBarTitleText": "文章详情"
+          }
+        },
+        {
+          "path": "huati/huati",
+          "style": {
+            "navigationBarTitleText": "选择标签"
+          }
+        },
+        {
+          "path": "xinzeng/xinzeng",
+          "style": {
+            "navigationBarTitleText": "发布动态"
+          }
+        },
+        {
+          "path": "soujian/soujian",
+          "style": {
+            "navigationBarTitleText": "消息"
+          }
+        },
+        {
+          "path": "jiahaoyou/jiahaoyou",
+          "style": {
+            "navigationBarTitleText": "添加好友"
+          }
+        },
+        {
+          "path": "logs/logs",
+          "style": {
+            "navigationBarTitleText": "查看启动日志"
+          }
+        }
+      ]
+    },
+    {
+      "root": "pagesC",
+      "pages": [
+        {
+          "path": "message/message",
+          "style": {}
+        },
+        {
+          "path": "info/index",
+          "style": {}
+        },
+        {
+          "path": "vip/vip",
+          "style": {}
+        },
+        {
+          "path": "gear/gear",
+          "style": {}
+        },
+        {
+          "path": "about_money/about_money",
+          "style": {}
+        },
+        {
+          "path": "customer_service/customer_service",
+          "style": {}
+        },
+        {
+          "path": "dynamic/dynamic",
+          "style": {}
+        },
+        {
+          "path": "shop_1/shop",
+          "style": {}
+        },
+        {
+          "path": "order/order",
+          "style": {}
+        },
+        {
+          "path": "card/card",
+          "style": {}
+        },
+        {
+          "path": "friends/friends",
+          "style": {}
+        },
+        {
+          "path": "teste/teste",
+          "style": {
+            "navigationBarTitleText": "",
+            "enablePullDownRefresh": false
+          }
+        }
+      ]
+    }
+  ]
+}
