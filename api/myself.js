@@ -59,7 +59,7 @@ function getchicken () {
 
 function getfollower () {
   return service({
-    url: `/v1/user/${id}/followings`,
+    url: `/v1/user/${id}/followers`,
     method: 'get'
   })
 }
