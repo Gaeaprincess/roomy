@@ -115,13 +115,25 @@
           设置
         </view>
       </view>
+      <view class="all_container"
+            @tap="goto_message">
+        <view class="img_container gear">
+          <image src="/static/image/message.png"
+                 class="image_item"></image>
+        </view>
+        <view class="text_container">
+          消息
+        </view>
+      </view>
     </view>
-    <!-- <h2>{{count}}</h2> -->
+    <mpopup ref="mpopup"
+            :isdistance="true"></mpopup>
   </view>
 </template>
 
 <script>
 import * as myself from "@/api/myself.js"
+import mpopup from '@/components/xuan-popup/xuan-popup.vue'
 export default {
   data () {
     return {
@@ -135,7 +147,9 @@ export default {
       is_pro: true,
     };
   },
-  components: {},
+  components: {
+    mpopup
+  },
   props: {},
   computed: {
     date () {
@@ -161,15 +175,12 @@ export default {
       })
       .catch(err => err)
   },
-  // computed: {
-  //   count () {
-  // return this.$store.state.count
-  // }
-  // },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () { },
+  onReady: function () {
+    this.pop("三条消息未读")
+  },
 
   /**
    * 生命周期函数--监听页面显示
@@ -257,8 +268,20 @@ export default {
       uni.navigateTo({
         url: "/pagesC/friends/friends"
       });
-    }
+    },
 
+    goto_message () {
+      uni.navigateTo({
+        url: "/pagesC/message/message"
+      });
+    },
+    pop: function (msg) {
+      this.$refs.mpopup.open({
+        type: 'success',
+        content: msg,
+        timeout: 2000,
+      });
+    }
   }
 };
 </script>

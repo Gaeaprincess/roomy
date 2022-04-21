@@ -65,32 +65,13 @@ export default {
       });
     getfollowings()
       .then(res => {
-        this.followings = res.data
+        this.followings = res.data;
       })
       .catch(err => {
         console.log(err);
       });
   },
-
-
   methods: {
-    // left() {
-    //   this.setData({
-    //     left: " ",
-    //     right: "right",
-    //     lianxiren: 'lianxiren',
-    //     friend: ' '
-    //   });
-    // },
-    // right() {
-    //   this.setData({
-    //     left: "left",
-    //     right: " ",
-    //     lianxiren: ' ',
-    //     friend: 'friend'
-    //   });
-    // }
-    // 分段器
     onClickItem (e) {
       // e:返回一个对象 {currentIndex: 1} 为currentIndex 0序
       if (this.current != e.currentIndex) {
