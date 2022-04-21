@@ -104,16 +104,16 @@ export default {
     },
     my_time_line_list () {
       let objarr = [];
-      let obj = new Object();
       // return this.time_line_list;
-
       if (this.arr.length) {
         this.arr.forEach(element => {
+          let obj = new Object();
           obj.tittle = element;
           obj.title_span = "打卡";
           obj.content = "加油呀!少年";
           objarr.push(obj);
         });
+        console.log(objarr);
         return objarr
       } else {
         return this.time_line_list;

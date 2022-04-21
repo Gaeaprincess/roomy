@@ -57,6 +57,20 @@ function getchicken () {
   })
 }
 
+function getfollower () {
+  return service({
+    url: `/v1/user/${id}/followings`,
+    method: 'get'
+  })
+}
 
-export { getUserInfo, getOrder, getMendian, putInformation, getdynamic, chicken, getchicken }
+function getfollowings () {
+  return service({
+    url: `/v1/user/${id}/followings`,
+    method: 'get'
+  })
+}
+
+
+export { getUserInfo, getOrder, getMendian, putInformation, getdynamic, chicken, getchicken, getfollower, getfollowings }
 

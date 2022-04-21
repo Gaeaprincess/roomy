@@ -1,97 +1,78 @@
 <template>
-<view>
-<view class="top"> 
-<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" styleType="button"
-			activeColor="#F5D04B"></uni-segmented-control>
-</view>
-<view class="friend" v-show="current ===0">
-    <view class="item">
-        <image src="../static/image/header_img.png" class="image"></image>
+  <view>
+    <view class="top">
+      <uni-segmented-control :current="current"
+                             :values="items"
+                             @clickItem="onClickItem"
+                             styleType="button"
+                             activeColor="#F5D04B"></uni-segmented-control>
+    </view>
+    <view class="friend"
+          v-show="current ===0">
+      <view class="item"
+            v-for="(item,index) in follower"
+            :key="index">
+        <image :src="item.avatar"
+               class="image"></image>
         <view class="content">
-            <view class="name">丹丹</view>
-            <view class="xiaoxi">在干哈</view>
-            <view class="time">上午12:12</view>
+          <view class="name">{{item.username}}</view>
+          <view class="xiaoxi"></view>
         </view>
+      </view>
+
     </view>
-    <view class="item">
-        <image src="../static/image/header_img.png" class="image"></image>
-        <view class="content">
-            <view class="name">丹丹</view>
-            <view class="xiaoxi">在干哈</view>
-            <view class="time">上午12:12</view>
-        </view>
+    <view class="lianxiren"
+          v-show="current ===1">
+      <view class="lianxiren_item"
+            v-for="(item,index) in followings"
+            :key="index">
+        <image :src="item.avatar"
+               class="lianxiren_image"></image>
+        <view class="lianxiren_name">{{item.username}}</view>
+      </view>
     </view>
-</view>
-<view class="lianxiren" v-show="current ===1">
-    <view class="lianxiren_item">
-        <image src="../static/image/header_img.png" class="lianxiren_image"></image>
-        <view class="lianxiren_name">丹丹</view>
-    </view>
-    <view class="lianxiren_item">
-        <image src="../static/image/header_img.png" class="lianxiren_image"></image>
-        <view class="lianxiren_name">霞霞</view>
-    </view>
-</view>
-</view>
+  </view>
 </template>
 
 <script>
-
+import { getfollower, getfollowings } from '@/api/myself.js'
 export default {
-  data() {
+  data () {
     return {
       // left: " ",
       // right: "right",
       // lianxiren: "lianxiren",
       // friend: " "
-	  //  分段器数据
-	  items: ["消息", "联系人"],
-	  current:0,
+      //  分段器数据
+      items: ["粉丝", "关注"],
+      current: 0,
+      follower: [],
+      followings: []
     };
   },
 
   components: {},
   props: {},
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    getfollower()
+      .then(res => {
+        this.follower = res.data
+        console.log(this.follower);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    getfollowings()
+      .then(res => {
+        this.followings = res.data
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {},
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {},
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {},
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {},
   methods: {
     // left() {
     //   this.setData({
@@ -109,121 +90,122 @@ export default {
     //     friend: 'friend'
     //   });
     // }
-	// 分段器
-	onClickItem(e) {
-		// e:返回一个对象 {currentIndex: 1} 为currentIndex 0序
-		if (this.current != e.currentIndex) {
-			this.current = e.currentIndex;
-		}
-	},
+    // 分段器
+    onClickItem (e) {
+      // e:返回一个对象 {currentIndex: 1} 为currentIndex 0序
+      if (this.current != e.currentIndex) {
+        this.current = e.currentIndex;
+      }
+    },
   }
 };
 </script>
 <style>
-page{
-    padding-top: 30rpx;
-    background-color: #F9F9F9;
+page {
+  padding-top: 30rpx;
+  background-color: #f9f9f9;
 }
-.top{
-    text-align: center;
-	margin-bottom: 20rpx;
+.top {
+  text-align: center;
+  margin-bottom: 20rpx;
 }
-.left,.right{
-    display: inline-block;
-    margin-bottom: 36rpx;
+.left,
+.right {
+  display: inline-block;
+  margin-bottom: 36rpx;
 }
-.left{
-    border-top-left-radius: 40rpx;
-    border-bottom-left-radius: 40rpx;
-    background-color: #F5D04B;
-    width: 160rpx;
-    height: 60rpx;
-    text-align: center;
-    line-height: 60rpx;
-    border: solid #F5D04B thin;
+.left {
+  border-top-left-radius: 40rpx;
+  border-bottom-left-radius: 40rpx;
+  background-color: #f5d04b;
+  width: 160rpx;
+  height: 60rpx;
+  text-align: center;
+  line-height: 60rpx;
+  border: solid #f5d04b thin;
 }
-.right{
-    border-top-right-radius: 40rpx;
-    border-bottom-right-radius: 40rpx;
-    background-color: #F5D04B;
-    width: 160rpx;
-    height: 60rpx;
-    text-align: center;
-    line-height: 60rpx;
-    border: solid #F5D04B thin;
+.right {
+  border-top-right-radius: 40rpx;
+  border-bottom-right-radius: 40rpx;
+  background-color: #f5d04b;
+  width: 160rpx;
+  height: 60rpx;
+  text-align: center;
+  line-height: 60rpx;
+  border: solid #f5d04b thin;
 }
-#left{
-    background-color: #fff;
+#left {
+  background-color: #fff;
 }
-#right{
-    background-color: #fff;
+#right {
+  background-color: #fff;
 }
-#friend{
-    display: none;
+#friend {
+  display: none;
 }
-#lianxiren{
-    display: none;
+#lianxiren {
+  display: none;
 }
-.friend{
-    background-color: #fff;
-    padding-bottom: 40rpx;
+.friend {
+  background-color: #fff;
+  padding-bottom: 40rpx;
 }
-.item{
-    height: 130rpx;
-    width: 654rpx;
-    margin: 0rpx auto;
-    padding-bottom: 20rpx;
-    padding-top: 20rpx;
+.item {
+  height: 130rpx;
+  width: 654rpx;
+  margin: 0rpx auto;
+  padding-bottom: 20rpx;
+  padding-top: 20rpx;
 }
-.image{
-    float: left;
-    margin-top: 20rpx;
-    margin-left: 20rpx;
-    margin-right: 40rpx;
-    height: 100rpx;
-    width: 100rpx;
-    border-radius: 70rpx;
+.image {
+  float: left;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  margin-right: 40rpx;
+  height: 100rpx;
+  width: 100rpx;
+  border-radius: 70rpx;
 }
-.content{
-    float: left;
-    width: 400rpx;
-    padding-bottom: 10rpx;
-    border-bottom: solid #bdbaba thin;
+.content {
+  float: left;
+  width: 400rpx;
+  padding-bottom: 10rpx;
+  border-bottom: solid #bdbaba thin;
 }
-.name{
-    margin-top: 20rpx;
+.name {
+  margin-top: 20rpx;
 }
-.xiaoxi{
-    margin-top: 20rpx;
+.xiaoxi {
+  margin-top: 20rpx;
 }
-.time{
-    float: right;
-    margin-top: -102rpx;
+.time {
+  float: right;
+  margin-top: -102rpx;
 }
-.lianxiren{
-    background-color: #fff;
-    padding-bottom: 40rpx;
+.lianxiren {
+  background-color: #fff;
+  padding-bottom: 40rpx;
 }
-.lianxiren_item{
-    height: 130rpx;
-    width: 654rpx;
-    margin: 0rpx auto;
-    padding-bottom: 20rpx;
-    padding-top: 20rpx;
+.lianxiren_item {
+  height: 130rpx;
+  width: 654rpx;
+  margin: 0rpx auto;
+  padding-bottom: 20rpx;
+  padding-top: 20rpx;
 }
-.lianxiren_image{
-    float: left;
-    margin-top: 20rpx;
-    margin-left: 20rpx;
-    margin-right: 40rpx;
-    height: 100rpx;
-    width: 100rpx;            
-    border-radius: 70rpx;
+.lianxiren_image {
+  float: left;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  margin-right: 40rpx;
+  height: 100rpx;
+  width: 100rpx;
+  border-radius: 70rpx;
 }
-.lianxiren_name{
-    float: left;
-    line-height: 120rpx;
-    width: 400rpx;
-    border-bottom: solid #bdbaba thin;
+.lianxiren_name {
+  float: left;
+  line-height: 120rpx;
+  width: 400rpx;
+  border-bottom: solid #bdbaba thin;
 }
 </style>
