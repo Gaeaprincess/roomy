@@ -11,7 +11,7 @@
 					<input type="text" placeholder="输入手机号码:" @blur="isFinish" v-model="userMsg.phone" @input="watchPhone">
 				</view>
 				<view>
-					<input type="text" placeholder="输入验证码:"@blur="isFinish" v-model="userMsg.code" @input="watchPhone"/>
+					<input type="text" placeholder="输入验证码:"@blur="isFinish" v-model="userMsg.code" @input="watchCode"/>
 					<button  class="getCodeBtn" ref="codeBtn" :disabled="!isSend" :class="isSend==true ? 'active':''" @click="sendCode">获取验证码</button>
 				</view>
 				<view>
@@ -28,18 +28,18 @@
 				<input type="text" placeholder="账号/手机号" v-model="userMsg.account" @blur="isFinish()" @input="watchPhone">
 			</view>
 			<view class="password">
-				<input :password="true" placeholder="密码" v-if="!isShowPWD" v-model="userMsg.password" @blur="isFinish()"/>
+				<input :password="true" placeholder="密码" v-if="!isShowPWD" v-model="userMsg.password" @blur="isFinish"/>
 				<input  placeholder="密码" v-else v-model="userMsg.password" @blur="isFinish()"/>
 				<view class="iconfont icon-yanjingbiyankaobei" v-if="! isShowPWD" @click="toggleIcon"></view>
 				<view class="iconfont icon-zhengyan" v-else @click="toggleIcon"></view>
 			</view>
 			<view class="footer">
 				<view><text @click="showVerificationBox">用验证码登录</text></view>
-				<view><text @click="findPass()">忘记密码</text></view>
+				<view><text @click="findPass">忘记密码</text></view>
 			</view>
 			<view class="button">
 				<button :disabled="!isFinished" :class="isFinished==true ? 'active':''" @click="loginByPwd">登录</button>
-				<button @click="goToRegister()">去注册</button>
+				<button @click="goToRegister">去注册</button>
 			</view>
 		</view>
 	</view>

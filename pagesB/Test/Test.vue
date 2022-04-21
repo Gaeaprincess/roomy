@@ -11,11 +11,9 @@
             <view class="shijian">{{ $IsoToString(topInfo.time) }}</view>
           </view>
           <!-- 添加好友功能 -->
-          <!-- <view class="jiaHaoYouBox">
-                <navigator url="/pagesB/jiahaoyou/jiahaoyou">
-                    <image class="jiahaoyou" src="../static/resources/jiahaoyou.png"></image>
-                </navigator>
-            </view> -->
+          <view class="jiaHaoYouBox">
+            <image class="jiahaoyou" @click="guanzhu" :src="isfollow?'../static/resources/guanzhu2.png':'../static/resources/guanzhu1.png'"></image>
+          </view>
         </view>
         <!-- 帖子内容 -->
         <view class="project-content">
@@ -80,7 +78,7 @@
             @click="rootClick"
             :data-user_info="j"
             @longtap="longtap(j.content)"
-            >{{ j.content.content }}</view
+            >{{ j.content }}</view
           >
         </view>
         <view class="xian2"></view>
@@ -133,6 +131,7 @@
 
 <script>
 import huoqu from "../../api/community.js";
+import { log } from '../../components/QS-tabs-wxs-list/js/config.js';
 
 export default {
   data() {
@@ -145,7 +144,13 @@ export default {
       isdianzan: false,
       focus: false,
       placeholder: "说亿点好听的",
+
+      // 关注用户
+      userId:1,
+      isfollow:false,
       // comment_text: null,
+
+
       //底部评论框内容
 
       now_reply_name: null,
@@ -165,8 +170,42 @@ export default {
       comment_id: this._1,
     });
     this.getThisPost(this._1);
+    this.userData();
   },
   methods: {
+    // 获取用户数据
+    userData(){
+      const id = this.userId;
+      huoqu.getUser(id).then((res)=>{
+        this.isfollow = res.data.is_following;
+      })
+    },
+    // 关注用户和取消
+    guanzhu(){
+      const w = this.isfollow;
+      const id = this.userId;
+      //  huoqu.attentionUser(id).then((res)=>{
+      //     this.isfollow=true;
+      //   })
+      if(!w){
+        huoqu.attentionUser(id).then((res)=>{
+          this.isfollow=true;
+        })
+      }else{
+        huoqu.unattentionUser(id).then((res)=>{
+        this.isfollow=false;
+        })
+      }
+    },
+
+    // 取消关注用户
+    // unguanzhu(){
+    //   const id = this.userId;
+    //   huoqu.unattentionUser(id).then((res)=>{
+    //     this.isfollow=false;
+    //   })
+    // },
+
     // 长按删除
     close() {
       this.$refs.alertDialog.close();
@@ -185,6 +224,22 @@ export default {
 
     // 回复帖子
     reply() {
+      console.log(this.comment_id,this._1);
+      if(this.comment_id!=this._1){
+         huoqu
+        .replyPost({
+          id: this.comment_id,
+          content: this.replycontent.content,
+        })
+        .then((res) => {
+          console.log(res), 
+          this.getThisPost(this._1)
+          this.setData({
+            comment_id:this._1,
+            replycontent:{},
+          })
+        });
+      }else{
       huoqu
         .replyPost({
           id: this.comment_id,
@@ -198,12 +253,14 @@ export default {
             replycontent:{},
           })
         });
+      }
     },
 
     // 展示文章详情
     getThisPost(e) {
       huoqu.getPostDetail(e).then((res) => {
         this.topInfo = res.data;
+        this.userId = res.data.author.userid;
       });
     },
 

@@ -1,6 +1,7 @@
 import request from "@/util/request.js"
 
 export default{
+
 	// 搜索
 	handleInputChange:function(obj){
 		return request({
@@ -79,5 +80,30 @@ export default{
 				page: e
 			}
 		})
-	}
+	},
+
+	// 关注用户
+	attentionUser:function(id){
+		return request({
+			url:`/v1/user/${id}/follow`,
+			method:'post'
+		})
+	},
+
+	// 取消关注用户
+	unattentionUser:function(id){
+		return request({
+			url:`/v1/user/${id}/unfollow`,
+			method:'post'
+		})
+	},
+
+	// 获取用户数据
+	getUser:function(id){
+		return request({
+			url:`/v1/user/${id}`,
+			method:'get'
+		})
+},
 }
+

@@ -8,13 +8,13 @@
 				<!-- <text class="content">门店：\n地址：\n设备设施：高级椅子， 真皮沙发，千兆WIFI 红酒</text> -->
 				<view class="content">
 					<view>
-						<text>门店：</text><view class="info"> 四川轻化工大学（宜宾校区）</view>
+						<text>门店：</text><view class="info"> {{imformation.name}}</view>
 					</view>
 					<view>
-						<text>地址：</text><view class="info">翠屏区白沙湾街道白塔路1号醉泉湖旁</view>
+						<text>地址：</text><view class="info">{{imformation.location}}</view>
 					</view>
 					<view>
-						<text>店内设施：</text><view class="info">高级椅子， 真皮沙发，千兆WIFI 红酒</view>
+						<text>店内设施：</text><view class="info">{{service}}</view>
 					</view>
 				</view>
 				<map class="map" :longitude="longitude" :latitude="latitude" show-location="true" @tap="map"></map>
@@ -27,7 +27,7 @@
 				</view>
 			</view>
 		<view class="navi">
-			<view class="col" @tap="col">
+			<view class="col" @tap="col(id)">
 				<view>
 					<image class="col_img" :src="img_src"> </image>
 				</view>
@@ -44,6 +44,13 @@
 	export default {
 		data() {
 			return {
+				id:0,
+				imformation:{
+				},
+				temp:{},
+				// name1:"",
+				// location:"",
+				service:"高级椅子， 真皮沙发，千兆WIFI 红酒",
 				longitude: '',
 				latitude: '',
 				img_src: "../static/image/col.png",
@@ -68,6 +75,106 @@
 				]
 			};
 		},
+		methods: {
+			tabChange(e) {
+				console.log('tab change', e);
+			},
+
+			map: function() {
+				uni.showLoading({
+					title: "定位中",
+					mask: true
+				});
+				var that = this;
+				uni.getLocation({
+					// type: 'gcj02',
+					altitude: true,
+					//高精度定位
+					//定位成功，更新定位结果
+					success: function(res) {
+						var latitudee = res.latitude;
+						var longitudee = res.longitude;
+						that.setData({
+							longitude: parseFloat(longitudee),
+							latitude: parseFloat(latitudee)
+						});
+					},
+					//定位失败回调
+					fail: function() {
+						uni.showToast({
+							title: "定位失败",
+							icon: "none"
+						});
+					},
+					complete: function() {
+						//隐藏定位中信息进度
+						uni.hideLoading();
+					}
+				});
+			},
+			col: function(id) {
+				
+				// let id = 1;
+				
+				// 查询数据库  
+				// console.log(this);
+
+				if (this.flag == false) {
+					//调用接口
+					collectAPI.setCollect(id).then(res => {
+						console.log(res);
+					}).catch(err => {
+						console.log(err);
+					})
+					
+					this.setData({
+						'img_src': "../static/image/col1.png",
+						flag: true
+					}), uni.showToast({
+						title: '收藏成功',
+						duration: 2500
+					}); // 修改数据库
+				} else {
+					//调用接口
+					collectAPI.setUncollect(id).then(res => {
+						console.log(res);
+					}).catch(err => {
+						console.log(err);
+					})
+					
+					this.setData({
+						'img_src': "../static/image/col.png",
+						flag: false
+					}), uni.showToast({
+						title: '取消收藏',
+						icon: 'error',
+						duration: 2500
+					}); // 修改数据库
+				}
+			},
+			reserve: function() {
+				uni.navigateTo({
+					url: '../bookseat/bookseat?id='+this.id,
+					fail:err=>{
+						console.log(err)
+					}
+				});
+			},
+			getCol(page) {
+				collectAPI.getCollect(page).then(res => {
+					console.log(res.data);
+					let item;
+					for(item of res.data) {
+						if (item.id == this.id) {
+							this.flag = true;
+							this.img_src="../static/image/col1.png"
+						}
+					}
+				}).then(err => {
+					// console.log(err);
+				})
+			},
+		},
 
 		components: {},
 		props: {},
@@ -75,7 +182,19 @@
 		/**
 		 * 生命周期函数--监听页面加载
 		 */
-		onLoad: function(options) {},
+		onLoad: function(options) {
+			var temp;
+			this.id = options.id;
+			console.log(this.id);
+			this.getCol(1);
+			const eventChannel = this.getOpenerEventChannel();
+				eventChannel.on('acceptData', function(data) {
+					console.log('------',data);
+					temp=data.data
+				})
+				this.imformation=temp
+				console.log('------',this.imformation);
+		},
 
 		/**
 		 * 生命周期函数--监听页面初次渲染完成
@@ -111,92 +230,6 @@
 		 * 用户点击右上角分享
 		 */
 		onShareAppMessage: function() {},
-		methods: {
-			tabChange(e) {
-				console.log('tab change', e);
-			},
-
-			map: function() {
-				uni.showLoading({
-					title: "定位中",
-					mask: true
-				});
-				var that = this;
-				uni.getLocation({
-					type: 'gcj02',
-					altitude: true,
-					//高精度定位
-					//定位成功，更新定位结果
-					success: function(res) {
-						var latitudee = res.latitude;
-						var longitudee = res.longitude;
-						that.setData({
-							longitude: parseFloat(longitudee),
-							latitude: parseFloat(latitudee)
-						});
-					},
-					//定位失败回调
-					fail: function() {
-						uni.showToast({
-							title: "定位失败",
-							icon: "none"
-						});
-					},
-					complete: function() {
-						//隐藏定位中信息进度
-						uni.hideLoading();
-					}
-				});
-			},
-			col: function() {
-				
-				// let id = 1;
-				
-				// 查询数据库  
-				// console.log(this);
-
-				if (this.flag == false) {
-					//调用接口
-					collectAPI.setCollect(1).then(res => {
-						console.log(res);
-					}).catch(err => {
-						console.log(err);
-					})
-					
-					this.setData({
-						'img_src': "../static/image/col1.png",
-						flag: true
-					}), uni.showToast({
-						title: '收藏成功',
-						duration: 2500
-					}); // 修改数据库
-				} else {
-					//调用接口
-					collectAPI.setUncollect(1).then(res => {
-						console.log(res);
-					}).catch(err => {
-						console.log(err);
-					})
-					
-					this.setData({
-						'img_src': "../static/image/col.png",
-						flag: false
-					}), uni.showToast({
-						title: '取消收藏',
-						icon: 'error',
-						duration: 2500
-					}); // 修改数据库
-				}
-			},
-			reserve: function() {
-				uni.navigateTo({
-					url: '../bookseat/bookseat',
-					fail:err=>{
-						console.log(err)
-					}
-				});
-			}
-		}
 	};
 </script>
 <style lang="scss" scoped>

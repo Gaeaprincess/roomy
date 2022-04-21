@@ -34,14 +34,15 @@
 </template>
 
 <script>
-
+import moment from 'moment'
 export default {
   data() {
     return {
       start: "开始时间",
       end: "结束时间",
       date: "",
-      time: ""
+      time: "",
+	  id:0,
     };
   },
 
@@ -52,14 +53,17 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var date = new Date();
-    var y = date.getFullYear();
-    var m = date.getMonth() + 1;
-    var d = date.getDate();
+	  
+    // var date = new Date();
+    // var y = date.getFullYear();
+    // var m = new DecimalFormat("00").format(date.getMonth() + 1);
+    // var d = date.getDate();
     this.setData({
-      date: y + "-" + m + "-" + d
+      // date: y + "-" + m + "-" + d
+	    date:moment(new Date()).format('YYYY-MM-DD'),
     });
     console.log(this.date); // console.log(time);
+	this.id=options.id;
   },
 
   /**
@@ -117,7 +121,7 @@ export default {
 
     appointments() {
       uni.redirectTo({
-        url: '/pagesA/bookseat/bookseat'
+        url: '/pagesA/bookseat/bookseat?id='+this.id
       });
     },
 
@@ -126,7 +130,7 @@ export default {
         time: this.start + "-" + this.end
       });
       uni.navigateTo({
-        url: '/pagesA/chooseseat/chooseseat?' + "date=" + this.date + "&time=" + this.time
+        url: '/pagesA/chooseseat/chooseseat?' + "date=" + this.date + "&time=" + this.time+"&id="+this.id
       });
     }
 

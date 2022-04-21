@@ -36,6 +36,7 @@
         placeholder="学友圈"
         placeholder-style="header-input-placeholder"
         @input="sousuoPost"
+        @blur="shijiao" 
       />
       <icon type="search" class="header-input-icon" v-if="showIcon"></icon>
       <!-- 轮播图 -->
@@ -88,7 +89,8 @@
                   class="yuedushuimage"
                   src="/static/resources/liulan.png"
                 ></image>
-                <view class="yuedushunum">{{ Math.round(Math.random()*500 + 1) }}</view>
+                <!-- <view class="yuedushunum">{{ Math.round(Math.random()*500 + 1) }}</view> -->
+                <view class="yuedushunum">66</view>
               </view>
             </view>
           </view>
@@ -145,6 +147,7 @@
     <block v-if="rankType === 'paihangbang'">
       <view class="title">月学时排行榜</view>
       <view v-for="(item, index) in paihangbang1" :key="index" class="qian">
+
         <view class="diyim">
           <image class="diyi" src="/static/resources/diyi.png"></image>
           <image class="yhtouxiang0" :src="item.touxiang"></image>
@@ -161,6 +164,7 @@
         <view class="shichang0">{{ item.time }}</view>
       </view>
 
+
       <view v-for="(item, index) in paihangbang3" :key="index" class="hou">
         <view class="mingci">{{ index + 4 }}</view>
         <image class="yhtouxiang" :src="item.touxiang"></image>
@@ -175,9 +179,12 @@
 // import {dongtai,updateDianZan } from '../../mockData/DongTaiData';
 import huoqu from "../../api/community.js";
 import { log } from "../../components/QS-tabs-wxs-list/js/config.js";
+
 export default {
   data() {
     return {
+      // 搜索框文字
+      ssvalue:"",
       like_by_me:false,
     //   postid: 0,
       showIcon: true,
@@ -249,6 +256,7 @@ export default {
   onLoad() {
     this.setData({ dongtai: this.dongtai });
     this.getArctile();
+
   },
 
   onShow() {
@@ -269,6 +277,7 @@ export default {
     // },
 
     //切换模式
+
     handleTypeChange(e) {
       const rankType = e.currentTarget.dataset.type;
       this.setData({
@@ -278,18 +287,33 @@ export default {
 
     // 搜索文章
     sousuoPost(e){
-        const value = e.detail.value;
-        console.log(value);
-        huoqu.handleInputChange({
-            keyword: value,
-            page:1
-        }).then((res)=>{
-            this.searchList = res.data;
-        });
-
+        this.ssvalue = e.detail.value;
+        console.log(this.ssvalue);
+        if(!this.ssvalue){
+          this.getArctile();
+          console.log(this.searchList);
+        }else{
+          huoqu.handleInputChange({
+              keyword: this.ssvalue,
+              page:1
+          }).then((res)=>{
+              this.searchList = res.data;
+              console.log(1111);
+              console.log(this.searchList);
+          });
+        }
         this.setData({
-            showIcon: value ? false : true,
+            showIcon: this.ssvalue ? false : true,
         });
+    },
+    // 搜索框失焦
+    shijiao(){
+      console.log(111)
+      if(!this.ssvalue){
+        console.log("ww")
+        this.searchList=null;
+        this.getArctile()
+      }
     },
 
     // 获取文章列表
@@ -320,7 +344,6 @@ export default {
     handlefenxiang() {
       uni.showActionSheet({
         itemList: ["分享到朋友圈", "分享到QQ", "分享到微博"],
-
         success(res) {
           console.log(res.tapIndex);
         },

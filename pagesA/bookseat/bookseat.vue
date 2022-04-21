@@ -22,8 +22,9 @@
 </template>
 
 <script>
-
+import moment from 'moment';
 export default {
+
   data() {
     return {
       // time:["1小时","2小时","3小时","4小时","5小时","6小时","7小时","8小时", "9小时","10小时"],
@@ -31,7 +32,8 @@ export default {
       cho_ti1: "cho_hour1",
       cho_ti2: "cho_hour2",
 	  date:"",
-	  time:""
+	  time:"",
+	  id:0
     };
   },
 
@@ -43,6 +45,7 @@ export default {
    */
   onLoad: function (options) {
     console.log(this);
+	this.id=options.id
   },
 
   /**
@@ -125,25 +128,19 @@ export default {
 
     appointments() {
       uni.redirectTo({
-        url: '/pagesA/bookseat1/bookseat1'
+        url: '/pagesA/bookseat1/bookseat1?id=' + this.id
       });
     },
 
     choose_seat() {
-    var date = new Date();
-    var y = date.getFullYear();
-    var m = date.getMonth() + 1;
-    var d = date.getDate();
-	var h = date.getHours(); var end_h = h + this.hour;
-	var min = date.getMinutes();
     this.setData({
-      date: y + "-" + m + "-" + d,
-	  time: h + ":" + min + "-" + end_h + ":" + min
+	  date:moment(new Date()).format('YYYY-MM-DD'),
+	  time:moment(new Date()).format('hh:mm:ss')
     });
     console.log(this.date);
     console.log(this.time);
       uni.navigateTo({
-        url: '/pagesA/chooseseat/chooseseat?' + "date=" + this.date + "&time=" + this.time
+        url: '/pagesA/chooseseat/chooseseat?' + "date=" + this.date + "&time=" + this.time +"&id="+this.id
       });
     }
 

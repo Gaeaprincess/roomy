@@ -1,159 +1,12 @@
-import chart1 from '../../components/Uchart/dailyTotal.vue'
-import chart2 from '@/components/Uchart/dailyDetail.vue'
-import chart3 from '@/components/Uchart/monthTotal.vue'
-import chart4 from '@/components/Uchart/monthDetail.vue'
+import {getId} from '../../util/uniqueId'
 export default {
-	data() {
-		return {
-			current: 0,
-			// 分段器选项数组
-			items: ["代办", "学习报告"],
-			//  用户的数据
-			item: {},
-			// 代办列表
-			toDOList: [],
-			toDoTime: 50,
-			totalTime: 120,
-			// 添加代办的对话框
-			isShowToDo: false,
-			showMasking: false,
-			newList: {
-				toToName: '',
-				study_target: "",
-				toDoTime: "",
-			},
-			isRefresh: true,
-			// 自定义时间
-			timeSetting: false,
-			showMasking2: false,
-			// 学习报告分段器
-			current1: 0,
-			// 环形统计图 日
-			dailyData: {
-				// 不用修改
-				"series": [{
-					"data": 1,
-					"color": "#F5D04B"
-				}]
-			},
-			// tabs标签数据
-			list: [{
-					title: '日'
-				},
-				{
-					title: '月'
-				},
-			],
-			// 环形统计图 日
-			dailyData: {
-				"series": [{
-					"data": 1,
-					"color": "#F5D04B"
-				}]
-			},
-			// 环形统计图 周
-			weeklyData: {
-				"series": [{
-					"data": 1,
-					"color": "#F5D04B"
-				}]
-			},
-			// 饼状图数据 日
-			dailyAnalyse: {
-				"series": [{
-					"data": [{
-							"name": "一班",
-							"value": 50
-						},
-						{
-							"name": "二班",
-							"value": 30
-						},
-						{
-							"name": "三班",
-							"value": 20
-						},
-						{
-							"name": "四班",
-							"value": 18
-						},
-						{
-							"name": "五班",
-							"value": 8
-						}
-					]
-				}]
-			},
-			// 环形图提示性文字 日
-			dailyTitle: {
-				// name是Strig类型
-				"name": "2",
-				"fontSize": 25,
-				"fontWeight": 500,
-				"color": "#F5D04B",
-				"offsetX": 0,
-				"offsetY": -5
-			},
-			// 环形图提示性文字 周
-			weeklyTitle: {
-				// name是Strig类型
-				"name": "2",
-				"fontSize": 25,
-				"fontWeight": 500,
-				"color": "#F5D04B",
-				"offsetX": 0,
-				"offsetY": -5
-			},
-			// 折线统计图数据  周
-			weeklyAnalyse: {
-				"categories": [
-					"2016",
-					"2017",
-					"2018",
-					"2019",
-					"2020",
-					"2021"
-				],
-				"series": [{
-					"data": [
-						35,
-						8,
-						25,
-						37,
-						0,
-						20
-					]
-				}]
-			}
-		}
-		},
-		onLoad() {
-				this.getUserInfo();
-				this.getToDolist();
-			},
-			components: {
-				"chart-a": chart1,
-				"chart-b": chart2,
-				"chart-c": chart3,
-				"chart-d": chart4
-			},
-			computed: {
-				// 把时间转化为小时
-				changeToHours() {
-					let decimals = (this.item.totalTime % 60) / 60;
-					let redix = this.fomatFloat(decimals, 2);
-					let hour = Math.floor(this.item.totalTime / 60);
-					return hour + redix;
-				}
-			},
-			methods: {
 				// 对用户学习时间进行处理
 				fomatFloat(num, n) {
 					var f = parseFloat(num);
 					if (isNaN(f)) {
 						return false;
 					}
-					f = Math.round(num * Math.pow(10, n)) / Math.pow(10, n); // n 幂   
+					f = Math.round(num * Math.pow(10, n)) / Math.pow(10, n); // n 幂
 					var s = f.toString();
 					var rs = s.indexOf('.');
 					//判定如果是整数，增加小数点再补0
@@ -195,35 +48,35 @@ export default {
 					//  Number类型
 					// console.log(typeof(this.item.totalTime))
 				},
-				//或取代办列表（待整合）
-				async getToDolist() {
-					const {
-						data: res
-					} = await this.$myRequest({
-						url: '/todo'
-					})
-					// 返回一个数组
-					this.toDOList = res;
+				//从缓存里面取 列表
+				 getToDolist() {
+					this.toDOList =uni.getStorageSync('data').list;
 				},
 				// 跳转至番茄页面
 				gotoClock(item) {
+					console.log(item)
 					uni.navigateTo({
 						url: '/pages/clock/clock?obj=' + encodeURIComponent(JSON.stringify(item))
 					})
 				},
 				// 根据id删除一个代办
 				async deletToDo(id) {
-					const {
-						data: res
-					} = await this.$myRequest({
-						url: `/todo/` + id,
-						method: 'delete'
-					})
+					// 取出代办
+					 let data=uni.getStorageSync('todoList');
+					 if(data){
+						 data=data.filter(item=>{
+							 if(item.id==id){
+								 return false
+							 }
+							 return true
+						 })
+					 }
+					uni.setStorageSync('todoList',data)
 					uni.showToast({
 						icon: "none",
 						title: "删除成功!"
 					})
-					this.getToDolist();
+					this.toDOList =uni.getStorageSync('todoList')?uni.getStorageSync('todoList'):[];
 				},
 				// 保存新建代办
 				async addNewList() {
@@ -243,25 +96,26 @@ export default {
 							title: '请选择代办目标'
 						});
 					}
+					let id=getId()
+					this.newList.id=id
 					// 四项内容都填了
-					this.$myRequest({
-						url: '/todo',
-						data: this.newList,
-						method: 'POST',
-						header: {
-							'content-type': 'application/x-www-form-urlencoded',
-						}
-					})
-					const {
-						data: res
-					} = await this.$myRequest({
-						url: '/todo'
-					})
-					this.toDOList = res;
+					let data=uni.getStorageSync('todoList')
+					console.log(data);
+					let list=[]
+					if(!data){
+						// data 为空
+						data=[]
+						data.unshift(this.newList)
+					}else {
+						data.unshift(this.newList)
+					}
+					uni.setStorageSync('todoList',data)
+					this.toDOList =uni.getStorageSync('todoList');
 					uni.showToast({
 						icon: "none",
 						title: "新建代办成功!"
 					})
+					this.newList.toToName=''
 					this.isShowToDo = false;
 					this.showMasking = false;
 				},
@@ -319,5 +173,4 @@ export default {
 				add() {
 					this.toDoTime += 10;
 				},
-			}
 	}
