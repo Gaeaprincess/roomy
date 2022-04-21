@@ -133,14 +133,16 @@ export default {
     },
 
     choose_seat() {
+		let curTime = new Date();
     this.setData({
-	  date:moment(new Date()).format('YYYY-MM-DD'),
-	  time:moment(new Date()).format('hh:mm:ss')
+	  date:moment(new Date()).format('YYYY-MM-DD'),//
+	  time:moment(new Date(curTime.setSeconds(curTime.getSeconds() + 10))).format('HH:mm:ss')
+	  // time:new Date()
     });
     console.log(this.date);
     console.log(this.time);
       uni.navigateTo({
-        url: '/pagesA/chooseseat/chooseseat?' + "date=" + this.date + "&time=" + this.time +"&id="+this.id
+        url: '/pagesA/chooseseat/chooseseat?' + "date=" + this.date + "&time=" + this.time + "&hour=" + this.hour +"&id="+this.id
       });
     }
 

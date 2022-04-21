@@ -42,6 +42,7 @@ export default {
       end: "结束时间",
       date: "",
       time: "",
+	  hour:0,
 	  id:0,
     };
   },
@@ -127,10 +128,13 @@ export default {
 
     choose_seat() {
       this.setData({
-        time: this.start + "-" + this.end
+        time: this.start,
       });
+	  this.hour = (new Date(this.date + " " +this.end).getTime() - new Date(this.date + " " +this.start).getTime())/(1000 * 60 * 60);
+	  // console.log(new Date (this.date + " " +this.start))
+	  console.log(this.hour);
       uni.navigateTo({
-        url: '/pagesA/chooseseat/chooseseat?' + "date=" + this.date + "&time=" + this.time+"&id="+this.id
+        url: '/pagesA/chooseseat/chooseseat?' + "date=" + this.date + "&time=" + this.time + "&hour=" + this.hour + "&id="+this.id
       });
     }
 
