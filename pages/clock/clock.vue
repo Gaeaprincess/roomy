@@ -257,11 +257,28 @@
           if(!data.dailyItem){
             dailyItem=[this.todoItem,]
           }else {
-            dailyItem=data.dailyItem
-            dailyItem.unshift(this.todoItem) //
+			  // 日代办有数据了
+			  try{
+				  //  this.todoItem.value
+				  data.dailyItem.forEach((item,index)=>{
+					  if(item.id==this.todoItem.id){
+						  let time=Number(item.value)+Number(this.todoItem.value)
+						  this.todoItem.value=time.toFixed(2)
+						  data.dailyItem.splice(index,1);
+						  throw new Error();
+					  }
+				  })
+				   throw new Error();
+			  }catch(e){
+				  // 头差
+				  dailyItem=data.dailyItem
+				  dailyItem.unshift(this.todoItem) //
+			  }
+			
           }
           // 有数据
         }
+		
         data.dailyItem=dailyItem
 		// console.log(data,222);
         uni.setStorageSync('data',data)
@@ -299,13 +316,15 @@
         let hour=Number(uni.getStorageSync('studyHours'))
         const time=(this.flag.tomatoTime-this.remainTime)/1000/60/60 // 小时  number
         this.todoItem.value=(time*60).toFixed(2) // 分
-        hour=Number(hour)+time.toFixed(2) // 字符串
+        hour=Number(hour)+Number(time.toFixed(2)) // 字符串
         uni.setStorageSync('studyHours',hour)
       }
 		},
 		onLoad(option) {
 			this.item = JSON.parse(decodeURIComponent(option.obj));// 接受参数
+			console.log("代办数据：",this.item);
       		this.todoItem.name=this.item.toToName
+			this.todoItem.id=this.item.id;
       		this.t1 = this.item.toDoTime;
 			// 将传来的时间字符串改为数字
 			this.flag.tomatoTime = this.changeTimeFM(this.item.toDoTime);

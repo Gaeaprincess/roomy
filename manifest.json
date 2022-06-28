@@ -56,10 +56,10 @@
             "minified" : true
         },
         "usingComponents" : true,
-        "permission" : {
-            "scope.userLocation" : {
-                "desc" : ""
-            }
+        "permission": {
+          "scope.userLocation": {
+            "desc": "您的位置信息用于快速录入检查地点"
+          }
         }
     },
     "mp-alipay" : {

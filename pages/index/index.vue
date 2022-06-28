@@ -39,7 +39,7 @@
 	export default {
 		data() {
 			return {
-				region: ['四川省', '宜宾市', '翠屏区'],
+				region: ['四川省', '乐山市', '市中区'],
 				// customItem: '全部',
 				list: [
 					// {

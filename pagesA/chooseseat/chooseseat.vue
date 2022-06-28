@@ -41,9 +41,9 @@
     <view v-for="(item,key,i) in selectbot"  class="display">
         <text class="display_txt">{{key}}</text>
         <view class="seats">
-            <view v-for="(it, j) in item" :key="j" class="one_seat" @tap="itemClick" :data-idx-i="i" :data-idx-j="j">
-                <image :src="statusSrc(item,i,j)" class="seat_icon" :data-idx="index" @tap="changeseat(item[j].seat_id)"></image>
-                <text class="seat_txt">{{it.idx}}</text>
+            <view v-for="(it,j) in item" :key="j" class="one_seat" @tap="itemClick" :data-idx-i="item[j].seat_id" :data-idx-j="j">
+                <image :src="statusSrc(item,item[j].seat_id,j)" class="seat_icon" :data-idx="index" @tap="changeseat(item[j].seat_id)"></image>
+                <text class="seat_txt">{{item[j].seat_id}}</text>
             </view>
         </view> 
     </view>
@@ -84,7 +84,7 @@ export default {
      * 生命周期函数--监听页面加载
      */
     itemClick(e) {
-      // console.log(e);
+      console.log(e);
       let _1 = e.currentTarget.dataset.idxI;
       let _2 = e.currentTarget.dataset.idxJ;
 
@@ -119,7 +119,7 @@ export default {
 	  let j = this.selected_j+1;
 	  console.log(this.seat_id);
       uni.navigateTo({
-        url: '/pagesA/pay/pay?' + "i=" + this.selected_i + "&j=" + j + "&date=" + this.date + "&time=" + this.time + "&seat_id=" +this.seat_id+"&start="+this.start+"&end="+this.end,
+        url: '/pagesA/pay/pay?' + "i=" + this.seat_id + "&j=" + j + "&date=" + this.date + "&time=" + this.time + "&seat_id=" +this.seat_id+"&start="+this.start+"&end="+this.end,
         events: {
           // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
           acceptDataFromOpenedPage: function (data) {
@@ -169,14 +169,20 @@ export default {
 		// console.log(this.end);
 		// this.seat_id=item[j].seat_id;
 		  let arr=item[j].status;
+		  console.log(arr)
 		  for (var idx in arr) {
+			  // console.log(arr[idx].status);
 		  // console.log(parseInt(new Date(arr[idx].start_time).getTime()/1000) );
 			  if(arr[idx].status=="occupied" && (parseInt(new Date(arr[idx].start_time).getTime()/1000) < this.end && parseInt(new Date(arr[idx].end_time).getTime()/1000) > this.start) ){
-				  console.log("111111");
+				  // console.log("111111");
 				  return '../static/image/seat2.png';
 			  }
 		  }
+		  console.log(i);
+		  console.log(j);
+		  console.log(this.selected_j);
 		  if(i === this.selected_i && j === this.selected_j){
+			  // console.log("yuqing");
 			  return '../static/image/seat1.png';
 		  }
 		  return '../static/image/seat.png';

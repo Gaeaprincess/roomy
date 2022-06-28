@@ -57,6 +57,17 @@ function getchicken () {
   })
 }
 
+function getpwd (token) {
+  return service({
+    url: '/v1/iot/interaction/gdan',
+    method: 'post',
+    data: {
+      "session": token
+    }
+  })
+}
+
+
 function getfollower () {
   return service({
     url: `/v1/user/${id}/followers`,
@@ -71,5 +82,70 @@ function getfollowings () {
   })
 }
 
+function postunfollow (id) {
+  return service({
+    url: `/v1/user/${id}/unfollow`,
+    method: 'post'
+  })
+}
 
-export { getUserInfo, getOrder, getMendian, putInformation, getdynamic, chicken, getchicken, getfollower, getfollowings }
+function postrecharge (amount) {
+  return service({
+    url: `/v1/subscription/recharge`,
+    method: 'post',
+    data: {
+      "amount": amount
+    }
+  })
+}
+
+function poststartcount (obj) {
+  return service({
+    url: `/v1/session/commence`,
+    method: 'post',
+    data: {
+      "timestamp": obj.timestamp,
+      "session": obj.session
+    }
+  })
+}
+
+
+function getmoney () {
+  return service({
+    url: `/v1/order/all?page=1&&limit=100`,
+    method: 'get',
+  })
+}
+
+
+function setprice (id) {
+  return service({
+    url: '/v1/callbacks/pay_debug',
+    method: 'post',
+    data: {
+      "order_id": id
+    }
+  })
+}
+
+
+function stopcharge (obj) {
+  return service({
+    url: '/v1/session/end',
+    method: 'post',
+    data: {
+      "timestamp": obj.timestamp,
+      "session": obj.session
+    }
+  })
+}
+
+function getnotification () {
+  return service({
+    url: `/v1/notification/notifications?page=1&&limit=10`,
+    method: 'get',
+  })
+}
+
+export { getUserInfo, getOrder, getMendian, putInformation, getdynamic, chicken, getchicken, getfollower, getfollowings, getpwd, postunfollow, postrecharge, poststartcount, getmoney, setprice, stopcharge, getnotification }

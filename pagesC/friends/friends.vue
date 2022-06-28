@@ -29,21 +29,24 @@
         <image :src="item.avatar"
                class="lianxiren_image"></image>
         <view class="lianxiren_name">{{item.username}}</view>
+        <view class="cancel"
+              @click="unfollow(item.userid)">
+          取消关注
+        </view>
       </view>
     </view>
+    <mpopup ref="mpopup"
+            :isdistance="true"></mpopup>
   </view>
 </template>
 
 <script>
-import { getfollower, getfollowings } from '@/api/myself.js'
+import { getfollower, getfollowings, postunfollow } from '@/api/myself.js'
+import mpopup from "@/components/xuan-popup/xuan-popup.vue";
+import { log } from '../../components/QS-tabs-wxs-list/js/config';
 export default {
   data () {
     return {
-      // left: " ",
-      // right: "right",
-      // lianxiren: "lianxiren",
-      // friend: " "
-      //  分段器数据
       items: ["粉丝", "关注"],
       current: 0,
       follower: [],
@@ -51,14 +54,15 @@ export default {
     };
   },
 
-  components: {},
+  components: {
+    mpopup
+  },
   props: {},
 
   onLoad: function (options) {
     getfollower()
       .then(res => {
         this.follower = res.data
-        console.log(this.follower);
       })
       .catch(err => {
         console.log(err);
@@ -66,18 +70,45 @@ export default {
     getfollowings()
       .then(res => {
         this.followings = res.data;
+        console.log(this.followings);
       })
       .catch(err => {
         console.log(err);
       });
   },
   methods: {
+    pop: function (msg) {
+      this.$refs.mpopup.open({
+        type: "success",
+        content: msg,
+        timeout: 2000,
+      });
+    },
     onClickItem (e) {
-      // e:返回一个对象 {currentIndex: 1} 为currentIndex 0序
       if (this.current != e.currentIndex) {
         this.current = e.currentIndex;
       }
     },
+    unfollow (id) {
+      //调用取消关注的接口
+      postunfollow(id)
+        .then(res => {
+          //取消成功，给予提示
+          this.pop("取消关注成功");
+          //刷新页面
+          getfollowings()
+            .then(res => {
+              this.followings = res.data;
+              console.log(this.followings);
+            })
+            .catch(err => {
+              console.log(err);
+            });
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
   }
 };
 </script>
@@ -188,5 +219,17 @@ page {
   line-height: 120rpx;
   width: 400rpx;
   border-bottom: solid #bdbaba thin;
+}
+
+.cancel {
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 20px;
+  /* background-color: red; */
+  float: right;
+  margin-top: -80px;
+  margin-right: 100px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px,
+    rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 </style>

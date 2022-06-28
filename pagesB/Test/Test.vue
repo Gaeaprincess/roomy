@@ -165,18 +165,20 @@ export default {
   },
 
   onLoad: function (options) {
+	  console.log(options)
     this._1 = parseInt(options.id);
     this.setData({
       comment_id: this._1,
     });
     this.getThisPost(this._1);
-    this.userData();
+	console.log(this.userId)
   },
   methods: {
     // 获取用户数据
     userData(){
       const id = this.userId;
       huoqu.getUser(id).then((res)=>{
+		console.log(res.data);
         this.isfollow = res.data.is_following;
       })
     },
@@ -261,6 +263,7 @@ export default {
       huoqu.getPostDetail(e).then((res) => {
         this.topInfo = res.data;
         this.userId = res.data.author.userid;
+		this.userData();
       });
     },
 

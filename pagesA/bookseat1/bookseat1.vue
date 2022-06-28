@@ -4,9 +4,9 @@
     <image class="layout" src="../static/image/layout.png"></image>
     <view class="rect">
 
-        <view class="notselected" @tap="appointments">立即订座</view>
+        <view class="notselected" @tap="appointments">立即入座</view>
         <view class="selected">
-            <view class="selected_txt">预约入座</view>
+            <view class="selected_txt">预约订座</view>
             <view class="stripe"></view>
         </view>
     </view>

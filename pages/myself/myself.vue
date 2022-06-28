@@ -3,17 +3,21 @@
   <view>
     <view class="top_container">
       <view class="top">
-        <cover-image class="header_img" v-bind:src="all.avatar"></cover-image>
+        <cover-image class="header_img"
+                     v-bind:src="all.avatar"></cover-image>
         <view class="header_message">
           <view class="header_name">{{ all.username }}</view>
           <!-- <view class="vip"
                 v-show="is_pro">打卡</view> -->
           <view class="phone">手机号：{{ all.phone }}</view>
 
-          <view class="vip" v-show="is_pro" @click="click_chinken">
+          <view class="vip"
+                v-show="is_pro"
+                @click="click_chinken">
             <button class="pre_button">打卡</button>
           </view>
-          <view class="isvip" v-show="!is_pro">
+          <view class="isvip"
+                v-show="!is_pro">
             <button>已打卡</button>
           </view>
         </view>
@@ -21,62 +25,97 @@
       </view>
     </view>
     <view class="banner">
-      <swiper
-        autoplay="true"
-        indicator-dots="true"
-        circular="true"
-        easing-function="linear"
-      >
-        <swiper-item class="a"></swiper-item>
-        <swiper-item class="b"></swiper-item>
+      <swiper autoplay="true"
+              indicator-dots="true"
+              circular="true"
+              easing-function="linear">
+        <swiper-item :class="class_obj">
+          <view class="tip"
+                v-show="is_show">
+            <h4>即将使用</h4>
+            <view>预约日期：{{ pre_message[0].start_time.slice(0, pre_message[0].start_time.indexOf("T")) }}</view>
+            <view>预约时间：{{
+            pre_message[0].start_time.substring(
+              pre_message[0].start_time.indexOf("T") + 1,
+              pre_message[0].start_time.indexOf("T") + 6
+            )
+          }}-{{
+            pre_message[0].end_time.substring(
+              pre_message[0].end_time.indexOf("T") + 1,
+              pre_message[0].end_time.indexOf("T") + 6
+            )
+          }}</view>
+            <view>座位：JY11</view>
+            <button class="mybutton"
+                    @click="goto_order">去使用</button>
+          </view>
+
+        </swiper-item>
+		<swiper-item class="a"></swiper-item>
+		<swiper-item class="b"></swiper-item>
       </swiper>
     </view>
     <view class="bottom">
-      <view class="all_container" @tap="goto_card">
+      <view class="all_container"
+            @tap="goto_card">
         <view class="img_container">
-          <image src="/static/image/taocan.png" class="image_item"></image>
+          <image src="/static/image/taocan.png"
+                 class="image_item"></image>
         </view>
         <view class="text_container"> 卡券套餐 </view>
       </view>
-      <view class="all_container" @tap="goto_friends">
+      <view class="all_container"
+            @tap="goto_friends">
         <view class="img_container friend">
-          <image src="/static/image/goodfriends.png" class="image_item"></image>
+          <image src="/static/image/goodfriends.png"
+                 class="image_item"></image>
         </view>
         <view class="text_container"> 好友 </view>
       </view>
-      <view class="all_container" @tap="goto_vip">
+      <view class="all_container"
+            @tap="goto_vip">
         <view class="img_container VIP">
-          <image src="/static/image/vip_1.png" class="image_item"></image>
+          <image src="/static/image/vip_1.png"
+                 class="image_item"></image>
         </view>
         <view class="text_container"> 打卡记录 </view>
       </view>
-      <view class="all_container" @tap="goto_order">
+      <view class="all_container"
+            @tap="goto_order">
         <view class="img_container">
-          <image src="/static/image/naozhong.png" class="image_item"></image>
+          <image src="/static/image/naozhong.png"
+                 class="image_item"></image>
         </view>
         <view class="text_container"> 我的预约 </view>
       </view>
       <view class="all_container">
         <view class="img_container">
-          <image src="/static/image/zizhu.png" class="image_item"></image>
+          <image src="/static/image/zizhu.png"
+                 class="image_item"></image>
         </view>
         <view class="text_container"> 自助设备 </view>
       </view>
-      <view class="all_container" @tap="goto_shop">
+      <view class="all_container"
+            @tap="goto_shop">
         <view class="img_container">
-          <image src="/static/image/shop.png" class="image_item"></image>
+          <image src="/static/image/shop.png"
+                 class="image_item"></image>
         </view>
         <view class="text_container"> 店铺收藏 </view>
       </view>
-      <view class="all_container" @tap="goto_dynamic">
+      <view class="all_container"
+            @tap="goto_dynamic">
         <view class="img_container">
-          <image src="/static/image/dynatic.png" class="image_item"></image>
+          <image src="/static/image/dynatic.png"
+                 class="image_item"></image>
         </view>
         <view class="text_container"> 我的动态 </view>
       </view>
-      <view class="all_container" @tap="goto_gear">
+      <view class="all_container"
+            @tap="goto_gear">
         <view class="img_container gear">
-          <image src="/static/image/gear.png" class="image_item"></image>
+          <image src="/static/image/gear.png"
+                 class="image_item"></image>
         </view>
         <view class="text_container"> 设置 </view>
       </view>
@@ -97,14 +136,12 @@
 </template>
 
 <script>
-<<<<<<< HEAD
-import * as myself from "@/api/myself.js";
-=======
+
 import * as myself from "@/api/myself.js"
 import mpopup from '@/components/xuan-popup/xuan-popup.vue'
->>>>>>> 3a9f230c6e47e83c7413632f8e6cf22e297c0a92
+
 export default {
-  data() {
+  data () {
     return {
       all: {
         username: "",
@@ -113,6 +150,13 @@ export default {
         avatar: "/static/image/header_img.png",
       },
       is_pro: true,
+      pre_message: [{
+        start_time: '10',
+        end_time: '10',
+        timestamp: 9999999999999
+      }],
+      is_show: false,
+      class_obj: 'a'
     };
   },
   components: {
@@ -120,7 +164,7 @@ export default {
   },
   props: {},
   computed: {
-    date() {
+    date () {
       var date = new Date();
       var year = date.getFullYear();
       var month = date.getMonth() + 1;
@@ -133,9 +177,12 @@ export default {
       }
       return year + "-" + month + "-" + day;
     },
+    timestamp () {
+      return Date.parse(new Date());
+    },
   },
-
   onLoad: function (options) {
+    //判断是否打卡
     myself
       .getchicken()
       .then((res) => {
@@ -145,17 +192,46 @@ export default {
           : (this.is_pro = true);
       })
       .catch((err) => err);
+    myself.getOrder()
+      .then(res => {
+        let date;
+        console.log("====");
+        if (res.data.length > 0) {
+          res.data.forEach((element) => {
+            date = new Date(
+              element.start_time.slice(0, element.start_time.indexOf("T")) +
+              " " +
+              element.start_time.substring(
+                element.start_time.indexOf("T") + 1,
+                element.start_time.indexOf("T") + 6
+              )
+            );
+            //放入时间戳
+            element.timestamp = date.getTime();
+            if (date.getTime() > this.timestamp) {
+              this.pre_message.pop();
+              this.pre_message.push(element);
+            }
+          });
+        }
+
+        if (this.pre_message[0].timestamp != 9999999999999) {
+          console.log('出战');
+          this.is_show = true;
+          this.class_obj = 'false';
+        }
+      })
+    this.pre_message.sort(function (a, b) {
+      return a.timestamp - b.timestamp
+    })
+
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-<<<<<<< HEAD
-  onReady: function () {},
-=======
   onReady: function () {
     this.pop("三条消息未读")
   },
->>>>>>> 3a9f230c6e47e83c7413632f8e6cf22e297c0a92
 
   /**
    * 生命周期函数--监听页面显示
@@ -168,34 +244,58 @@ export default {
         this.all = res.data;
       })
       .catch((err) => err);
+
+    // myself.getOrder()
+    //   .then(res => {
+    //     let date;
+    //     console.log(res.data);
+    //     res.data.forEach((element) => {
+    //       date = new Date(
+    //         element.start_time.slice(0, element.start_time.indexOf("T")) +
+    //         " " +
+    //         element.start_time.substring(
+    //           element.start_time.indexOf("T") + 1,
+    //           element.start_time.indexOf("T") + 6
+    //         )
+    //       );
+    //       element.timestamp = date.getTime();
+    //       if (date.getTime() > this.timestamp) {
+    //         this.pre_message.push(element);
+    //       }
+    //     });
+    //     // this.pre_message.reverse();
+    //   })
+    // this.pre_message.sort(function (a, b) {
+    //   return a.timestamp - b.timestamp
+    // })
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {},
+  onHide: function () { },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {},
+  onUnload: function () { },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {},
+  onPullDownRefresh: function () { },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {},
+  onReachBottom: function () { },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {},
+  onShareAppMessage: function () { },
   methods: {
-    click_chinken() {
+    click_chinken () {
       myself
         .chicken()
         .then((res) => {
@@ -205,51 +305,47 @@ export default {
           console.log(err);
         });
     },
-    goto_vip() {
+    goto_vip () {
       uni.navigateTo({
         url: "/pagesC/vip/vip",
       });
     },
 
-    goto_gear() {
+    goto_gear () {
       uni.navigateTo({
         url: "/pagesC/gear/gear",
       });
     },
 
-    goto_dynamic() {
+    goto_dynamic () {
       uni.navigateTo({
         url: "/pagesC/dynamic/dynamic",
       });
     },
 
-    goto_shop() {
+    goto_shop () {
       uni.navigateTo({
         url: "/pagesC/shop_1/shop",
       });
     },
 
-    goto_order() {
+    goto_order () {
       uni.navigateTo({
         url: "/pagesC/order/order",
       });
     },
 
-    goto_card() {
+    goto_card () {
       uni.navigateTo({
         url: "/pagesC/card/card",
       });
     },
 
-    goto_friends() {
+    goto_friends () {
       uni.navigateTo({
         url: "/pagesC/friends/friends",
       });
     },
-<<<<<<< HEAD
-  },
-=======
-
     goto_message () {
       uni.navigateTo({
         url: "/pagesC/message/message"
@@ -263,7 +359,6 @@ export default {
       });
     }
   }
->>>>>>> 3a9f230c6e47e83c7413632f8e6cf22e297c0a92
 };
 </script>
 <style>
@@ -324,7 +419,7 @@ page {
   clear: both;
 }
 swiper {
-  background-color: red;
+  /* background-color: red; */
 }
 
 .a {
@@ -434,5 +529,23 @@ button::before {
 
 .pre_button:hover::before {
   width: 9em;
+}
+
+h4 {
+  text-align: center;
+  color: #0fd850;
+  font-size: 40px;
+}
+
+.mybutton {
+  /* float: left; */
+  margin-right: 10px;
+  margin-bottom: 90px;
+}
+
+.tip {
+  padding: 20px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px,
+    rgba(0, 0, 0, 0.05) 0px 5px 10px;
 }
 </style>

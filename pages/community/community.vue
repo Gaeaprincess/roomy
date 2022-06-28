@@ -85,12 +85,12 @@
             <view class="project-xinxi">
               <view class="project-nicheng">{{ item.author.username }}</view>
               <view class="yuedushu">
-                <image
+                <!-- <image
                   class="yuedushuimage"
                   src="/static/resources/liulan.png"
-                ></image>
+                ></image> -->
                 <!-- <view class="yuedushunum">{{ Math.round(Math.random()*500 + 1) }}</view> -->
-                <view class="yuedushunum">66</view>
+                <view class="yuedushunum">{{ item.author.bio }}</view>
               </view>
             </view>
           </view>

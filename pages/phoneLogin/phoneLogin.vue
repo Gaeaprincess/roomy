@@ -2,8 +2,8 @@
 	<view class="wrap">
 		<!-- 验证码登录 -->
 		<view class="logo">
-			<image src="../../static/logo.png" mode=""></image>
-			<text class="title">智慧无人自习室</text>
+			<image src="../../static/study.jpg" mode=""></image>
+			<text class="title">智慧自习室</text>
 		</view>
 		<view class="verification" v-if="isVerification">
 			<form action="">

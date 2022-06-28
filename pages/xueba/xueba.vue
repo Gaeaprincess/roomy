@@ -261,12 +261,19 @@ import chart4 from '@/components/Uchart/monthDetail.vue'
 			this.dailyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
 			this.weeklyTitle.name=util.changeTimeToMinute(this.studyTime)+' '
 			this.toDOList=uni.getStorageSync('todoList');
-			this.item.totalTimes=uni.getStorageSync('days')
+			this.item.totalTimes=uni.getStorageSync('day')
 			this.dailyAnalyse.series[0].data=uni.getStorageSync('data').dailyItem?uni.getStorageSync('data').dailyItem:[]
 			// this.weeklyAnalyse=uni.getStorageSync('monthList')?uni.getStorageSync('monthList'):{}
+			// console.log(this.dailyAnalyse,'====')
+			// let obj=[uni.getStorageSync('data').dailyItem?uni.getStorageSync('data').dailyItem:[]]
+			// this.dailyAnalyse.series=obj
 		},
-		onShow(){	
+		onShow(){
 			this.dailyAnalyse.series[0].data=uni.getStorageSync('data').dailyItem?uni.getStorageSync('data').dailyItem:[]
+			
+			// let obj=[uni.getStorageSync('data').dailyItem?uni.getStorageSync('data').dailyItem:[]]
+			// this.dailyAnalyse.series=obj
+			// console.log(this.dailyAnalyse,'====')
 		},
 		created(){
 	

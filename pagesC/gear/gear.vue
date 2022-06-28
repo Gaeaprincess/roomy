@@ -6,7 +6,7 @@
     </view>
     <view class="child child1"
           @tap="goto_about_money">
-      关于押金
+      我的钱包
     </view>
     <view class="child">
       学习公约

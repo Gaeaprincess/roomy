@@ -3,7 +3,7 @@
     <view class="content"
           v-for="(item,index) in shop"
           :key=index>
-      <image :src="item.cover||'../static/image/img1.jpg'"
+      <image :src="item.cover"
              @click="introduce"></image>
       <view class="item">
         <view class="tittle">{{item.name||'智慧自习室'}}</view>
@@ -77,7 +77,7 @@ export default {
     // 选定座位
     reserve () {
       uni.navigateTo({
-        url: '../../pagesA/bookseat/bookseat',
+        url: '../../pagesA/shop/shop',
         fail: err => {
           console.log(err)
         }

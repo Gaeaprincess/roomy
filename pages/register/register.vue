@@ -3,8 +3,8 @@
 		<!-- 注册和改密码都用一个页面 -->
 		<view class="index">
 			<text class="title">{{editItem.isRegister==true?'注册':"找回密码"}}</text>
-			<image src="../../static/logo.png" mode=""></image>
-			<text class="title">智慧无人自习室</text>
+			<image src="../../static/study.jpg" mode=""></image>
+			<text class="title">智慧自习室</text>
 		</view>
 		<!-- 获取验证码 -->
 		<view class="verification" v-show="isShowVeify">

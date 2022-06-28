@@ -24,7 +24,7 @@
 </view>
 <!-- <view class="bottom"> -->
     <!-- <view class="pay" @tap="pay_card" style="background-color: rgb(245,208,75);">使用卡券</view> -->
-    <view class="pay" @tap="pay_wx" style="background-color: #04BE02;">微信支付</view>
+    <view class="pay" @tap="pay_wx" style="background-color: #F5D04B;">快速下单</view>
 <!-- </view> -->
 </view>
 </template>
@@ -54,12 +54,13 @@ export default {
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
+	console.log(option);
     var i = option.i;
     var j = option.j;
     var date = option.date;
     var time = option.time;
     this.setData({
-      seat: this.seat_i[i] + "_" + j,
+      seat: this.seat_i[0] + "_" + i,
       date: date,
       time: time
     }); 

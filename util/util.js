@@ -22,7 +22,7 @@ function changeTimeToMinute(time){
   if(!time){
     return 0
   }
-  return time*60
+  return (time*60).toFixed(2)
 }
 module.exports = {
   formatTime,
